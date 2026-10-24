@@ -104,6 +104,11 @@ h3 { font-size: 18px; margin: 0 0 6px; }
 .card-body p { margin: 0; color: var(--muted); font-size: 15px; }
 .card .links { margin-top: auto; padding-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
 .card.tool h3::before { content: "⧉ "; color: var(--accent); }
+.card-body .project-kind { color: var(--accent); font: 500 12px/1.6 var(--mono); }
+.project-details { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+.project-details summary { cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600; }
+.project-details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+.project-details p { padding-top: 12px; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tags span {

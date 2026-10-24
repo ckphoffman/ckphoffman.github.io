@@ -97,6 +97,11 @@ function card(p, kind) {
 document.getElementById("demo-grid").append(...demos.map((d) => card(d, "demo")));
 document.getElementById("tool-grid").append(...tools.map((t) => card(t, "tool")));
 
+// Count the two YouTube versions separately; v2 includes an extension and web app.
+const earlierCount = document.querySelectorAll(".earlier-project").length;
+document.getElementById("count").textContent = demos.length + tools.length + 2 + earlierCount;
+document.getElementById("earlier-count").textContent = earlierCount;
+
 document.querySelectorAll("[data-src]").forEach((a) => {
   const url = srcUrl(a.dataset.src);
   if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; } else a.remove();
