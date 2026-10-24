@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git 工作原理互动讲解</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Interactive Git Model</p>
+          <h1>Git 的工作原理</h1>
+        </div>
+        <p class="topbar-summary">
+          把 Git 想成一台快照机器：工作区负责改文件，暂存区挑选下一次快照，本地仓库存对象和引用，远程仓库负责同步。
+        </p>
+      </header>
+
+      <main>
+        <section class="workspace" aria-labelledby="sim-title">
+          <div class="sim-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">01</p>
+                <h2 id="sim-title">命令会怎样改变 Git 的内部状态</h2>
+              </div>
+              <button class="ghost-button" id="resetButton" type="button" aria-label="重置演示">
+                ↺ 重置
+              </button>
+            </div>
+
+            <div class="command-strip" aria-label="Git 命令演示">
+              <button class="command-button active" type="button" data-step="0">初始状态</button>
+              <button class="command-button" type="button" data-step="1">编辑文件</button>
+              <button class="command-button" type="button" data-step="2">git add</button>
+              <button class="command-button" type="button" data-step="3">git commit</button>
+              <button class="command-button" type="button" data-step="4">git branch</button>
+              <button class="command-button" type="button" data-step="5">git switch</button>
+              <button class="command-button" type="button" data-step="6">再提交</button>
+              <button class="command-button" type="button" data-step="7">git merge</button>
+              <button class="command-button" type="button" data-step="8">git push</button>
+            </div>
+
+            <div class="stage-grid" aria-live="polite">
+              <article class="zone" data-zone="working">
+                <div class="zone-title">
+                  <span class="zone-icon">W</span>
+                  <div>
+                    <h3>工作区</h3>
+                    <p>你真实编辑的文件目录</p>
+                  </div>
+                </div>
+                <ul class="file-list" id="workingFiles"></ul>
+              </article>
+
+              <article class="zone" data-zone="index">
+                <div class="zone-title">
+                  <span class="zone-icon">I</span>
+                  <div>
+                    <h3>暂存区</h3>
+                    <p>下一次提交的候选快照</p>
+                  </div>
+                </div>
+                <ul class="file-list" id="indexFiles"></ul>
+              </article>
+
+              <article class="zone" data-zone="repo">
+                <div class="zone-title">
+                  <span class="zone-icon">R</span>
+                  <div>
+                    <h3>本地仓库</h3>
+                    <p>对象数据库和分支引用</p>
+                  </div>
+                </div>
+                <div class="repo-objects" id="repoObjects"></div>
+              </article>
+
+              <article class="zone" data-zone="remote">
+                <div class="zone-title">
+                  <span class="zone-icon">O</span>
+                  <div>
+                    <h3>远程仓库</h3>
+                    <p>另一份可同步的对象和引用</p>
+                  </div>
+                </div>
+                <div class="remote-state" id="remoteState"></div>
+              </article>
+            </div>
+          </div>
+
+          <aside class="explain-panel">
+            <p class="section-kicker">当前命令</p>
+            <h2 id="stepTitle">初始状态</h2>
+            <code id="stepCommand">git init</code>
+            <p id="stepBody"></p>
+            <div class="rule-box">
+              <h3>记住这一句</h3>
+              <p id="stepRule"></p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="graph-section" aria-labelledby="graph-title">
+          <div class="section-heading">
+            <p class="section-kicker">02</p>
+            <h2 id="graph-title">提交图：Git 主要移动的是指针</h2>
+          </div>
+          <div class="graph-layout">
+            <div class="commit-graph" id="commitGraph" aria-label="提交图可视化"></div>
+            <div class="legend-grid">
+              <div class="legend-item">
+                <span class="dot commit-dot"></span>
+                <div>
+                  <h3>Commit</h3>
+                  <p>提交对象保存作者、说明、父提交和一棵 tree。</p>
+                </div>
+              </div>
+              <div class="legend-item">
+                <span class="dot branch-dot"></span>
+                <div>
+                  <h3>Branch</h3>
+                  <p>分支只是一个名字，指向某个提交。</p>
+                </div>
+              </div>
+              <div class="legend-item">
+                <span class="dot head-dot"></span>
+                <div>
+                  <h3>HEAD</h3>
+                  <p>HEAD 表示你当前站在哪个分支或提交上。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="concepts" aria-labelledby="concept-title">
+          <div class="section-heading">
+            <p class="section-kicker">03</p>
+            <h2 id="concept-title">Git 底层的四个核心概念</h2>
+          </div>
+          <div class="concept-grid">
+            <article class="concept-card">
+              <span class="concept-number">1</span>
+              <h3>对象是不可变内容</h3>
+              <p>Git 把文件内容、目录结构和提交信息存成 blob、tree、commit。内容一变，哈希就变。</p>
+            </article>
+            <article class="concept-card">
+              <span class="concept-number">2</span>
+              <h3>提交是完整快照</h3>
+              <p>每次 commit 记录的是项目的一棵目录树，不是简单的补丁。相同内容会复用已有对象。</p>
+            </article>
+            <article class="concept-card">
+              <span class="concept-number">3</span>
+              <h3>分支是轻量指针</h3>
+              <p>新建分支通常只是在 refs 里多了一个名字，所以创建和切换分支很快。</p>
+            </article>
+            <article class="concept-card">
+              <span class="concept-number">4</span>
+              <h3>同步靠对象和引用</h3>
+              <p>push 和 fetch 传输缺失对象，再更新远端或本地的分支引用。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="cheatsheet" aria-labelledby="cheat-title">
+          <div class="section-heading">
+            <p class="section-kicker">04</p>
+            <h2 id="cheat-title">常见命令对应的内部动作</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>命令</th>
+                  <th>内部发生什么</th>
+                  <th>影响区域</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>git add file</code></td>
+                  <td>把当前文件内容写成 blob，并把路径到 blob 的映射放进 index。</td>
+                  <td>工作区 → 暂存区</td>
+                </tr>
+                <tr>
+                  <td><code>git commit</code></td>
+                  <td>把 index 组装成 tree，创建 commit 对象，让当前分支指向它。</td>
+                  <td>暂存区 → 本地仓库</td>
+                </tr>
+                <tr>
+                  <td><code>git branch name</code></td>
+                  <td>创建一个新的 refs/heads/name，初始指向当前提交。</td>
+                  <td>本地引用</td>
+                </tr>
+                <tr>
+                  <td><code>git switch name</code></td>
+                  <td>更新 HEAD 指向的分支，并把工作区恢复成该提交的快照。</td>
+                  <td>HEAD、工作区</td>
+                </tr>
+                <tr>
+                  <td><code>git merge name</code></td>
+                  <td>如果能快进就移动分支指针，否则创建一个有两个父提交的 merge commit。</td>
+                  <td>提交图、本地引用</td>
+                </tr>
+                <tr>
+                  <td><code>git push</code></td>
+                  <td>上传远端缺少的对象，再请求远端更新对应分支引用。</td>
+                  <td>本地仓库 → 远程仓库</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yuxiao Pu — Portfolio</title>
+  <meta name="description" content="Yuxiao Pu — MSc Computer Science (AI), University of Nottingham. Interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
+  <meta property="og:title" content="Yuxiao Pu — Portfolio">
+  <meta property="og:description" content="Interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
+  <meta property="og:image" content="assets/shots/camera-angles.jpg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f5c5c'/><text x='50%' y='56%' font-family='Georgia,serif' font-size='30' fill='white' text-anchor='middle' dominant-baseline='middle'>YP</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand">Yuxiao Pu</a>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <p class="eyebrow">MSc Computer Science (AI) · University of Nottingham</p>
+      <h1>I turn fuzzy ideas into <em>working software</em> — fast.</h1>
+      <p class="lede">
+        I'm Yuxiao, an engineering and AI graduate who builds interactive tools with an
+        AI-assisted (“vibe coding”) workflow: write the spec, let the model draft, then test,
+        verify and ship. Below are <span id="count">12</span> things I've built — most of them you can try right here.
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="#work">See the work</a>
+        <a class="btn" id="hero-email" href="#contact">Get in touch</a>
+      </div>
+      <ul class="stats">
+        <li><strong>5</strong><span>live interactive demos</span></li>
+        <li><strong>8</strong><span>Chrome extensions</span></li>
+        <li><strong>1</strong><span>full-stack learning app</span></li>
+      </ul>
+    </section>
+
+    <section id="work" class="wrap">
+      <div class="section-head">
+        <h2>Interactive demos</h2>
+        <p>Single-page explainers that make an abstract idea tangible. Open any of them live — no install. <span class="note">UI language: Chinese.</span></p>
+      </div>
+      <div class="grid demos" id="demo-grid"></div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2>Featured: YouTube Vocabulary Learner</h2>
+        <p>My most complete project — a three-part system I iterated on from a single extension into a full-stack app.</p>
+      </div>
+      <article class="feature">
+        <div class="feature-diagram" aria-hidden="true">
+          <div class="node"><span class="k">Chrome extension</span><span class="v">captures uploaded (non-auto) subtitles from the video you're watching</span></div>
+          <div class="arrow">→</div>
+          <div class="node"><span class="k">Node + Express API</span><span class="v">tokenises text, stores videos, sentences &amp; word counts in SQLite</span></div>
+          <div class="arrow">→</div>
+          <div class="node"><span class="k">React + TypeScript web app</span><span class="v">browse words, read every sentence they appear in, jump the embedded player to that moment</span></div>
+        </div>
+        <div class="feature-body">
+          <ul class="bullets">
+            <li>Counts each word once per video, so rewatching doesn't inflate frequencies.</li>
+            <li>Concordance view: every subtitle line containing a word, highlighted, grouped by video.</li>
+            <li>Click a sentence → the embedded YouTube player seeks to that timestamp.</li>
+            <li>Favourites, sorting by frequency / date / alphabet, and filters.</li>
+            <li>v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am/is/are → be); v2 split it into extension, API and web app.</li>
+          </ul>
+          <div class="tags"><span>Chrome MV3</span><span>Express</span><span>SQLite</span><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Tailwind</span></div>
+          <div class="links">
+            <a class="btn small" data-src="projects/youtube-vocab-learner">Source (v2, full-stack)</a>
+            <a class="btn small ghost" data-src="projects/youtube-subtitle-parser">Source (v1, extension)</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2>Douyin creator toolkit</h2>
+        <p>Six Chrome extensions I built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok) — chats, posts and notifications.
+          Everything runs locally in the browser using the session I'm already logged into; nothing is uploaded, and none of them bypass login or DRM.</p>
+      </div>
+      <div class="grid tools" id="tool-grid"></div>
+    </section>
+
+    <section id="about" class="wrap about">
+      <div class="section-head"><h2>About</h2></div>
+      <div class="about-grid">
+        <div>
+          <p>
+            I studied measurement and control engineering at ECUST, then moved into AI with an
+            MSc in Computer Science at the University of Nottingham (Merit). My dissertation evaluated
+            anomaly-detection methods on 2.9 million one-minute observations across 30 US equities, and
+            concluded they're better supported as a risk-monitoring aid than as a profit signal.
+          </p>
+          <p>
+            What I enjoy most is the step from “this is confusing” to “here's a tool that makes it obvious”.
+            Several of the demos above started as questions I had while learning photography, Git and LaTeX.
+          </p>
+          <h3>How I build</h3>
+          <ol class="process">
+            <li><strong>Specify.</strong> Write down the goal, constraints and what “done” looks like.</li>
+            <li><strong>Generate.</strong> Pair with AI coding agents (Claude Code, Codex) to draft quickly.</li>
+            <li><strong>Verify.</strong> Unit tests, manual checks in the real page, and reading every diff.</li>
+            <li><strong>Iterate.</strong> Ship a small version, then refine from real use.</li>
+          </ol>
+        </div>
+        <aside class="card facts">
+          <h3>Education</h3>
+          <p><strong>MSc Computer Science (AI)</strong><br>University of Nottingham, UK · 2024–2026 · Merit</p>
+          <p><strong>BEng Measurement, Control Technology &amp; Instruments</strong><br>East China University of Science and Technology · 2019–2023</p>
+          <h3>Toolkit</h3>
+          <div class="tags"><span>Python</span><span>PyTorch</span><span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>SQL</span><span>PHP</span><span>Three.js</span><span>Chrome Extensions</span></div>
+          <h3>Languages</h3>
+          <p>Mandarin (native) · English (IELTS 6.5, UK-taught Master's)</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="contact" class="wrap contact">
+      <h2>Let's talk</h2>
+      <p>I'm looking for roles where I can turn ambiguous problems into working tools.</p>
+      <a class="btn primary big" id="email-link" href="#">Email me</a>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <span>© <span id="year"></span> Yuxiao Pu</span>
+    <a id="repo-link" href="#">Source of this site</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

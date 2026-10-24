@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>抖音作品下载器</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>抖音作品下载器</h1>
+    </header>
+
+    <div id="screen-idle">
+      <p class="hint">请先打开 douyin.com 并登录</p>
+      <button id="btn-fetch" class="btn-primary">获取我的作品</button>
+    </div>
+
+    <div id="screen-loading" class="hidden">
+      <div class="spinner"></div>
+      <p id="loading-text">正在获取作品列表…</p>
+    </div>
+
+    <div id="screen-list" class="hidden">
+      <div class="toolbar">
+        <span id="summary"></span>
+        <div class="actions">
+          <button id="btn-select-all" class="btn-sm">全选</button>
+          <button id="btn-export-comments" class="btn-sm">导出评论</button>
+          <button id="btn-download" class="btn-primary">下载所选</button>
+        </div>
+      </div>
+      <div id="video-list"></div>
+    </div>
+
+    <div id="screen-error" class="hidden">
+      <p id="error-msg" class="error"></p>
+      <button id="btn-retry" class="btn-primary">重试</button>
+    </div>
+  </div>
+  <script src="debug-bridge.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

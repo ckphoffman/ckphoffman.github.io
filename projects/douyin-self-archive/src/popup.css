@@ -1,0 +1,171 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+body {
+  width: 380px;
+  margin: 0;
+  color: #161616;
+  background: #f8f7f4;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.shell {
+  padding: 14px;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 4px 0 0;
+  color: #66615b;
+  font-size: 12px;
+}
+
+.iconButton {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  color: #171717;
+  background: #ece7de;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.notice,
+.status {
+  margin-top: 12px;
+  border: 1px solid #e0d8cc;
+  border-radius: 8px;
+  padding: 10px;
+  color: #584f45;
+  background: #fffdf8;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.status {
+  background: #f1f5f4;
+  border-color: #d7e2de;
+}
+
+.status.error {
+  color: #7b1e22;
+  background: #fff2f1;
+  border-color: #f1c8c8;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.primary,
+.secondary,
+.miniButton {
+  border-radius: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  font-weight: 650;
+}
+
+.primary {
+  color: #fff;
+  background: #0f766e;
+}
+
+.secondary,
+.miniButton {
+  color: #173c38;
+  background: #dcebe7;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.item {
+  display: grid;
+  gap: 8px;
+  border: 1px solid #ded7ce;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+}
+
+.itemTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.badge {
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: #33413f;
+  background: #e7efed;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.score {
+  color: #77716b;
+  font-size: 11px;
+}
+
+.url {
+  overflow: hidden;
+  color: #3b3b3b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  color: #6c6761;
+  font-size: 12px;
+}
+
+.itemActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.warning {
+  color: #806218;
+  font-size: 12px;
+  line-height: 1.4;
+}

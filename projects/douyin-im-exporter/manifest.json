@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Douyin IM HTML Exporter",
+  "description": "Export selected Douyin private-message conversations to a local HTML file.",
+  "version": "0.1.0",
+  "permissions": ["downloads", "activeTab"],
+  "host_permissions": ["https://www.douyin.com/*"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "导出抖音私信"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.douyin.com/*"],
+      "js": ["src/pageBridge.js"],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://www.douyin.com/*"],
+      "js": ["src/exportCore.js", "src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/pageBridge.js"],
+      "matches": ["https://www.douyin.com/*"]
+    }
+  ]
+}

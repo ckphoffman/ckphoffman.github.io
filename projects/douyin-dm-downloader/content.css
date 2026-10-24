@@ -1,0 +1,89 @@
+/* 注入到 douyin.com 页面的样式：右下角浮动按钮 */
+
+#douyin-sixin-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2147483600;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+}
+
+#douyin-sixin-fab #sixin-fab-main {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #fe2c55;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(254, 44, 85, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+#douyin-sixin-fab #sixin-fab-main:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(254, 44, 85, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+#douyin-sixin-fab #sixin-fab-menu {
+  position: absolute;
+  bottom: 56px;
+  right: 0;
+  min-width: 220px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: sixin-fab-pop 0.12s ease-out;
+}
+
+#douyin-sixin-fab #sixin-fab-menu[hidden] {
+  display: none;
+}
+
+#douyin-sixin-fab #sixin-fab-menu button {
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 9px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #1f1f1f;
+  white-space: nowrap;
+}
+
+#douyin-sixin-fab #sixin-fab-menu button:hover {
+  background: #f3f3f5;
+}
+
+#douyin-sixin-fab #sixin-fab-menu button[data-act="close"] {
+  color: #888;
+  border-top: 1px solid #ececec;
+  margin-top: 2px;
+  padding-top: 10px;
+}
+
+@keyframes sixin-fab-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

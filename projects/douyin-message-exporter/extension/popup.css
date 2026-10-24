@@ -1,0 +1,116 @@
+.dy-exporter-popup {
+  width: 260px;
+  margin: 0;
+  color: #161823;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #ffffff;
+}
+
+.dy-exporter-popup main {
+  padding: 14px;
+}
+
+.dy-exporter-popup h1 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.dy-exporter-popup p {
+  margin: 0 0 12px;
+  color: #555b66;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.dy-exporter-popup button,
+.dy-exporter-panel button {
+  border: 1px solid #d9dce3;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #ffffff;
+  background: #fe2c55;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.dy-exporter-popup button:disabled,
+.dy-exporter-panel button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.dy-exporter-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147483647;
+  width: 380px;
+  max-height: 70vh;
+  overflow: hidden;
+  border: 1px solid #d9dce3;
+  border-radius: 8px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18);
+  color: #161823;
+  background: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.dy-exporter-panel header,
+.dy-exporter-panel footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.dy-exporter-panel footer {
+  border-top: 1px solid #eef0f4;
+  border-bottom: 0;
+}
+
+.dy-exporter-panel h2 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.dy-exporter-panel .dy-exporter-body {
+  max-height: 48vh;
+  overflow: auto;
+  padding: 12px;
+}
+
+.dy-exporter-panel .dy-exporter-status {
+  margin: 0 0 10px;
+  color: #555b66;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.dy-exporter-panel .dy-exporter-list {
+  display: grid;
+  gap: 8px;
+}
+
+.dy-exporter-panel label {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid #eef0f4;
+  border-radius: 6px;
+}
+
+.dy-exporter-panel strong {
+  display: block;
+  font-size: 13px;
+}
+
+.dy-exporter-panel small {
+  display: block;
+  color: #6f7785;
+  font-size: 12px;
+  line-height: 1.35;
+}

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>入瞳直径 · 光圈 · 焦距 关系演示</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #1a1814;
+    --bg-elevated: #211e19;
+    --ink: #e8dfc9;
+    --ink-dim: #8a8170;
+    --amber: #d4a24c;
+    --amber-bright: #f0c674;
+    --rust: #b85c3a;
+    --line: #3a342a;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    padding: 32px 24px;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(212, 162, 76, 0.06), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(184, 92, 58, 0.04), transparent 50%);
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* ===== Header ===== */
+  header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .title-block h1 {
+    font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 52px);
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .title-block h1 em {
+    font-style: italic;
+    color: var(--amber);
+    font-weight: 500;
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+
+  .formula {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--amber-bright);
+    border-left: 1px solid var(--amber);
+    padding-left: 18px;
+  }
+
+  .formula small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink-dim);
+    margin-top: 6px;
+    font-style: normal;
+  }
+
+  /* ===== Main grid ===== */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 36px;
+  }
+
+  @media (max-width: 880px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Visualization panel ===== */
+  .viz-panel {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .viz-panel::before {
+    content: '01';
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.2em;
+  }
+
+  .viz-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .viz-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.1 / 1;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.015), transparent),
+      radial-gradient(circle at center, rgba(0,0,0,0.35), transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Grid background */
+  .stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232, 223, 201, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 223, 201, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Crosshairs */
+  .crosshair {
+    position: absolute;
+    background: rgba(212, 162, 76, 0.15);
+  }
+  .crosshair.h { left: 0; right: 0; height: 1px; top: 50%; }
+  .crosshair.v { top: 0; bottom: 0; width: 1px; left: 50%; }
+
+  /* Lens outline (full aperture reference circle) */
+  .lens-outline {
+    position: absolute;
+    border: 1px dashed rgba(232, 223, 201, 0.18);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Entrance pupil — the actual aperture opening */
+  .pupil {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+      rgba(240, 198, 116, 0.95),
+      rgba(212, 162, 76, 0.7) 40%,
+      rgba(184, 92, 58, 0.5) 75%,
+      rgba(120, 60, 30, 0.3) 100%);
+    box-shadow:
+      0 0 40px rgba(212, 162, 76, 0.3),
+      inset 0 0 30px rgba(0, 0, 0, 0.4);
+    transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Diameter indicator line */
+  .diameter-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 1px;
+    background: var(--amber-bright);
+    box-shadow: 0 0 8px var(--amber);
+    transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+
+  .diameter-line::before,
+  .diameter-line::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    width: 1px;
+    height: 11px;
+    background: var(--amber-bright);
+  }
+  .diameter-line::before { left: 0; }
+  .diameter-line::after { right: 0; }
+
+  .diameter-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% - 18px));
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--amber-bright);
+    background: var(--bg);
+    padding: 2px 8px;
+    border: 1px solid var(--amber);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* Scale ruler */
+  .scale-ruler {
+    position: absolute;
+    bottom: 20px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .scale-bar {
+    height: 1px;
+    background: var(--ink-dim);
+    position: relative;
+  }
+
+  .scale-bar::before, .scale-bar::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 1px;
+    height: 7px;
+    background: var(--ink-dim);
+  }
+  .scale-bar::before { left: 0; }
+  .scale-bar::after { right: 0; }
+
+  /* Out-of-bounds warning */
+  .oversize-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--rust);
+    background: rgba(184, 92, 58, 0.1);
+    border: 1px solid var(--rust);
+    padding: 4px 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .oversize-tag.show { opacity: 1; }
+
+  /* ===== Controls panel ===== */
+  .controls-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .control-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 24px 26px;
+    position: relative;
+  }
+
+  .control-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.2em;
+  }
+
+  .control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+  }
+
+  .control-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink);
+  }
+
+  .control-name .cn {
+    font-family: 'Noto Serif SC', serif;
+    font-style: normal;
+    color: var(--ink-dim);
+    font-size: 13px;
+    margin-left: 8px;
+  }
+
+  .control-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--amber-bright);
+    letter-spacing: 0.02em;
+  }
+
+  /* Custom slider */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 24px;
+    background: transparent;
+    cursor: pointer;
+    margin: 4px 0;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    background: linear-gradient(to right, var(--amber) var(--fill, 50%), var(--line) var(--fill, 50%));
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    width: 18px;
+    background: var(--amber-bright);
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    margin-top: -8px;
+    box-shadow: 0 0 0 1px var(--amber), 0 0 12px rgba(240, 198, 116, 0.4);
+    transition: transform 0.15s;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+  input[type="range"]::-moz-range-track {
+    height: 2px;
+    background: var(--line);
+  }
+
+  input[type="range"]::-moz-range-progress {
+    height: 2px;
+    background: var(--amber);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    height: 18px;
+    width: 18px;
+    background: var(--amber-bright);
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--amber);
+  }
+
+  .range-marks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* Result card */
+  .result-card {
+    background: linear-gradient(135deg, rgba(212, 162, 76, 0.08), rgba(184, 92, 58, 0.04));
+    border: 1px solid var(--amber);
+    padding: 26px;
+    position: relative;
+  }
+
+  .result-card::before {
+    content: '03';
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--amber);
+    letter-spacing: 0.2em;
+  }
+
+  .result-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .result-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .result-name .cn {
+    font-family: 'Noto Serif SC', serif;
+    font-style: normal;
+    color: var(--ink-dim);
+    font-size: 13px;
+    margin-left: 8px;
+  }
+
+  .result-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 44px;
+    font-weight: 300;
+    color: var(--amber-bright);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .result-value .unit {
+    font-size: 18px;
+    color: var(--ink-dim);
+    margin-left: 6px;
+    font-weight: 400;
+  }
+
+  .calc-breakdown {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(212, 162, 76, 0.25);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+  }
+
+  .calc-breakdown .eq {
+    color: var(--ink);
+  }
+
+  /* ===== Presets ===== */
+  .presets {
+    margin-top: 36px;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+  }
+
+  .presets-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .preset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .preset-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 14px 16px;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .preset-btn:hover {
+    border-color: var(--amber);
+    background: rgba(212, 162, 76, 0.05);
+  }
+
+  .preset-btn .pname {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .preset-btn .pspec {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .preset-btn .pdia {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== Insights ===== */
+  .insights {
+    margin-top: 36px;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .insight {
+    border-left: 2px solid var(--amber);
+    padding: 8px 0 8px 18px;
+  }
+
+  .insight-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+
+  .insight h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .insight p {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+
+  .insight p em {
+    color: var(--amber-bright);
+    font-style: normal;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="title-block">
+      <h1>入瞳直径 · <em>Entrance Pupil</em></h1>
+      <div class="subtitle">Aperture × Focal Length · 光学几何演示</div>
+    </div>
+    <div class="formula">
+      D = f ⁄ N
+      <small>diameter = focal length / f-number</small>
+    </div>
+  </header>
+
+  <div class="main-grid">
+
+    <!-- Visualization -->
+    <div class="viz-panel">
+      <div class="viz-label">— Visualization · 实际比例</div>
+      <div class="viz-title">Entrance pupil at true scale</div>
+
+      <div class="stage" id="stage">
+        <div class="crosshair h"></div>
+        <div class="crosshair v"></div>
+        <div class="oversize-tag" id="oversize">⚠ 超出画面 · scaled down</div>
+        <div class="lens-outline" id="lensOutline"></div>
+        <div class="pupil" id="pupil"></div>
+        <div class="diameter-line" id="diameterLine"></div>
+        <div class="diameter-label" id="diameterLabel">— mm</div>
+        <div class="scale-ruler">
+          <span>0</span>
+          <div class="scale-bar" id="scaleBar" style="width: 80px;"></div>
+          <span id="scaleLabel">20 mm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-panel">
+
+      <div class="control-card" data-num="02·a">
+        <div class="control-header">
+          <div class="control-name">Focal length <span class="cn">焦距 f</span></div>
+          <div class="control-value" id="focalValue">50 mm</div>
+        </div>
+        <input type="range" id="focal" min="14" max="600" value="50" step="1">
+        <div class="range-marks">
+          <span>14</span><span>50</span><span>200</span><span>400</span><span>600 mm</span>
+        </div>
+      </div>
+
+      <div class="control-card" data-num="02·b">
+        <div class="control-header">
+          <div class="control-name">f-number <span class="cn">光圈值 N</span></div>
+          <div class="control-value" id="apertureValue">f/1.8</div>
+        </div>
+        <input type="range" id="aperture" min="0" max="14" value="3" step="1">
+        <div class="range-marks">
+          <span>1.0</span><span>2.8</span><span>5.6</span><span>11</span><span>22</span>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">— Result · 入瞳直径</div>
+        <div class="result-name">Entrance pupil diameter</div>
+        <div class="result-value"><span id="diameterValue">27.8</span><span class="unit">mm</span></div>
+        <div class="calc-breakdown" id="calcBreakdown">
+          <span class="eq">D = f / N</span><br>
+          <span id="calcSteps">D = 50 / 1.8 = 27.78 mm</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Presets -->
+  <div class="presets">
+    <div class="presets-label">— Classic Lenses · 经典镜头示例</div>
+    <div class="preset-grid">
+      <button class="preset-btn" data-f="50" data-n="3">
+        <span class="pname">Nifty fifty</span>
+        <span class="pspec">50 mm · f/1.8</span>
+        <span class="pdia">27.8</span>
+      </button>
+      <button class="preset-btn" data-f="35" data-n="2">
+        <span class="pname">Street classic</span>
+        <span class="pspec">35 mm · f/1.4</span>
+        <span class="pdia">25.0</span>
+      </button>
+      <button class="preset-btn" data-f="85" data-n="2">
+        <span class="pname">Portrait king</span>
+        <span class="pspec">85 mm · f/1.4</span>
+        <span class="pdia">60.7</span>
+      </button>
+      <button class="preset-btn" data-f="200" data-n="5">
+        <span class="pname">Telephoto bright</span>
+        <span class="pspec">200 mm · f/2.8</span>
+        <span class="pdia">71.4</span>
+      </button>
+      <button class="preset-btn" data-f="400" data-n="5">
+        <span class="pname">Sports beast</span>
+        <span class="pspec">400 mm · f/2.8</span>
+        <span class="pdia">142.9</span>
+      </button>
+      <button class="preset-btn" data-f="600" data-n="5">
+        <span class="pname">Wildlife monster</span>
+        <span class="pspec">600 mm · f/2.8</span>
+        <span class="pdia">214.3</span>
+      </button>
+      <button class="preset-btn" data-f="24" data-n="9">
+        <span class="pname">Landscape stop</span>
+        <span class="pspec">24 mm · f/8</span>
+        <span class="pdia">3.0</span>
+      </button>
+      <button class="preset-btn" data-f="100" data-n="13">
+        <span class="pname">Macro pinhole</span>
+        <span class="pspec">100 mm · f/16</span>
+        <span class="pdia">6.3</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Insights -->
+  <div class="insights">
+    <div class="insight">
+      <div class="insight-num">— Insight 01</div>
+      <h3>为什么大炮那么大</h3>
+      <p>同样是 <em>f/2.8</em>，200mm 镜头入瞳是 <em>71mm</em>，而 600mm 镜头则达到惊人的 <em>214mm</em>——这就是为什么"大三元"和长焦定焦镜头前组玻璃如此巨大、价格如此惊人。</p>
+    </div>
+    <div class="insight">
+      <div class="insight-num">— Insight 02</div>
+      <h3>等效光圈的真相</h3>
+      <p>光圈值 N 只是个<em>比值</em>，真正决定单位时间进光量绝对值的是<em>入瞳面积</em>（∝ D²）。同样 f/1.8，50mm 镜头进光量远小于 200mm 镜头。</p>
+    </div>
+    <div class="insight">
+      <div class="insight-num">— Insight 03</div>
+      <h3>缩光圈 = 缩孔径</h3>
+      <p>从 f/2.8 收到 f/5.6（两档），入瞳直径减半，<em>面积变为四分之一</em>，进光量也变为四分之一——这正是"每档曝光"的几何依据。</p>
+    </div>
+  </div>
+
+  <footer>
+    D = f ⁄ N · The geometry of light through a lens
+  </footer>
+
+</div>
+
+<script>
+  // Standard f-number stops (in 1/3-stop increments would be too many; using main stops)
+  const F_STOPS = [1.0, 1.2, 1.4, 1.8, 2.0, 2.8, 4.0, 5.6, 8.0, 11, 13, 16, 18, 22, 32];
+
+  const focalSlider = document.getElementById('focal');
+  const apertureSlider = document.getElementById('aperture');
+  const focalValueEl = document.getElementById('focalValue');
+  const apertureValueEl = document.getElementById('apertureValue');
+  const diameterValueEl = document.getElementById('diameterValue');
+  const calcStepsEl = document.getElementById('calcSteps');
+  const pupil = document.getElementById('pupil');
+  const lensOutline = document.getElementById('lensOutline');
+  const diameterLine = document.getElementById('diameterLine');
+  const diameterLabel = document.getElementById('diameterLabel');
+  const stage = document.getElementById('stage');
+  const oversize = document.getElementById('oversize');
+  const scaleBar = document.getElementById('scaleBar');
+  const scaleLabel = document.getElementById('scaleLabel');
+
+  function updateSliderFill(slider) {
+    const min = +slider.min, max = +slider.max, val = +slider.value;
+    const pct = ((val - min) / (max - min)) * 100;
+    slider.style.setProperty('--fill', pct + '%');
+  }
+
+  function update() {
+    const f = +focalSlider.value;
+    const nIdx = +apertureSlider.value;
+    const N = F_STOPS[nIdx];
+    const D = f / N;
+
+    focalValueEl.textContent = f + ' mm';
+    apertureValueEl.textContent = 'f/' + (N % 1 === 0 ? N.toFixed(0) : N.toFixed(1));
+    diameterValueEl.textContent = D.toFixed(1);
+    calcStepsEl.textContent = `D = ${f} / ${N} = ${D.toFixed(2)} mm`;
+
+    updateSliderFill(focalSlider);
+    updateSliderFill(apertureSlider);
+
+    // Visualization scale: how many pixels per mm
+    // Stage is roughly 480x436 on desktop; we want max diameter ~250mm to fit
+    // Adaptive scale: if D > 220mm, scale down
+    const stageRect = stage.getBoundingClientRect();
+    const maxVisualDia = Math.min(stageRect.width, stageRect.height) * 0.78;
+
+    // Try a consistent mm-per-pixel scale, but adapt when too big
+    let pxPerMm = maxVisualDia / 250; // baseline: 250mm fills the stage
+    let isOversized = false;
+
+    if (D > 250) {
+      pxPerMm = maxVisualDia / D;
+      isOversized = true;
+    }
+
+    const pupilPx = D * pxPerMm;
+    const lensRefPx = Math.min(maxVisualDia, (f / 1.0) * pxPerMm * 0.4); // reference outline
+
+    pupil.style.width = pupilPx + 'px';
+    pupil.style.height = pupilPx + 'px';
+
+    // Lens reference outline: show full-open potential (f/1.0 equivalent) capped
+    const refDia = Math.min(maxVisualDia, f * pxPerMm * 0.5);
+    lensOutline.style.width = refDia + 'px';
+    lensOutline.style.height = refDia + 'px';
+
+    diameterLine.style.width = pupilPx + 'px';
+    diameterLabel.textContent = D.toFixed(1) + ' mm';
+
+    oversize.classList.toggle('show', isOversized);
+
+    // Update scale ruler
+    const scaleMm = Math.round((80 / pxPerMm) / 5) * 5 || 5;
+    const scaleBarPx = scaleMm * pxPerMm;
+    scaleBar.style.width = scaleBarPx + 'px';
+    scaleLabel.textContent = scaleMm + ' mm';
+  }
+
+  focalSlider.addEventListener('input', update);
+  apertureSlider.addEventListener('input', update);
+  window.addEventListener('resize', update);
+
+  // Preset buttons
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      focalSlider.value = btn.dataset.f;
+      apertureSlider.value = btn.dataset.n;
+      update();
+    });
+  });
+
+  // Initial render
+  update();
+</script>
+</body>
+</html>

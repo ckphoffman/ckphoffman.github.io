@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>相机拍摄角度演示 — 室内全身人像</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    background: #0a0e15;
+    color: #d4dde6;
+    padding: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  .layout { max-width: 1500px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .subtitle {
+    text-align: center;
+    color: #889;
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .views {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .panel {
+    background: #141a24;
+    border: 1px solid #232a38;
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .panel h2 {
+    font-size: 14px;
+    color: #4a90e2;
+    margin-bottom: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .canvas-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 280px;
+  }
+  .canvas-wrap canvas { display: block; }
+  .canvas-label {
+    color: #788;
+    font-size: 12px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .canvas-label .key-red { color: #ff6060; }
+  .canvas-label .key-yellow { color: #ffd040; }
+  .controls-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .slider-block { margin-bottom: 12px; }
+  .slider-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #aab;
+  }
+  .slider-label .hint { color: #556; font-size: 11px; margin-left: 4px; }
+  .slider-row { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] {
+    flex: 1;
+    accent-color: #4a90e2;
+    cursor: pointer;
+  }
+  .value-display {
+    min-width: 58px;
+    text-align: right;
+    color: #4a90e2;
+    font-weight: 600;
+    font-family: "SF Mono", "Monaco", monospace;
+    font-size: 13px;
+  }
+  .orientation-toggle {
+    display: flex;
+    gap: 4px;
+    background: #0a0e15;
+    padding: 3px;
+    border-radius: 6px;
+  }
+  .orientation-toggle button {
+    flex: 1;
+    padding: 8px;
+    background: transparent;
+    color: #889;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+  }
+  .orientation-toggle button.active {
+    background: #4a90e2;
+    color: #fff;
+  }
+  .presets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .presets button {
+    padding: 9px 10px;
+    background: #1c2433;
+    color: #d4dde6;
+    border: 1px solid #2c364a;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .presets button:hover {
+    background: #232c3d;
+    border-color: #4a90e2;
+  }
+  .presets button.active {
+    background: #4a90e2;
+    border-color: #4a90e2;
+    color: #fff;
+  }
+  .preset-title { font-weight: 600; display: block; font-size: 13px; margin-bottom: 1px; }
+  .preset-desc { font-size: 11px; color: #889; }
+  .presets button.active .preset-desc { color: #cde; }
+  .section-title {
+    font-size: 13px;
+    color: #f0a020;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .effect-feedback {
+    background: linear-gradient(135deg, #1a2030, #14182a);
+    border-left: 3px solid #f0a020;
+    padding: 12px 14px;
+    margin-top: 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 100px;
+  }
+  .effect-feedback strong { color: #f0a020; }
+  .effect-feedback .ok { color: #4ae2a0; }
+  .effect-feedback .warn { color: #ff8060; }
+  .effect-feedback .key { color: #6abef0; font-weight: 600; }
+  .effect-feedback ul { margin: 4px 0 0 18px; }
+  .effect-feedback li { margin-bottom: 4px; }
+
+  .explain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .explain-card {
+    background: #11161f;
+    border: 1px solid #232a38;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .explain-card h3 {
+    color: #4ae2a0;
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .explain-card p {
+    color: #99a;
+    font-size: 12px;
+    margin-bottom: 7px;
+    line-height: 1.65;
+  }
+  .explain-card .good { color: #4ae2a0; }
+  .explain-card .bad { color: #ff8060; }
+  .explain-card .key { color: #f0a020; font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .views, .controls-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Crop demo section ===== */
+  .crop-intro {
+    color: #aab;
+    font-size: 13px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .crop-intro strong { color: #f0a020; }
+  .crop-views {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 1100px) { .crop-views { grid-template-columns: 1fr; } }
+  .crop-panel {
+    background: #11161f;
+    border: 1px solid #232a38;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .crop-title {
+    font-size: 14px;
+    color: #4a90e2;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .crop-title.good { color: #4ae2a0; }
+  .crop-title.warn { color: #ff8060; }
+  .crop-canvas-wrap {
+    position: relative;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+  }
+  .crop-canvas-wrap canvas { display: block; width: 100% !important; height: 100% !important; }
+  .crop-marker {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 50%;
+    height: 50%;
+    border: 2px solid #ff4040;
+    box-sizing: border-box;
+    pointer-events: none;
+    animation: cropPulse 1.8s ease-in-out infinite;
+  }
+  .crop-marker::after {
+    content: "想拍的区域";
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    color: #ff8080;
+    font-size: 11px;
+    font-weight: 600;
+    text-shadow: 0 0 4px rgba(0,0,0,0.9);
+  }
+  @keyframes cropPulse {
+    0%, 100% { box-shadow: inset 0 0 0 1px rgba(255,80,80,0.0), 0 0 0 0 rgba(255,80,80,0.5); }
+    50% { box-shadow: inset 0 0 0 1px rgba(255,80,80,0.3), 0 0 0 5px rgba(255,80,80,0); }
+  }
+  .crop-desc {
+    color: #99a;
+    font-size: 12px;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+  .crop-desc strong { color: #d4dde6; }
+  .crop-desc .good { color: #4ae2a0; }
+  .crop-desc .warn { color: #ff8060; }
+  .crop-conclusion {
+    background: linear-gradient(135deg, #14201f, #181a26);
+    border-left: 3px solid #4ae2a0;
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #aab;
+  }
+  .crop-conclusion strong { color: #d4dde6; }
+  .crop-conclusion .key { color: #f0a020; font-weight: 600; }
+  .crop-conclusion .warn { color: #ff8060; font-weight: 600; }
+  .crop-conclusion .good { color: #4ae2a0; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<h1>📷 相机拍摄角度对画面的影响</h1>
+<div class="subtitle">室内全身人像演示 · 调整下方控件，左侧为旁观者视角，右侧为相机拍出的画面</div>
+
+<div class="views">
+  <div class="panel">
+    <h2>🌍 场景全景 — 旁观者视角</h2>
+    <div class="canvas-wrap" id="worldView"></div>
+    <div class="canvas-label">
+      用鼠标拖动可旋转视角 ·
+      <span class="key-red">红色锥形</span>表示相机视野方向 ·
+      <span class="key-yellow">黄色箭头</span>是相机的"上方"
+    </div>
+  </div>
+  <div class="panel">
+    <h2>📸 相机拍出的画面</h2>
+    <div class="canvas-wrap" id="photoView"></div>
+    <div class="canvas-label" id="photoLabel">水平正放 · 横拍 · 高度 1.50m · 距离 3.50m</div>
+  </div>
+</div>
+
+<div class="panel" style="margin-bottom: 12px;">
+  <h2>🎮 调整相机姿态</h2>
+  <div class="controls-grid">
+    <div>
+      <div class="slider-block">
+        <div class="slider-label">
+          <span>横滚 Roll <span class="hint">绕镜头光轴左右倾斜</span></span>
+          <span class="value-display" id="rollVal">0°</span>
+        </div>
+        <input type="range" id="rollSlider" min="-45" max="45" value="0" step="1">
+      </div>
+      <div class="slider-block">
+        <div class="slider-label">
+          <span>俯仰 Pitch <span class="hint">抬头(+) / 低头(−)</span></span>
+          <span class="value-display" id="pitchVal">0°</span>
+        </div>
+        <input type="range" id="pitchSlider" min="-60" max="60" value="0" step="1">
+      </div>
+      <div class="slider-block">
+        <div class="slider-label">
+          <span>偏航 Yaw <span class="hint">绕竖直轴左右转</span></span>
+          <span class="value-display" id="yawVal">0°</span>
+        </div>
+        <input type="range" id="yawSlider" min="-60" max="60" value="0" step="1">
+      </div>
+      <div class="slider-block">
+        <div class="slider-label">
+          <span>高度 Height <span class="hint">相机离地高度</span></span>
+          <span class="value-display" id="heightVal">1.50m</span>
+        </div>
+        <input type="range" id="heightSlider" min="0.3" max="2.5" value="1.5" step="0.05">
+      </div>
+      <div class="slider-block">
+        <div class="slider-label">
+          <span>距离 Distance <span class="hint">相机离模特的距离</span></span>
+          <span class="value-display" id="distanceVal">3.50m</span>
+        </div>
+        <input type="range" id="distanceSlider" min="1.0" max="6.0" value="3.5" step="0.1">
+      </div>
+      <div class="slider-block">
+        <div class="slider-label">
+          <span>画幅方向</span>
+          <span></span>
+        </div>
+        <div class="orientation-toggle">
+          <button id="landscapeBtn" class="active">横拍 16:9</button>
+          <button id="portraitBtn">竖拍 9:16</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">🎯 一键试不同摄影风格</div>
+      <div class="presets" id="presetGroup">
+        <button data-preset="level" class="active">
+          <span class="preset-title">✓ 完美水平</span>
+          <span class="preset-desc">齐腰平拍，画面端正</span>
+        </button>
+        <button data-preset="eyelevel">
+          <span class="preset-title">👁 齐眼平拍</span>
+          <span class="preset-desc">证件照式，最自然</span>
+        </button>
+        <button data-preset="longlegs">
+          <span class="preset-title">🦵 大长腿</span>
+          <span class="preset-desc">蹲低仰拍，腿长头小</span>
+        </button>
+        <button data-preset="topdown">
+          <span class="preset-title">📱 高位俯拍</span>
+          <span class="preset-desc">头大身小，自拍误区</span>
+        </button>
+        <button data-preset="tilted">
+          <span class="preset-title">↺ 横滚歪斜</span>
+          <span class="preset-desc">地平线倾斜，常见错误</span>
+        </button>
+        <button data-preset="dutch">
+          <span class="preset-title">🎬 荷兰角</span>
+          <span class="preset-desc">紧张感电影构图</span>
+        </button>
+        <button data-preset="closeup">
+          <span class="preset-title">🔍 贴脸广角</span>
+          <span class="preset-desc">近距离面部夸张变形</span>
+        </button>
+        <button data-preset="reset">
+          <span class="preset-title">⟳ 重置</span>
+          <span class="preset-desc">回到默认参数</span>
+        </button>
+      </div>
+
+      <div class="effect-feedback" id="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>📚 四个核心姿态变化详解</h2>
+  <div class="explain-grid">
+    <div class="explain-card">
+      <h3>1. 横滚 Roll — 水平 vs 歪斜</h3>
+      <p>相机绕<span class="key">镜头光轴</span>旋转。</p>
+      <p><span class="good">✓ 水平正放：</span>地板线、挂画水平边都是横平的；墙线、门框是竖直的。</p>
+      <p><span class="bad">✗ 横滚倾斜：</span>这些参考线统统变成<span class="key">斜线</span>，照片"歪了"，是最容易被一眼识破的业余错误。</p>
+      <p>🎬 <span class="key">故意倾斜（荷兰角）：</span>电影里用来表达紧张、动荡、失衡的情绪。</p>
+    </div>
+    <div class="explain-card">
+      <h3>2. 俯仰 Pitch — 水平 vs 仰俯</h3>
+      <p>相机绕<span class="key">水平横轴</span>抬头 / 低头。这是与"绝对水平面"产生夹角的核心方式。</p>
+      <p><span class="good">✓ 水平拍摄：</span>墙线、门框、人物身体的垂直线都<span class="key">平行竖直</span>。</p>
+      <p><span class="bad">✗ 仰拍：</span>垂直线向上<span class="key">汇聚</span>（Keystone 透视变形），人物腿被拉长、头变小，墙面看起来"向后倒"。</p>
+      <p><span class="bad">✗ 俯拍：</span>垂直线向下汇聚，人物头变大身变小，墙面"向前倒"。</p>
+    </div>
+    <div class="explain-card">
+      <h3>3. 横拍 vs 竖拍</h3>
+      <p>相机绕镜头光轴旋转 90°，画幅由<span class="key">横</span>变<span class="key">竖</span>。</p>
+      <p>📷 <span class="good">横拍 16:9：</span>视野<span class="key">横向宽广</span>，适合带环境的合照、风景。</p>
+      <p>📱 <span class="good">竖拍 9:16：</span>视野<span class="key">纵向高挑</span>，适合全身人像、高楼、手机短视频。</p>
+      <p>⚠️ 竖拍只是画幅旋转，<span class="key">不会消除 Pitch/Roll 引起的几何变形</span>——竖拍仰拍同样会让人腿长头小。</p>
+    </div>
+    <div class="explain-card">
+      <h3>4. 偏航 Yaw + 高度 + 距离</h3>
+      <p><span class="good">Yaw 偏航：</span>相机绕竖直轴左右转，<span class="key">不引起几何变形</span>，只改变取景中心，多张拼起来 = 全景图。</p>
+      <p><span class="good">高度：</span>低机位（蹲拍）显<span class="key">高大</span>，高机位（俯视）显<span class="key">矮小</span>——直接影响"气势"。</p>
+      <p><span class="good">距离：</span>同样视角下，越近<span class="key">近大远小越夸张</span>（鼻子大、耳朵小）；越远越平面化（"长焦压缩")。</p>
+    </div>
+  </div>
+</div>
+
+<div class="panel" style="margin-top: 12px;">
+  <h2>🔬 进阶演示：为什么"裁切"无法用换镜头复现</h2>
+  <p class="crop-intro">
+    场景中将模特放在<strong>原图左下角 1/4</strong>区域里。下方三个画面对比"获取这块画面"的三种方式 —
+    注意 ② 和 ③ 的<strong>垂直线条</strong>差异。
+  </p>
+
+  <div class="crop-views">
+    <div class="crop-panel">
+      <div class="crop-title">① 原图（广角，3:2）</div>
+      <div class="crop-canvas-wrap" id="wideView">
+        <div class="crop-marker"></div>
+      </div>
+      <div class="crop-desc">红框 = 我们想要捕捉的"左下角 1/4"区域</div>
+    </div>
+    <div class="crop-panel">
+      <div class="crop-title good">② 裁切 = 移轴镜头</div>
+      <div class="crop-canvas-wrap" id="shiftView"></div>
+      <div class="crop-desc">
+        直接从①里抠出红框，<strong>或</strong>用移轴镜头让传感器横向平移。
+        相机姿态没动 → 垂直线<strong class="good">依然垂直</strong>，几何关系与原图一致。
+      </div>
+    </div>
+    <div class="crop-panel">
+      <div class="crop-title warn">③ 转头 + 2× 长焦</div>
+      <div class="crop-canvas-wrap" id="rotatedView"></div>
+      <div class="crop-desc">
+        把相机转去对准红框中心方向 → 视野缩到 1/4，但相机被<strong class="warn">转动</strong>了。
+        墙线、人物身体的垂直线全部<strong class="warn">向中心汇聚</strong>（Pitch+Yaw 引起的 Keystone 形变）。
+      </div>
+    </div>
+  </div>
+
+  <div class="crop-conclusion">
+    📌 仔细对比 ② 和 ③：场景内容相同、画面占比相同，但 ③ 的垂直线（墙角、人物身体、门框）<strong class="warn">不再平行</strong>，因为相机姿态变了；
+    ② 的所有线条与 ① 完全一致 —— 仅仅是"传感器对像圈的取景位置"被平移到了左下角。
+    <br><br>
+    <strong class="good">这正是移轴镜头存在的全部理由</strong>：在不改变相机姿态（不引入 Keystone 形变）的前提下，让传感器去捕捉光轴之外的偏心区域。
+    建筑摄影里"避免大楼向后倒"用的就是这个原理。
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+"use strict";
+
+// ============ Scene Building ============
+function buildScene() {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xb8c4d2);
+
+  // Lighting
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const ceilingLight = new THREE.PointLight(0xfff0c0, 0.6, 14, 2);
+  ceilingLight.position.set(0, 2.85, 0);
+  scene.add(ceilingLight);
+  const winLight = new THREE.DirectionalLight(0xb8d0e8, 0.6);
+  winLight.position.set(-3, 3, -4);
+  winLight.target.position.set(0, 1, 0);
+  scene.add(winLight);
+  scene.add(winLight.target);
+
+  // Floor (wood planks)
+  scene.add(makeFloor());
+
+  // Walls
+  scene.add(makeWall(10, 3, 0xe6d8be, [0, 1.5, -5], [0, 0, 0]));      // back
+  scene.add(makeWall(13, 3, 0xddd0b6, [-5, 1.5, 1.5], [0, Math.PI/2, 0]));  // left
+  scene.add(makeWall(13, 3, 0xddd0b6, [5, 1.5, 1.5], [0, -Math.PI/2, 0])); // right
+
+  // Ceiling
+  const ceil = new THREE.Mesh(
+    new THREE.PlaneGeometry(10, 13),
+    new THREE.MeshLambertMaterial({ color: 0xf2eadc, side: THREE.DoubleSide })
+  );
+  ceil.rotation.x = Math.PI / 2;
+  ceil.position.set(0, 3, 1.5);
+  scene.add(ceil);
+
+  // Skirting boards (where walls meet floor — strong horizontal reference)
+  const skirtMat = new THREE.MeshLambertMaterial({ color: 0x5a4028 });
+  const skirtBack = new THREE.Mesh(new THREE.BoxGeometry(10, 0.1, 0.04), skirtMat);
+  skirtBack.position.set(0, 0.05, -4.97);
+  scene.add(skirtBack);
+  const skirtL = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.1, 13), skirtMat);
+  skirtL.position.set(-4.97, 0.05, 1.5);
+  scene.add(skirtL);
+  const skirtR = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.1, 13), skirtMat);
+  skirtR.position.set(4.97, 0.05, 1.5);
+  scene.add(skirtR);
+
+  // Window (back wall, left side) — light source feel
+  scene.add(makeWindow(-1.6, 1.7, -4.95));
+
+  // Door (right wall)
+  scene.add(makeDoor(4.95, -2));
+
+  // Picture frames (back wall)
+  scene.add(makePicture(1.4, 1.85, -4.95, 1.1, 0.85, 0xd89a50));
+  scene.add(makePicture(2.85, 1.95, -4.95, 0.6, 0.6, 0x6a90c0));
+
+  // Furniture
+  scene.add(makeTable(2.5, -1.5));
+  scene.add(makeLamp(2.5, 0.55, -1.5));
+  scene.add(makePlant(-3.7, -4.2));
+  scene.add(makeRug(0, 0));
+
+  // Subject
+  scene.add(makeSubject());
+
+  return scene;
+}
+
+function makeFloor() {
+  const group = new THREE.Group();
+  const base = new THREE.Mesh(
+    new THREE.PlaneGeometry(10, 13),
+    new THREE.MeshLambertMaterial({ color: 0x8e6a3e })
+  );
+  base.rotation.x = -Math.PI / 2;
+  base.position.set(0, 0, 1.5);
+  group.add(base);
+  // Plank lines (running along Z)
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x5e3e20, transparent: true, opacity: 0.7 });
+  for (let x = -4.5; x <= 4.5; x += 0.55) {
+    const pts = [new THREE.Vector3(x, 0.002, -5), new THREE.Vector3(x, 0.002, 8)];
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), lineMat));
+  }
+  return group;
+}
+
+function makeWall(w, h, color, position, rotation) {
+  const wall = new THREE.Mesh(
+    new THREE.PlaneGeometry(w, h),
+    new THREE.MeshLambertMaterial({ color, side: THREE.DoubleSide })
+  );
+  wall.position.set(...position);
+  wall.rotation.set(...rotation);
+  return wall;
+}
+
+function makeWindow(x, y, z) {
+  const g = new THREE.Group();
+  const frame = new THREE.Mesh(
+    new THREE.BoxGeometry(2.0, 1.4, 0.06),
+    new THREE.MeshLambertMaterial({ color: 0x2a2a2a })
+  );
+  frame.position.set(x, y, z);
+  g.add(frame);
+  const glass = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.85, 1.28),
+    new THREE.MeshBasicMaterial({ color: 0xcfe2f0 })
+  );
+  glass.position.set(x, y, z + 0.035);
+  g.add(glass);
+  // Cross mullions
+  const mMat = new THREE.MeshLambertMaterial({ color: 0x2a2a2a });
+  const vM = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.28, 0.05), mMat);
+  vM.position.set(x, y, z + 0.05);
+  g.add(vM);
+  const hM = new THREE.Mesh(new THREE.BoxGeometry(1.85, 0.05, 0.05), mMat);
+  hM.position.set(x, y, z + 0.05);
+  g.add(hM);
+  // Window sill
+  const sill = new THREE.Mesh(
+    new THREE.BoxGeometry(2.2, 0.06, 0.16),
+    new THREE.MeshLambertMaterial({ color: 0xc0a070 })
+  );
+  sill.position.set(x, y - 0.73, z + 0.06);
+  g.add(sill);
+  return g;
+}
+
+function makeDoor(x, z) {
+  const g = new THREE.Group();
+  const doorMat = new THREE.MeshLambertMaterial({ color: 0x5e3e1e });
+  const frameMat = new THREE.MeshLambertMaterial({ color: 0x8a5a30 });
+
+  const door = new THREE.Mesh(new THREE.BoxGeometry(0.05, 2.3, 1.0), doorMat);
+  door.position.set(x - 0.02, 1.15, z);
+  g.add(door);
+
+  const top = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 1.2), frameMat);
+  top.position.set(x, 2.36, z);
+  g.add(top);
+  const sideA = new THREE.Mesh(new THREE.BoxGeometry(0.12, 2.4, 0.12), frameMat);
+  sideA.position.set(x, 1.2, z - 0.56);
+  g.add(sideA);
+  const sideB = new THREE.Mesh(new THREE.BoxGeometry(0.12, 2.4, 0.12), frameMat);
+  sideB.position.set(x, 1.2, z + 0.56);
+  g.add(sideB);
+
+  const handle = new THREE.Mesh(
+    new THREE.SphereGeometry(0.06),
+    new THREE.MeshLambertMaterial({ color: 0xc4a040 })
+  );
+  handle.position.set(x - 0.08, 1.1, z + 0.36);
+  g.add(handle);
+  return g;
+}
+
+function makePicture(x, y, z, w, h, color) {
+  const g = new THREE.Group();
+  const frame = new THREE.Mesh(
+    new THREE.BoxGeometry(w, h, 0.04),
+    new THREE.MeshLambertMaterial({ color: 0x3a2814 })
+  );
+  frame.position.set(x, y, z);
+  g.add(frame);
+  const pic = new THREE.Mesh(
+    new THREE.PlaneGeometry(w * 0.85, h * 0.85),
+    new THREE.MeshLambertMaterial({ color })
+  );
+  pic.position.set(x, y, z + 0.025);
+  g.add(pic);
+  return g;
+}
+
+function makeTable(x, z) {
+  const g = new THREE.Group();
+  const topMat = new THREE.MeshLambertMaterial({ color: 0x6e4a28 });
+  const legMat = new THREE.MeshLambertMaterial({ color: 0x4e3218 });
+  const top = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.05, 0.6), topMat);
+  top.position.set(x, 0.5, z);
+  g.add(top);
+  for (const [dx, dz] of [[-0.45,-0.25],[0.45,-0.25],[-0.45,0.25],[0.45,0.25]]) {
+    const leg = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.5, 0.06), legMat);
+    leg.position.set(x + dx, 0.25, z + dz);
+    g.add(leg);
+  }
+  return g;
+}
+
+function makeLamp(x, y, z) {
+  const g = new THREE.Group();
+  const m = new THREE.MeshLambertMaterial({ color: 0x202020 });
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 0.04), m);
+  base.position.set(x, y + 0.02, z);
+  g.add(base);
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.4), m);
+  stem.position.set(x, y + 0.24, z);
+  g.add(stem);
+  const shade = new THREE.Mesh(
+    new THREE.ConeGeometry(0.16, 0.22, 10, 1, true),
+    new THREE.MeshLambertMaterial({ color: 0xf2d090, side: THREE.DoubleSide })
+  );
+  shade.position.set(x, y + 0.5, z);
+  g.add(shade);
+  return g;
+}
+
+function makePlant(x, z) {
+  const g = new THREE.Group();
+  const pot = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.24, 0.18, 0.32),
+    new THREE.MeshLambertMaterial({ color: 0x7a3a28 })
+  );
+  pot.position.set(x, 0.16, z);
+  g.add(pot);
+  const leafMat = new THREE.MeshLambertMaterial({ color: 0x3e7838 });
+  for (let i = 0; i < 7; i++) {
+    const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.18 + Math.random() * 0.08, 8, 8), leafMat);
+    const a = (i / 7) * Math.PI * 2;
+    leaf.position.set(x + Math.cos(a) * 0.13, 0.4 + Math.random() * 0.5, z + Math.sin(a) * 0.13);
+    g.add(leaf);
+  }
+  return g;
+}
+
+function makeRug(x, z) {
+  const rug = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.4, 3),
+    new THREE.MeshLambertMaterial({ color: 0x8a3030, side: THREE.DoubleSide })
+  );
+  rug.rotation.x = -Math.PI / 2;
+  rug.position.set(x, 0.012, z);
+  return rug;
+}
+
+function makeSubject() {
+  const g = new THREE.Group();
+  const skin = new THREE.MeshLambertMaterial({ color: 0xf2c89a });
+  const shirt = new THREE.MeshLambertMaterial({ color: 0xc0303a });
+  const pants = new THREE.MeshLambertMaterial({ color: 0x2a4a78 });
+  const shoes = new THREE.MeshLambertMaterial({ color: 0x202020 });
+  const hair = new THREE.MeshLambertMaterial({ color: 0x32220e });
+  const belt = new THREE.MeshLambertMaterial({ color: 0x1a1a1a });
+
+  // Shoes
+  const shoeL = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.06, 0.25), shoes);
+  shoeL.position.set(-0.1, 0.03, 0.04); g.add(shoeL);
+  const shoeR = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.06, 0.25), shoes);
+  shoeR.position.set(0.1, 0.03, 0.04); g.add(shoeR);
+
+  // Legs
+  const legGeom = new THREE.CylinderGeometry(0.075, 0.075, 0.82, 14);
+  const legL = new THREE.Mesh(legGeom, pants);
+  legL.position.set(-0.1, 0.47, 0); g.add(legL);
+  const legR = new THREE.Mesh(legGeom, pants);
+  legR.position.set(0.1, 0.47, 0); g.add(legR);
+
+  // Belt
+  const beltM = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.06, 14), belt);
+  beltM.position.set(0, 0.9, 0); g.add(beltM);
+
+  // Torso
+  const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.20, 0.55, 14), shirt);
+  torso.position.set(0, 1.2, 0); g.add(torso);
+
+  // Shoulders
+  const shoulder = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.18, 0.08, 14), shirt);
+  shoulder.position.set(0, 1.48, 0); g.add(shoulder);
+
+  // Upper arms (shirt color)
+  const armGeom = new THREE.CylinderGeometry(0.06, 0.07, 0.5, 12);
+  const armL = new THREE.Mesh(armGeom, shirt); armL.position.set(-0.24, 1.21, 0); g.add(armL);
+  const armR = new THREE.Mesh(armGeom, shirt); armR.position.set(0.24, 1.21, 0); g.add(armR);
+
+  // Forearms (skin)
+  const faGeom = new THREE.CylinderGeometry(0.055, 0.06, 0.36, 12);
+  const faL = new THREE.Mesh(faGeom, skin); faL.position.set(-0.24, 0.78, 0); g.add(faL);
+  const faR = new THREE.Mesh(faGeom, skin); faR.position.set(0.24, 0.78, 0); g.add(faR);
+
+  // Hands
+  const handL = new THREE.Mesh(new THREE.SphereGeometry(0.07), skin);
+  handL.position.set(-0.24, 0.58, 0); g.add(handL);
+  const handR = new THREE.Mesh(new THREE.SphereGeometry(0.07), skin);
+  handR.position.set(0.24, 0.58, 0); g.add(handR);
+
+  // Neck
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.08, 12), skin);
+  neck.position.set(0, 1.56, 0); g.add(neck);
+
+  // Head
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.118, 18, 18), skin);
+  head.position.set(0, 1.7, 0); g.add(head);
+
+  // Hair (cap)
+  const hairCap = new THREE.Mesh(
+    new THREE.SphereGeometry(0.125, 18, 18, 0, Math.PI * 2, 0, Math.PI * 0.55),
+    hair
+  );
+  hairCap.position.set(0, 1.7, -0.005); g.add(hairCap);
+
+  // Eyes
+  const eyeMat = new THREE.MeshBasicMaterial({ color: 0x101010 });
+  const eyeGeom = new THREE.SphereGeometry(0.014);
+  const eyeL = new THREE.Mesh(eyeGeom, eyeMat); eyeL.position.set(-0.038, 1.71, 0.108); g.add(eyeL);
+  const eyeR = new THREE.Mesh(eyeGeom, eyeMat); eyeR.position.set(0.038, 1.71, 0.108); g.add(eyeR);
+
+  return g;
+}
+
+// Camera model (visible in world view)
+function makeCameraModel() {
+  const g = new THREE.Group();
+  const black = new THREE.MeshLambertMaterial({ color: 0x1a1a1a });
+
+  const body = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.18, 0.12), black);
+  g.add(body);
+  const grip = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.17, 0.12), black);
+  grip.position.set(0.16, -0.005, 0);
+  g.add(grip);
+
+  // Lens points along -Z (camera's forward direction)
+  const lens = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.07, 0.075, 0.18),
+    new THREE.MeshLambertMaterial({ color: 0x0c0c0c })
+  );
+  lens.rotation.x = Math.PI / 2;
+  lens.position.z = -0.14;
+  g.add(lens);
+
+  const glass = new THREE.Mesh(
+    new THREE.CircleGeometry(0.06, 24),
+    new THREE.MeshBasicMaterial({ color: 0x3070a0 })
+  );
+  glass.rotation.y = Math.PI;
+  glass.position.z = -0.235;
+  g.add(glass);
+
+  // Hot shoe on top
+  const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.025, 0.06), black);
+  shoe.position.set(0, 0.1, 0.02);
+  g.add(shoe);
+
+  // Frustum lines showing view direction (red)
+  g.add(makeFrustum());
+
+  // Up arrow (yellow) — shows camera's "up" direction
+  const arrow = new THREE.Mesh(
+    new THREE.ConeGeometry(0.04, 0.12, 8),
+    new THREE.MeshBasicMaterial({ color: 0xffd040 })
+  );
+  arrow.position.set(0, 0.18, 0);
+  g.add(arrow);
+
+  return g;
+}
+
+function makeFrustum() {
+  const L = 1.6;
+  const halfV = L * Math.tan(THREE.MathUtils.degToRad(22.5));
+  const halfH = halfV * (16/9);
+  const pts = [
+    [0,0,0], [halfH, halfV, -L],
+    [0,0,0], [-halfH, halfV, -L],
+    [0,0,0], [halfH, -halfV, -L],
+    [0,0,0], [-halfH, -halfV, -L],
+    [halfH, halfV, -L], [-halfH, halfV, -L],
+    [-halfH, halfV, -L], [-halfH, -halfV, -L],
+    [-halfH, -halfV, -L], [halfH, -halfV, -L],
+    [halfH, -halfV, -L], [halfH, halfV, -L],
+  ].map(p => new THREE.Vector3(...p));
+  const geom = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = new THREE.LineBasicMaterial({ color: 0xff4040, transparent: true, opacity: 0.75 });
+  return new THREE.LineSegments(geom, mat);
+}
+
+// ============ Setup ============
+const scene = buildScene();
+const cameraModel = makeCameraModel();
+scene.add(cameraModel);
+
+// FOV math: rotating camera 90° should swap horizontal and vertical FOV
+const FOV_LANDSCAPE = 45;  // ~24-28mm equivalent — wide enough to show distortion
+const FOV_PORTRAIT = 2 * THREE.MathUtils.radToDeg(
+  Math.atan(Math.tan(THREE.MathUtils.degToRad(FOV_LANDSCAPE / 2)) * (16 / 9))
+);
+
+const photoCamera = new THREE.PerspectiveCamera(FOV_LANDSCAPE, 16/9, 0.05, 60);
+photoCamera.rotation.order = 'YXZ';
+
+const worldCamera = new THREE.PerspectiveCamera(50, 1, 0.1, 60);
+worldCamera.position.set(5.5, 2.5, 6);
+
+// Renderers
+const photoViewEl = document.getElementById('photoView');
+const worldViewEl = document.getElementById('worldView');
+
+const photoRenderer = new THREE.WebGLRenderer({ antialias: true });
+photoRenderer.setPixelRatio(window.devicePixelRatio);
+photoViewEl.appendChild(photoRenderer.domElement);
+
+const worldRenderer = new THREE.WebGLRenderer({ antialias: true });
+worldRenderer.setPixelRatio(window.devicePixelRatio);
+worldViewEl.appendChild(worldRenderer.domElement);
+
+// Orbit controls for world view
+const orbit = new THREE.OrbitControls(worldCamera, worldRenderer.domElement);
+orbit.target.set(0, 1.2, 0);
+orbit.enableDamping = true;
+orbit.dampingFactor = 0.12;
+orbit.minDistance = 4;
+orbit.maxDistance = 14;
+orbit.maxPolarAngle = Math.PI * 0.49;
+orbit.update();
+
+// ============ State ============
+const state = {
+  roll: 0,
+  pitch: 0,
+  yaw: 0,
+  height: 1.5,
+  distance: 3.5,
+  orientation: 'landscape',
+};
+
+// ============ Update Functions ============
+function updateCamera() {
+  photoCamera.position.set(0, state.height, state.distance);
+  photoCamera.rotation.set(
+    THREE.MathUtils.degToRad(state.pitch),
+    THREE.MathUtils.degToRad(state.yaw),
+    THREE.MathUtils.degToRad(state.roll),
+    'YXZ'
+  );
+  cameraModel.position.copy(photoCamera.position);
+  cameraModel.rotation.copy(photoCamera.rotation);
+}
+
+function resizeRenderers() {
+  const photoBox = photoViewEl.getBoundingClientRect();
+  const pW = photoBox.width;
+
+  let canvasW, canvasH;
+  if (state.orientation === 'portrait') {
+    const maxH = Math.min(window.innerHeight * 0.55, 540);
+    canvasH = maxH;
+    canvasW = canvasH * (9 / 16);
+    if (canvasW > pW * 0.95) {
+      canvasW = pW * 0.95;
+      canvasH = canvasW * (16 / 9);
+    }
+    photoCamera.fov = FOV_PORTRAIT;
+    photoCamera.aspect = 9 / 16;
+  } else {
+    canvasW = pW;
+    canvasH = canvasW * (9 / 16);
+    photoCamera.fov = FOV_LANDSCAPE;
+    photoCamera.aspect = 16 / 9;
+  }
+  photoRenderer.setSize(canvasW, canvasH);
+  photoCamera.updateProjectionMatrix();
+
+  const worldBox = worldViewEl.getBoundingClientRect();
+  const wW = worldBox.width;
+  const wH = Math.max(wW * 0.62, 280);
+  worldRenderer.setSize(wW, wH);
+  worldCamera.aspect = wW / wH;
+  worldCamera.updateProjectionMatrix();
+}
+
+function animate() {
+  orbit.update();
+  updateCamera();
+
+  // Render world view (camera model visible)
+  cameraModel.visible = true;
+  worldRenderer.render(scene, worldCamera);
+
+  // Render photo view (hide camera model so it doesn't appear in the photo)
+  cameraModel.visible = false;
+  photoRenderer.render(scene, photoCamera);
+
+  requestAnimationFrame(animate);
+}
+
+// ============ UI Bindings ============
+const els = {
+  roll: document.getElementById('rollSlider'),
+  pitch: document.getElementById('pitchSlider'),
+  yaw: document.getElementById('yawSlider'),
+  height: document.getElementById('heightSlider'),
+  distance: document.getElementById('distanceSlider'),
+  rollVal: document.getElementById('rollVal'),
+  pitchVal: document.getElementById('pitchVal'),
+  yawVal: document.getElementById('yawVal'),
+  heightVal: document.getElementById('heightVal'),
+  distanceVal: document.getElementById('distanceVal'),
+  landscapeBtn: document.getElementById('landscapeBtn'),
+  portraitBtn: document.getElementById('portraitBtn'),
+  feedback: document.getElementById('feedback'),
+  photoLabel: document.getElementById('photoLabel'),
+  presetGroup: document.getElementById('presetGroup'),
+};
+
+function syncUIFromState() {
+  els.roll.value = state.roll;
+  els.pitch.value = state.pitch;
+  els.yaw.value = state.yaw;
+  els.height.value = state.height;
+  els.distance.value = state.distance;
+  els.rollVal.textContent = state.roll + '°';
+  els.pitchVal.textContent = state.pitch + '°';
+  els.yawVal.textContent = state.yaw + '°';
+  els.heightVal.textContent = state.height.toFixed(2) + 'm';
+  els.distanceVal.textContent = state.distance.toFixed(2) + 'm';
+  els.landscapeBtn.classList.toggle('active', state.orientation === 'landscape');
+  els.portraitBtn.classList.toggle('active', state.orientation === 'portrait');
+  updateFeedback();
+  updatePhotoLabel();
+}
+
+function updatePhotoLabel() {
+  const parts = [];
+  const aR = Math.abs(state.roll), aP = Math.abs(state.pitch), aY = Math.abs(state.yaw);
+  if (aR < 1 && aP < 1 && aY < 1) parts.push('水平正放');
+  else {
+    if (aR >= 1) parts.push(`Roll ${state.roll}°`);
+    if (aP >= 1) parts.push(`Pitch ${state.pitch}°`);
+    if (aY >= 1) parts.push(`Yaw ${state.yaw}°`);
+  }
+  parts.push(state.orientation === 'portrait' ? '竖拍' : '横拍');
+  parts.push(`高度 ${state.height.toFixed(2)}m`);
+  parts.push(`距离 ${state.distance.toFixed(2)}m`);
+  els.photoLabel.textContent = parts.join(' · ');
+}
+
+function updateFeedback() {
+  const lines = [];
+  const aR = Math.abs(state.roll), aP = Math.abs(state.pitch), aY = Math.abs(state.yaw);
+  const isLevel = aR < 1 && aP < 1 && aY < 1;
+
+  if (isLevel) {
+    lines.push('<strong>✓ 完美水平姿态</strong>');
+    lines.push('地板线水平、墙线和门框垂直、人物身体笔直。所有几何关系都正确呈现，这是最自然、被广泛接受的"正确"拍照姿态。');
+  } else {
+    lines.push('<strong>当前画面发生了以下变化：</strong><ul>');
+    if (aR >= 1) {
+      const dir = state.roll > 0 ? '相机右肩低' : '相机左肩低';
+      lines.push(`<li><span class="warn">↺ 横滚 ${aR}°（${dir}）</span>：地板线、挂画的水平边在画面里变成<span class="key">斜线</span>，人物和墙线也跟着歪。</li>`);
+    }
+    if (aP >= 1) {
+      if (state.pitch > 0) {
+        lines.push(`<li><span class="warn">↑ 仰拍 ${aP}°</span>：墙线、门框这些<span class="key">垂直线向上汇聚</span>（Keystone 变形），人物腿显长、头显小，墙面看起来"向后倒"。</li>`);
+      } else {
+        lines.push(`<li><span class="warn">↓ 俯拍 ${aP}°</span>：垂直线向下汇聚，人物<span class="key">头大身小</span>，地板比例放大、天花板被切掉。</li>`);
+      }
+    }
+    if (aY >= 1) {
+      const dir = state.yaw > 0 ? '向左' : '向右';
+      lines.push(`<li><span class="ok">→ 偏航 ${aY}°（${dir}转）</span>：取景中心偏移，但<span class="key">不引起几何变形</span>。</li>`);
+    }
+    lines.push('</ul>');
+  }
+
+  // Height feedback
+  if (state.height < 0.8) {
+    lines.push(`💡 <span class="key">低机位 ${state.height.toFixed(2)}m</span>：从下往上看，人物显得高大、有气势；常配合仰拍呈现"大长腿"效果。`);
+  } else if (state.height > 2.0) {
+    lines.push(`💡 <span class="key">高机位 ${state.height.toFixed(2)}m</span>：从上往下看，人物显得矮小；常配合俯拍呈现"头大身小"的自拍误区。`);
+  } else if (state.height >= 1.55 && state.height <= 1.75) {
+    lines.push(`💡 <span class="ok">齐眼高度 ${state.height.toFixed(2)}m</span>：与模特视线齐平，最能传达"对等、自然"的关系，是证件照、纪录式人像的常用机位。`);
+  }
+
+  // Distance feedback
+  if (state.distance < 1.8) {
+    lines.push(`💡 <span class="warn">近距离 ${state.distance.toFixed(2)}m</span>：当前 FOV 下，<span class="key">近大远小</span>被放大——离镜头近的部位（手、头）被夸张，离镜头远的部位被压缩。手机自拍的脸部变形主要源于此。`);
+  } else if (state.distance > 5) {
+    lines.push(`💡 <span class="ok">远距离 ${state.distance.toFixed(2)}m</span>：近大远小不明显，画面接近平面化（类似长焦"压缩感"），人脸比例自然。`);
+  }
+
+  if (state.orientation === 'portrait') {
+    lines.push(`📱 <span class="ok">竖拍画幅</span>：纵向视野大，正好框住全身人像；横向视野缩小，环境包含更少。`);
+  }
+
+  els.feedback.innerHTML = lines.join(' ');
+}
+
+function bindSlider(el, key, parser = parseFloat) {
+  el.addEventListener('input', () => {
+    state[key] = parser(el.value);
+    clearPresetActive();
+    syncUIFromState();
+  });
+}
+bindSlider(els.roll, 'roll', parseInt);
+bindSlider(els.pitch, 'pitch', parseInt);
+bindSlider(els.yaw, 'yaw', parseInt);
+bindSlider(els.height, 'height', parseFloat);
+bindSlider(els.distance, 'distance', parseFloat);
+
+els.landscapeBtn.addEventListener('click', () => {
+  state.orientation = 'landscape';
+  syncUIFromState();
+  resizeRenderers();
+});
+els.portraitBtn.addEventListener('click', () => {
+  state.orientation = 'portrait';
+  syncUIFromState();
+  resizeRenderers();
+});
+
+// ============ Presets ============
+const PRESETS = {
+  level:    { roll: 0, pitch: 0, yaw: 0, height: 1.5, distance: 3.5, orientation: 'landscape' },
+  eyelevel: { roll: 0, pitch: 0, yaw: 0, height: 1.65, distance: 3.0, orientation: 'portrait' },
+  longlegs: { roll: 0, pitch: 18, yaw: 0, height: 0.4, distance: 2.5, orientation: 'portrait' },
+  topdown:  { roll: 0, pitch: -28, yaw: 0, height: 2.4, distance: 1.8, orientation: 'landscape' },
+  tilted:   { roll: 15, pitch: 0, yaw: 0, height: 1.5, distance: 3.5, orientation: 'landscape' },
+  dutch:    { roll: 22, pitch: 10, yaw: -8, height: 1.3, distance: 3.0, orientation: 'landscape' },
+  closeup:  { roll: 0, pitch: 5, yaw: 0, height: 1.65, distance: 1.2, orientation: 'portrait' },
+  reset:    { roll: 0, pitch: 0, yaw: 0, height: 1.5, distance: 3.5, orientation: 'landscape' },
+};
+
+function clearPresetActive() {
+  els.presetGroup.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+}
+
+els.presetGroup.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const p = PRESETS[btn.dataset.preset];
+    if (!p) return;
+    Object.assign(state, p);
+    clearPresetActive();
+    btn.classList.add('active');
+    syncUIFromState();
+    resizeRenderers();
+  });
+});
+
+// ============ Initialize ============
+window.addEventListener('resize', resizeRenderers);
+resizeRenderers();
+syncUIFromState();
+animate();
+
+// ============ Crop Demo (advanced section) ============
+(function setupCropDemo() {
+  const CROP_POS = new THREE.Vector3(1.8, 2.3, 4.5);
+  const WFOV = 60;            // wide camera vertical FOV
+  const W_ASPECT = 3 / 2;     // 3:2 image aspect
+
+  // ① Wide camera (the "original" photo)
+  const wideCam = new THREE.PerspectiveCamera(WFOV, W_ASPECT, 0.05, 60);
+  wideCam.position.copy(CROP_POS);
+
+  // ② Shift camera = wide cam, off-center frustum (= bottom-left 1/4)
+  const shiftCam = new THREE.PerspectiveCamera(WFOV, W_ASPECT, 0.05, 60);
+  shiftCam.position.copy(CROP_POS);
+
+  // ③ Rotated long-focal camera: 2x focal length → tan(halfFOV) halved
+  const longFOV = 2 * THREE.MathUtils.radToDeg(
+    Math.atan(Math.tan(THREE.MathUtils.degToRad(WFOV / 2)) * 0.5)
+  );
+  const rotatedCam = new THREE.PerspectiveCamera(longFOV, W_ASPECT, 0.05, 60);
+  rotatedCam.position.copy(CROP_POS);
+
+  // Point the rotated camera at the bottom-left center of the wide view.
+  // In the wide camera's frame, that direction lands on the image plane at
+  // (-0.5 * tan(hFOV/2), -0.5 * tan(vFOV/2), -1).
+  const tanV = Math.tan(THREE.MathUtils.degToRad(WFOV / 2));
+  const tanH = tanV * W_ASPECT;
+  const dirBL = new THREE.Vector3(-0.5 * tanH, -0.5 * tanV, -1).normalize();
+  rotatedCam.lookAt(CROP_POS.clone().addScaledVector(dirBL, 10));
+
+  // Renderers for the three side-by-side canvases
+  function mkRenderer(parent) {
+    const r = new THREE.WebGLRenderer({ antialias: true });
+    r.setPixelRatio(window.devicePixelRatio);
+    parent.appendChild(r.domElement);
+    return r;
+  }
+  const wideEl = document.getElementById('wideView');
+  const shiftEl = document.getElementById('shiftView');
+  const rotatedEl = document.getElementById('rotatedView');
+  const wideR = mkRenderer(wideEl);
+  const shiftR = mkRenderer(shiftEl);
+  const rotatedR = mkRenderer(rotatedEl);
+
+  function resizeCrop() {
+    for (const [el, r, cam, isShift] of [
+      [wideEl,    wideR,    wideCam,    false],
+      [shiftEl,   shiftR,   shiftCam,   true ],
+      [rotatedEl, rotatedR, rotatedCam, false],
+    ]) {
+      const w = el.clientWidth;
+      const h = Math.round(w * (2 / 3));
+      r.setSize(w, h);
+      cam.aspect = 3 / 2;
+      if (isShift) {
+        // Off-center frustum: render bottom-left quadrant of a 2x2 virtual frame.
+        // Y is measured top-down here (Three.js convention for setViewOffset).
+        cam.setViewOffset(2, 2, 0, 1, 1, 1);
+      }
+      cam.updateProjectionMatrix();
+    }
+  }
+
+  function renderCrop() {
+    const wasVisible = cameraModel.visible;
+    cameraModel.visible = false;     // hide the camera prop from the photos
+    wideR.render(scene, wideCam);
+    shiftR.render(scene, shiftCam);
+    rotatedR.render(scene, rotatedCam);
+    cameraModel.visible = wasVisible;
+  }
+
+  window.addEventListener('resize', () => { resizeCrop(); renderCrop(); });
+  resizeCrop();
+  // Defer one frame so the layout is finalised before the first render.
+  requestAnimationFrame(renderCrop);
+})();
+</script>
+
+</body>
+</html>

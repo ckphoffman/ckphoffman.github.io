@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "抖音消息视频链接提取器",
+  "version": "0.5.0",
+  "description": "抖音通知消息 hover 显示视频链接 + 一键筛选「赞了你的评论」「回复了你的评论」等类型",
+  "host_permissions": [
+    "https://www.douyin.com/*",
+    "https://*.douyin.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.douyin.com/*",
+        "https://*.douyin.com/*"
+      ],
+      "css": ["styles.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.douyin.com/*",
+        "https://*.douyin.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "world": "MAIN",
+      "all_frames": false
+    }
+  ]
+}

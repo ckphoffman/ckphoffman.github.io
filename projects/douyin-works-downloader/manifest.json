@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "抖音作品下载器",
+  "version": "1.0.0",
+  "description": "下载自己发布的抖音作品（含私密作品）",
+  "permissions": ["downloads", "scripting", "tabs"],
+  "host_permissions": ["https://www.douyin.com/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "抖音作品下载器"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.douyin.com/*"],
+      "js": ["debug-bridge.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

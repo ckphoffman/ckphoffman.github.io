@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Douyin Message Exporter",
+  "version": "0.1.0",
+  "description": "Export selected visible Douyin web private-message conversations to JSON and CSV.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://www.douyin.com/*", "https://douyin.com/*"],
+  "action": {
+    "default_title": "Douyin Message Exporter",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.douyin.com/*", "https://douyin.com/*"],
+      "js": [
+        "src/exporter-core.js",
+        "src/douyin-dom.js",
+        "src/panel.js",
+        "src/content.js"
+      ],
+      "css": ["popup.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube英语学习助手</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      font-size: 18px;
+      margin-top: 0;
+      color: #cc0000;
+    }
+    .button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .button:hover {
+      background-color: #990000;
+    }
+    .button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .success {
+      background-color: #dff0d8;
+      color: #3c763d;
+    }
+    .error {
+      background-color: #f2dede;
+      color: #a94442;
+    }
+    .links {
+      margin-top: 15px;
+    }
+    .links a {
+      display: block;
+      margin-bottom: 8px;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>YouTube英语学习助手</h1>
+  
+  <div id="content">
+    <p>在YouTube视频页面上，点击下方按钮保存当前视频的字幕。</p>
+    
+    <button id="saveButton" class="button">保存当前视频字幕</button>
+    
+    <div id="status" class="status" style="display: none;"></div>
+    
+    <div class="links">
+      <a href="http://localhost:3000/videos" target="_blank">查看我的视频</a>
+      <a href="http://localhost:3000/words" target="_blank">查看我的单词</a>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

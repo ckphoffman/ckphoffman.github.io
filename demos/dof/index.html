@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>景深、像素密度与最小弥散圆计算器</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Depth of Field Lab</p>
+        <h1>景深、像素密度与最小弥散圆计算器</h1>
+      </div>
+      <p class="topbar-note">
+        手动设定 CoC，观察几何景深、像素尺度和 RGB 衍射修正之间的关系。
+      </p>
+    </header>
+
+    <main class="app-shell">
+      <aside class="control-panel" aria-label="景深参数">
+        <form data-dof-form>
+          <section class="panel-section">
+            <h2>镜头与对焦</h2>
+            <label>
+              <span>焦距</span>
+              <input name="focalLengthMm" type="number" min="1" step="1" />
+              <small>mm</small>
+            </label>
+            <label>
+              <span>光圈</span>
+              <input name="aperture" type="number" min="0.7" step="0.1" />
+              <small>f/N</small>
+            </label>
+            <label>
+              <span>对焦距离</span>
+              <input name="focusDistanceM" type="number" min="0.01" step="0.01" />
+              <small>m</small>
+            </label>
+            <label>
+              <span>手动 CoC</span>
+              <input name="cocMm" type="number" min="0.0001" step="0.001" />
+              <small>mm</small>
+            </label>
+          </section>
+
+          <section class="panel-section">
+            <h2>传感器与分辨率</h2>
+            <div class="two-up">
+              <label>
+                <span>传感器宽</span>
+                <input name="sensorWidthMm" type="number" min="1" step="0.1" />
+                <small>mm</small>
+              </label>
+              <label>
+                <span>传感器高</span>
+                <input name="sensorHeightMm" type="number" min="1" step="0.1" />
+                <small>mm</small>
+              </label>
+            </div>
+            <div class="two-up">
+              <label>
+                <span>横向像素</span>
+                <input name="resolutionWidthPx" type="number" min="1" step="1" />
+                <small>px</small>
+              </label>
+              <label>
+                <span>纵向像素</span>
+                <input name="resolutionHeightPx" type="number" min="1" step="1" />
+                <small>px</small>
+              </label>
+            </div>
+          </section>
+
+          <section class="panel-section">
+            <h2>扫描模式</h2>
+            <div class="segmented" role="radiogroup" aria-label="扫描模式">
+              <label>
+                <input type="radio" name="sweepMode" value="coc" checked />
+                <span>CoC 扫描</span>
+              </label>
+              <label>
+                <input type="radio" name="sweepMode" value="pixel-density" />
+                <span>像素密度扫描</span>
+              </label>
+            </div>
+          </section>
+        </form>
+      </aside>
+
+      <section class="workspace" aria-label="计算结果">
+        <section class="metric-grid" aria-label="景深结果">
+          <article class="metric-card" data-metric="total-depth">
+            <strong>—</strong>
+            <span>几何总景深</span>
+          </article>
+          <article class="metric-card" data-metric="near-limit">
+            <strong>—</strong>
+            <span>近景深界限</span>
+          </article>
+          <article class="metric-card" data-metric="far-limit">
+            <strong>—</strong>
+            <span>远景深界限</span>
+          </article>
+          <article class="metric-card" data-metric="hyperfocal">
+            <strong>—</strong>
+            <span>超焦距</span>
+          </article>
+        </section>
+
+        <section class="chart-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Sweep</p>
+              <h2>参数扫描图</h2>
+            </div>
+            <p data-geometric-summary>—</p>
+          </div>
+          <p class="chart-note" data-chart-note>—</p>
+          <svg
+            data-sweep-chart
+            class="sweep-chart"
+            viewBox="0 0 760 310"
+            role="img"
+            aria-label="参数扫描曲线"
+          ></svg>
+          <div class="legend" data-chart-legend>
+            <span><i class="depth"></i>总景深</span>
+            <span><i class="near"></i>近界或 Airy</span>
+            <span><i class="coc"></i>CoC 像素尺度</span>
+          </div>
+        </section>
+
+        <section class="lower-grid">
+          <article class="panel">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Pixel Scale</p>
+                <h2>像素密度换算</h2>
+              </div>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-metric" data-metric="pixel-pitch">
+                <strong>—</strong><span>像素间距</span>
+              </div>
+              <div class="mini-metric" data-metric="pixel-density">
+                <strong>—</strong><span>像素密度</span>
+              </div>
+              <div class="mini-metric" data-metric="coc-pixels">
+                <strong>—</strong><span>CoC 对应像素</span>
+              </div>
+              <div class="mini-metric" data-metric="airy-pixels">
+                <strong>—</strong><span>Airy 对应像素</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Diffraction</p>
+                <h2>RGB 衍射修正</h2>
+              </div>
+            </div>
+            <div class="diffraction-list" data-diffraction-rows></div>
+          </article>
+        </section>
+
+        <section class="notes-grid">
+          <article class="warning-panel" data-warnings></article>
+          <article class="formula-panel">
+            <p data-formula>—</p>
+          </article>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

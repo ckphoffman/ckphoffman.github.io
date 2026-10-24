@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaTeX 编译之旅 — 从源码到 PDF</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #131829;
+  --bg-tertiary: #1a2238;
+  --bg-code: #060912;
+  --border: #2a3553;
+  --border-strong: #3a4670;
+  --text-primary: #e8eef7;
+  --text-secondary: #9aa5b8;
+  --text-muted: #5a6580;
+  --accent-blue: #5eb3ff;
+  --accent-cyan: #5ee3ff;
+  --accent-purple: #b478ff;
+  --accent-pink: #ff78b4;
+  --accent-gold: #ffd478;
+  --accent-green: #78ffaa;
+  --accent-red: #ff7878;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 1200px 800px at 10% -10%, rgba(94, 179, 255, 0.08), transparent 60%),
+    radial-gradient(ellipse 1000px 700px at 100% 110%, rgba(180, 120, 255, 0.08), transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* HEADER */
+header { text-align: center; padding: 4rem 0 3rem; }
+h1 {
+  font-family: "Times New Roman", "Songti SC", serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #5eb3ff 0%, #b478ff 50%, #ff78b4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+.subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+.tagline { font-style: italic; color: var(--text-muted); font-size: 0.95rem; }
+
+/* SECTIONS */
+section { margin-bottom: 4rem; }
+h2 {
+  font-family: "Times New Roman", "Songti SC", serif;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  display: flex; align-items: baseline; gap: 0.75rem;
+}
+h2 .num {
+  font-family: "Times New Roman", serif;
+  color: var(--accent-blue);
+  font-size: 1.4rem;
+}
+h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+section > p { color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 75ch; }
+section > p code, .step-body code, .pass-content code {
+  background: var(--bg-code);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.85em;
+  color: var(--accent-gold);
+  font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+  border: 1px solid var(--border);
+}
+
+/* PIPELINE CONTAINER */
+.pipeline-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.compile-controls {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+}
+.compile-controls p { margin: 0; color: var(--text-secondary); font-size: 0.95rem; }
+.btn-group { display: flex; gap: 0.75rem; }
+
+.compile-btn {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: white; border: none;
+  padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600;
+  border-radius: 8px; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 4px 16px rgba(94, 179, 255, 0.2);
+  font-family: inherit;
+}
+.compile-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(94, 179, 255, 0.35);
+}
+.compile-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.reset-btn {
+  background: transparent; color: var(--text-secondary);
+  border: 1px solid var(--border-strong);
+  padding: 0.75rem 1.25rem; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.reset-btn:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+
+/* WORKFLOW LAYOUT */
+.workflow {
+  display: grid; grid-template-columns: 1fr; gap: 1rem;
+}
+@media (min-width: 1024px) {
+  .workflow { grid-template-columns: 290px 1fr 280px; }
+}
+
+.workflow-panel {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex; flex-direction: column;
+  min-height: 0;
+}
+.panel-header {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-weight: 700;
+}
+.panel-header .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+/* SOURCE CODE */
+.source-code {
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Source Code Pro", monospace;
+  font-size: 0.76rem;
+  line-height: 1.75;
+  background: var(--bg-code);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre;
+  flex: 1;
+  border: 1px solid var(--border);
+}
+.source-code .cmd { color: var(--accent-blue); }
+.source-code .arg { color: var(--accent-gold); }
+.source-code .math { color: var(--accent-pink); background: rgba(255, 120, 180, 0.06); padding: 0 2px; border-radius: 2px; }
+.source-code .img { color: var(--accent-gold); }
+.source-code .txt { color: var(--text-primary); }
+.source-code .ref { color: var(--accent-cyan); }
+.source-code [data-stage] {
+  padding: 1px 2px;
+  margin: -1px -2px;
+  border-radius: 3px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.source-code .src-highlight {
+  background: rgba(255, 212, 120, 0.18) !important;
+  box-shadow: 0 0 0 1px rgba(255, 212, 120, 0.4), 0 0 12px rgba(255, 212, 120, 0.15);
+}
+
+/* PIPELINE STAGES */
+.stages { display: flex; flex-direction: column; gap: 0.5rem; }
+.stage {
+  display: flex; align-items: center; gap: 0.875rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.stage.active {
+  border-color: var(--accent-blue);
+  background: linear-gradient(90deg, rgba(94, 179, 255, 0.15), transparent 80%);
+  box-shadow: 0 0 0 1px var(--accent-blue), 0 0 24px rgba(94, 179, 255, 0.2);
+  transform: translateX(2px);
+}
+.stage.complete {
+  border-color: rgba(120, 255, 170, 0.35);
+  background: rgba(120, 255, 170, 0.04);
+}
+.stage-icon {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  font-family: "Times New Roman", serif;
+}
+.stage.active .stage-icon {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: white; border-color: transparent;
+  animation: pulseGlow 1.4s infinite;
+}
+.stage.complete .stage-icon {
+  background: rgba(120, 255, 170, 0.15);
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+}
+.stage.complete .stage-icon .num { display: none; }
+.stage.complete .stage-icon::before { content: '✓'; font-size: 0.9rem; }
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(94, 179, 255, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(94, 179, 255, 0); }
+}
+
+.stage-content { flex: 1; min-width: 0; }
+.stage-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.1rem; }
+.stage-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+.stage-status {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: "SF Mono", monospace;
+  text-align: right;
+  min-width: 56px;
+}
+.stage.active .stage-status { color: var(--accent-cyan); }
+.stage.complete .stage-status { color: var(--accent-green); }
+
+/* OUTPUT PANEL */
+.aux-files { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.75rem; }
+.aux-file {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-family: "SF Mono", monospace;
+  color: var(--text-muted);
+  opacity: 0.4;
+  transition: all 0.4s;
+}
+.aux-file.exists {
+  opacity: 1;
+  border-color: var(--accent-gold);
+  color: var(--text-primary);
+  background: rgba(255, 212, 120, 0.06);
+}
+.aux-file.exists.final {
+  border-color: var(--accent-green);
+  background: rgba(120, 255, 170, 0.08);
+}
+
+.pdf-preview {
+  background: #fbfaf6;
+  color: #2a2a2a;
+  border-radius: 6px;
+  padding: 0.875rem 1rem;
+  flex: 1;
+  font-family: "Times New Roman", "Songti SC", serif;
+  font-size: 0.7rem;
+  line-height: 1.55;
+  min-height: 200px;
+  border: 1px solid #d8d4c4;
+  position: relative;
+}
+.pdf-preview::after {
+  content: 'PDF';
+  position: absolute; top: 6px; right: 8px;
+  font-size: 0.55rem; font-weight: bold;
+  color: #c44; opacity: 0.6;
+  font-family: -apple-system, sans-serif;
+  letter-spacing: 0.1em;
+}
+.pdf-preview h4 {
+  font-size: 0.88rem; margin-bottom: 0.45rem;
+  color: #1a1a1a; font-family: inherit;
+}
+.pdf-preview p { color: #2a2a2a; margin-bottom: 0.35rem; font-size: 0.68rem; }
+.pdf-preview .math-render {
+  font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", serif;
+  font-style: italic;
+}
+.pdf-preview .img-placeholder {
+  background: linear-gradient(135deg, #d4c8a0 0%, #b8a87a 100%);
+  height: 38px; margin: 0.4rem 0; border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; color: #5a4a20;
+  font-family: -apple-system, sans-serif;
+}
+.pdf-preview .figure-caption {
+  font-size: 0.6rem; text-align: center; color: #555;
+  margin-bottom: 0.3rem;
+}
+.pdf-preview .ref-undef { color: #c00; font-weight: bold; background: #fdd; padding: 0 3px; border-radius: 2px; }
+.pdf-preview .ref-resolved {
+  color: #0066cc;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+.pdf-preview .page-mark {
+  font-size: 0.55rem; color: #888; text-align: center;
+  margin-top: 0.5rem; font-family: -apple-system, sans-serif;
+  border-top: 1px dashed #d0cab8; padding-top: 0.3rem;
+}
+.pdf-preview.empty {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-code);
+  color: var(--text-muted);
+  border-color: var(--border);
+  font-family: -apple-system, sans-serif;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+/* CONSOLE */
+.console {
+  margin-top: 1rem;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+.console-output {
+  font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+  font-size: 0.75rem;
+  line-height: 1.75;
+  max-height: 150px;
+  overflow-y: auto;
+  color: var(--text-secondary);
+}
+.console-line { padding: 0.05rem 0; opacity: 0; animation: fadeUp 0.3s forwards; word-wrap: break-word; }
+.console-line.muted { color: var(--text-muted); }
+.console-line.info { color: var(--accent-cyan); }
+.console-line.success { color: var(--accent-green); }
+.console-line.warn { color: var(--accent-gold); }
+.console-line.error { color: var(--accent-red); }
+.console-line .prompt { color: var(--accent-purple); margin-right: 0.5rem; }
+.console-line .em { color: var(--accent-blue); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* PASS INDICATOR */
+.pass-indicator {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-family: "SF Mono", monospace;
+  color: var(--text-muted);
+  margin-left: auto;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.pass-indicator .pass-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-muted);
+}
+.pass-indicator.active .pass-dot {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  animation: blink 1s infinite;
+}
+.pass-indicator.done .pass-dot { background: var(--accent-green); }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* CONTENT TYPE CARDS */
+.content-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.25rem;
+}
+.content-type-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+.content-type-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+.content-type-card .ct-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: bold;
+  margin-bottom: 1rem;
+  font-family: "Times New Roman", serif;
+}
+.content-type-card.text .ct-icon { background: rgba(94, 179, 255, 0.15); color: var(--accent-blue); }
+.content-type-card.math .ct-icon { background: rgba(255, 120, 180, 0.15); color: var(--accent-pink); }
+.content-type-card.image .ct-icon { background: rgba(255, 212, 120, 0.15); color: var(--accent-gold); }
+.content-type-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; }
+.content-type-card code {
+  background: var(--bg-code); padding: 0.1rem 0.35rem;
+  border-radius: 3px; font-size: 0.85em;
+  color: var(--accent-gold); border: 1px solid var(--border);
+  font-family: "SF Mono", monospace;
+}
+.flow-arrow {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: "SF Mono", monospace; font-size: 0.72rem;
+  flex-wrap: wrap;
+}
+.flow-step {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+.flow-arrow .arr { color: var(--accent-blue); padding: 0 0.1rem; }
+
+/* MULTI-PASS DIAGRAM */
+.passes-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.pass {
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  padding: 1.25rem;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  border-left: 3px solid var(--accent-blue);
+  margin-bottom: 1rem;
+}
+.pass:last-child { margin-bottom: 0; }
+.pass.bibtex { border-left-color: var(--accent-purple); }
+.pass.final { border-left-color: var(--accent-green); }
+.pass-number {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: white;
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.05rem;
+  font-family: "Times New Roman", serif;
+  flex-shrink: 0;
+}
+.pass.bibtex .pass-number { background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); }
+.pass.final .pass-number { background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); color: var(--bg-primary); }
+.pass-content { flex: 1; }
+.pass-content h4 {
+  font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--text-primary);
+}
+.pass-content p { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 0; }
+
+.ref-demo {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.ref-state {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+}
+.ref-state-label {
+  font-size: 0.62rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 0.35rem; font-weight: 600;
+}
+.ref-state-content {
+  font-family: "SF Mono", monospace; font-size: 0.78rem;
+  color: var(--text-primary);
+}
+.ref-state-content .placeholder { color: var(--accent-red); font-weight: bold; }
+.ref-state-content .resolved { color: var(--accent-green); font-weight: bold; }
+.ref-state-content .src { color: var(--accent-blue); }
+
+/* STEP DETAILS */
+.steps-detail { display: grid; gap: 1rem; }
+.step-detail {
+  display: grid; grid-template-columns: 52px 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+.step-detail:hover { border-color: var(--border-strong); }
+.step-number {
+  font-size: 2.5rem; font-weight: 700;
+  font-family: "Times New Roman", serif;
+  line-height: 0.9;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.step-body h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.step-body p { color: var(--text-secondary); margin-bottom: 0.6rem; font-size: 0.95rem; }
+.step-body p:last-child { margin-bottom: 0; }
+.step-body ul { color: var(--text-secondary); padding-left: 1.5rem; margin: 0.5rem 0; font-size: 0.92rem; }
+.step-body li { margin-bottom: 0.3rem; }
+.step-body .technical {
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.95rem;
+  background: var(--bg-code);
+  border-left: 3px solid var(--accent-purple);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.step-body .technical strong { color: var(--accent-purple); }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+}
+footer p { color: var(--text-muted); margin-bottom: 0.3rem; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .container { padding: 1rem; }
+  header { padding: 2rem 0 1.5rem; }
+  h2 { font-size: 1.4rem; }
+  .compile-controls { flex-direction: column; align-items: stretch; }
+  .btn-group { width: 100%; }
+  .compile-btn, .reset-btn { flex: 1; }
+  .step-detail { grid-template-columns: 40px 1fr; gap: 1rem; padding: 1rem; }
+  .step-number { font-size: 1.75rem; }
+  .pass { padding: 1rem; }
+  .ref-demo { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>LaTeX 编译之旅</h1>
+    <p class="subtitle">从源代码到 PDF 的全过程交互演示</p>
+    <p class="tagline">— 点击下方「编译成 PDF」按钮，跟随光标穿越每一个阶段 —</p>
+  </header>
+
+  <!-- SECTION 1: INTERACTIVE PIPELINE -->
+  <section>
+    <h2><span class="num">①</span>编译流水线</h2>
+    <div class="pipeline-container">
+      <div class="compile-controls">
+        <p>一个简单的 LaTeX 源文件，包含文本、数学公式、图片和引用：</p>
+        <div class="btn-group">
+          <button class="reset-btn" id="resetBtn">重置</button>
+          <button class="compile-btn" id="compileBtn">📄 编译成 PDF</button>
+        </div>
+      </div>
+
+      <div class="workflow">
+        <!-- SOURCE PANEL -->
+        <div class="workflow-panel">
+          <div class="panel-header">
+            <span class="dot"></span>
+            <span>SOURCE · document.tex</span>
+          </div>
+          <pre class="source-code"><span class="cmd" data-stage="2">\documentclass</span><span class="arg">{article}</span>
+<span class="cmd" data-stage="2">\usepackage</span><span class="arg">{graphicx}</span>
+<span class="cmd" data-stage="2">\begin</span><span class="arg">{document}</span>
+
+<span class="cmd" data-stage="2">\section</span><span class="arg" data-stage="3">{介绍}</span>
+<span class="txt" data-stage="3">这是一段普通文本。</span>
+
+公式： <span class="math" data-stage="3">$E = mc^2$</span>
+
+<span class="cmd">\begin</span><span class="arg">{figure}</span>
+  <span class="img" data-stage="3">\includegraphics{photo.png}</span>
+  <span class="cmd">\caption</span><span class="arg">{示例图片}</span>
+  <span class="cmd" data-stage="5">\label</span><span class="arg" data-stage="5">{fig:1}</span>
+<span class="cmd">\end</span><span class="arg">{figure}</span>
+
+参考<span class="cmd" data-stage="7">\ref</span><span class="ref" data-stage="7">{fig:1}</span>。
+
+<span class="cmd">\end</span><span class="arg">{document}</span></pre>
+        </div>
+
+        <!-- PIPELINE PANEL -->
+        <div class="workflow-panel">
+          <div class="panel-header">
+            <span class="dot"></span>
+            <span>PIPELINE · pdflatex</span>
+            <span class="pass-indicator" id="passIndicator">
+              <span class="pass-dot"></span>
+              <span id="passLabel">待命</span>
+            </span>
+          </div>
+          <div class="stages" id="stages">
+            <div class="stage" data-stage="1">
+              <div class="stage-icon"><span class="num">1</span></div>
+              <div class="stage-content">
+                <div class="stage-title">词法分析（Lexer）</div>
+                <div class="stage-desc">逐字符读取，按 catcode 拆分成 token</div>
+              </div>
+              <div class="stage-status">⋯</div>
+            </div>
+            <div class="stage" data-stage="2">
+              <div class="stage-icon"><span class="num">2</span></div>
+              <div class="stage-content">
+                <div class="stage-title">宏展开（Expansion）</div>
+                <div class="stage-desc">\section、\includegraphics 展开为底层指令</div>
+              </div>
+              <div class="stage-status">⋯</div>
+            </div>
+            <div class="stage" data-stage="3">
+              <div class="stage-icon"><span class="num">3</span></div>
+              <div class="stage-content">
+                <div class="stage-title">排版构建（Boxes）</div>
+                <div class="stage-desc">文本→字形盒子，数学→数学列表，图片→图形盒子</div>
+              </div>
+              <div class="stage-status">⋯</div>
+            </div>
+            <div class="stage" data-stage="4">
+              <div class="stage-icon"><span class="num">4</span></div>
+              <div class="stage-content">
+                <div class="stage-title">断行与分页</div>
+                <div class="stage-desc">Knuth-Plass 全局算法决定每行在哪里折</div>
+              </div>
+              <div class="stage-status">⋯</div>
+            </div>
+            <div class="stage" data-stage="5">
+              <div class="stage-icon"><span class="num">5</span></div>
+              <div class="stage-content">
+                <div class="stage-title">写入副产品</div>
+                <div class="stage-desc">.aux 记录 label / 页码，.toc 记录目录</div>
+              </div>
+              <div class="stage-status">⋯</div>
+            </div>
+            <div class="stage" data-stage="6">
+              <div class="stage-icon"><span class="num">6</span></div>
+              <div class="stage-content">
+                <div class="stage-title">第一遍 PDF</div>
+                <div class="stage-desc">输出 PDF（但 \ref 还是 ??）</div>
+              </div>
+              <div class="stage-status">⋯</div>
+            </div>
+            <div class="stage" data-stage="7">
+              <div class="stage-icon"><span class="num">7</span></div>
+              <div class="stage-content">
+                <div class="stage-title">第二遍：链接引用</div>
+                <div class="stage-desc">重读 .aux，把 ?? 换成真实编号 / 加超链接</div>
+              </div>
+              <div class="stage-status">⋯</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OUTPUT PANEL -->
+        <div class="workflow-panel">
+          <div class="panel-header">
+            <span class="dot"></span>
+            <span>OUTPUT</span>
+          </div>
+          <div class="aux-files" id="auxFiles">
+            <div class="aux-file" data-file="log">📜 document.log</div>
+            <div class="aux-file" data-file="aux">📝 document.aux</div>
+            <div class="aux-file" data-file="toc">📋 document.toc</div>
+            <div class="aux-file" data-file="pdf">📄 document.pdf</div>
+          </div>
+          <div class="pdf-preview empty" id="pdfPreview">
+            等待编译…
+          </div>
+        </div>
+      </div>
+
+      <!-- CONSOLE -->
+      <div class="console">
+        <div class="panel-header" style="margin-bottom: 0.5rem;">
+          <span class="dot"></span>
+          <span>CONSOLE</span>
+        </div>
+        <div class="console-output" id="consoleOutput">
+          <div class="console-line muted"><span class="prompt">$</span>等待用户点击「编译成 PDF」…</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: CONTENT TYPES -->
+  <section>
+    <h2><span class="num">②</span>不同内容如何被渲染</h2>
+    <p>LaTeX 把文档的所有部分——文本、公式、图片——最终都化为「盒子」（box）拼到页面上。但每种内容到达盒子的路径并不一样：</p>
+
+    <div class="content-types">
+      <div class="content-type-card text">
+        <div class="ct-icon">A</div>
+        <h3>文本</h3>
+        <p>字符变 token，token 查 <code>.tfm</code> 字体度量文件取得每个字形的宽度、高度、深度。引擎根据这些尺寸构造水平盒子（<code>hbox</code>）。</p>
+        <div class="flow-arrow">
+          <div class="flow-step">字符</div>
+          <span class="arr">→</span>
+          <div class="flow-step">token</div>
+          <span class="arr">→</span>
+          <div class="flow-step">字形</div>
+          <span class="arr">→</span>
+          <div class="flow-step">hbox</div>
+        </div>
+      </div>
+
+      <div class="content-type-card math">
+        <div class="ct-icon">∑</div>
+        <h3>数学公式</h3>
+        <p>遇到 <code>$</code> 进入数学模式，切换到专用数学字体（CM Math / AMS）。<code>^</code><code>_</code><code>\frac</code> 等被组装成「数学列表」，按特殊间距规则计算上下标位置、根号高度、定界符大小。</p>
+        <div class="flow-arrow">
+          <div class="flow-step">$…$</div>
+          <span class="arr">→</span>
+          <div class="flow-step">数学列表</div>
+          <span class="arr">→</span>
+          <div class="flow-step">数学盒子</div>
+        </div>
+      </div>
+
+      <div class="content-type-card image">
+        <div class="ct-icon">▦</div>
+        <h3>图片</h3>
+        <p><code>\includegraphics</code> 由 graphicx 宏包处理。pdfTeX 原生认识 PNG / JPG / PDF——把整个图像数据作为 PDF 对象嵌入，并保留一个等大的「图形盒子」占位。矢量图保持矢量。</p>
+        <div class="flow-arrow">
+          <div class="flow-step">PNG/PDF</div>
+          <span class="arr">→</span>
+          <div class="flow-step">PDF 对象</div>
+          <span class="arr">→</span>
+          <div class="flow-step">图形盒子</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: LINKING / MULTI-PASS -->
+  <section>
+    <h2><span class="num">③</span>为什么要编译好几次？— 链接的奥秘</h2>
+    <p>LaTeX 是<strong style="color: var(--accent-pink);">单遍处理器</strong>：从头读到尾。当它读到 <code>\ref{fig:1}</code> 那一行时，<code>fig:1</code> 的图都还没出现，它根本不知道编号是几、页码是几。怎么办？把信息先写到磁盘，下次再读回来——这就是「链接」的全部秘密。</p>
+
+    <div class="passes-container">
+      <div class="pass">
+        <div class="pass-number">1</div>
+        <div class="pass-content">
+          <h4>第一遍 <code>pdflatex document.tex</code></h4>
+          <p>正常排版。遇到 <code>\label{fig:1}</code> 时，把「fig:1 → 编号 1，第 1 页」写入 <code>document.aux</code>；遇到 <code>\ref{fig:1}</code> 时不知道答案，先输出占位符 <strong style="color: var(--accent-red);">??</strong>，并在日志里抱怨「LaTeX Warning: Reference 'fig:1' on page X undefined」。</p>
+          <div class="ref-demo">
+            <div class="ref-state">
+              <div class="ref-state-label">源代码</div>
+              <div class="ref-state-content">参考<span class="src">\ref{fig:1}</span></div>
+            </div>
+            <div class="ref-state">
+              <div class="ref-state-label">PDF 输出</div>
+              <div class="ref-state-content">参考 <span class="placeholder">??</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pass bibtex">
+        <div class="pass-number">B</div>
+        <div class="pass-content">
+          <h4>BibTeX 介入 <code>bibtex document</code>（若有参考文献）</h4>
+          <p>这是另一个独立的程序。它读 <code>.aux</code> 文件里 LaTeX 写下的 <code>\citation{Knuth1984}</code> 记录，去 <code>.bib</code> 数据库找到对应条目，按 <code>.bst</code> 样式文件格式化后写出 <code>document.bbl</code>。LaTeX 自己其实不懂 BibTeX 格式，只会读已经处理好的 <code>.bbl</code>。索引（<code>makeindex</code>）和术语表（<code>glossaries</code>）流程类似。</p>
+        </div>
+      </div>
+
+      <div class="pass">
+        <div class="pass-number">2</div>
+        <div class="pass-content">
+          <h4>第二遍 <code>pdflatex document.tex</code></h4>
+          <p>启动时先把 <code>.aux</code> 全部读入内存。这一次，当再遇到 <code>\ref{fig:1}</code>，它已经知道答案了——直接打印「1」。<code>\cite{Knuth1984}</code> 也变成 [1]。目录页知道每一章在第几页。<code>hyperref</code> 此时把这些引用全部包装成 PDF 内可点击的链接。</p>
+          <div class="ref-demo">
+            <div class="ref-state">
+              <div class="ref-state-label">源代码</div>
+              <div class="ref-state-content">参考<span class="src">\ref{fig:1}</span></div>
+            </div>
+            <div class="ref-state">
+              <div class="ref-state-label">PDF 输出</div>
+              <div class="ref-state-content">参考 <span class="resolved">1</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pass final">
+        <div class="pass-number">3</div>
+        <div class="pass-content">
+          <h4>有时还需要第三遍</h4>
+          <p>第二遍补回的引用文字长度变了（比如「??」一个字符变成「[15]」四个字符），可能挤动后面的行、改变某些 label 的页码——这又让 <code>.aux</code> 改变。所以工具链会一直跑直到 <code>.aux</code> 收敛、不再变化。这就是 <code>latexmk</code> 之类的工具默默替你做的事。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: DETAILED STEPS -->
+  <section>
+    <h2><span class="num">④</span>点击「编译」之后，后台到底执行了什么</h2>
+    <p>把刚才的演示按顺序拆开看，下面是「点了编译按钮」到「PDF 出现」之间的每一步：</p>
+
+    <div class="steps-detail">
+      <div class="step-detail">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <h3>启动 TeX 引擎</h3>
+          <p>编辑器（TeXShop、Overleaf、VSCode + LaTeX Workshop……）只是个外壳，它在后台调用了一个独立的可执行文件——通常是 <code>pdflatex</code>、<code>xelatex</code> 或 <code>lualatex</code>。本质上是 <code>pdftex</code>/<code>xetex</code>/<code>luatex</code> 这些引擎，加上预先加载的 LaTeX 宏包。</p>
+          <div class="technical">引擎初始化字体表、catcode 表、内存池，把 <strong>LaTeX 格式文件</strong>（<code>.fmt</code>，一份已经预编译好的「热启动镜像」）读进来——这就是为什么编译总是一开始就「噌」一下，因为 LaTeX 内核已经预先冻干了。</div>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <h3>词法分析：字符变 token</h3>
+          <p>引擎逐字符读源文件，根据每个字符的 <strong>catcode</strong>（类别码）将其归类。共 16 种：<code>\</code> 是「转义」、<code>{</code><code>}</code> 是「分组」、<code>$</code> 是「数学切换」、<code>%</code> 是「注释」、字母是「字母」、空格是「空格」……</p>
+          <div class="technical"><strong>catcode 可以重定义</strong>。这就是 <code>verbatim</code>、<code>listings</code> 等环境能让 <code>\</code> 等特殊字符「失效」的原理——它们临时改了 catcode 表，让 <code>\</code> 不再是转义符。</div>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <h3>宏展开：高层命令 → 底层指令</h3>
+          <p>LaTeX 命令大多是「宏」——本质是文本替换规则。比如 <code>\section{介绍}</code> 会被展开成数十条原始 TeX 指令：「跳过一段垂直空白；切到加粗大字号；查询 .aux 中的章节编号；把『1』和『介绍』拼到一起；把这个组合写到 .toc；恢复正文字体……」</p>
+          <div class="technical">TeX 严格区分 <strong>展开</strong>（expansion，把宏替换成它的定义）和 <strong>执行</strong>（execution，调用排版原语）。两个阶段交错进行——这就是 TeX 编程那么烧脑的根源。</div>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">4</div>
+        <div class="step-body">
+          <h3>排版：盒子与胶水</h3>
+          <p>所有内容最终都成为「盒子」（box）。盒子之间用「胶水」（glue，一种带弹性的空白）连接。</p>
+          <ul>
+            <li><strong>水平盒子</strong>（hbox）：字形一字字排成一行</li>
+            <li><strong>数学盒子</strong>：包含上下标、分数线、定界符的复合结构</li>
+            <li><strong>图形盒子</strong>：外部图片，记录大小、位置和缩放参数</li>
+            <li><strong>垂直盒子</strong>（vbox）：把多行段落或图、表、标题堆成一页</li>
+          </ul>
+          <div class="technical">所有 LaTeX 排版问题最终都是「盒子拼图」问题。理解了这点，就理解了为什么 <code>\hspace</code>/<code>\vspace</code>/<code>\hfill</code>/<code>\vfill</code> 在 LaTeX 里那么核心。</div>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">5</div>
+        <div class="step-body">
+          <h3>断行与分页</h3>
+          <p>段落由 <strong>Knuth-Plass 全局断行算法</strong>处理：把整段当一个整体，尝试所有可能的断行组合，挑出「丑陋度」（badness，由字间距偏差、连字符次数、行尾参差等加权）最低的那一种。这就是 LaTeX 排版比 Word 美观的根本原因——Word 是逐行贪心，LaTeX 是全段全局优化。</p>
+          <p>分页由「输出例程」（<code>\output</code>）触发：当垂直方向堆叠超过一页高度，它把当前内容打包成一页 PDF 输出，剩下的留给下一页继续。</p>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">6</div>
+        <div class="step-body">
+          <h3>写副产品文件</h3>
+          <p>排版过程中遇到 <code>\label</code>、<code>\section</code>、<code>\cite</code> 都会顺手往磁盘写一笔——这些就是下一遍编译需要的「记忆」：</p>
+          <div class="technical">
+            <strong>document.aux</strong> 里典型的一行：<br>
+            <code style="color: var(--text-secondary);">\newlabel{fig:1}{{1}{1}{示例图片}{figure.1}{}}</code><br>
+            含义：标签 <code>fig:1</code> 的编号是 <strong>1</strong>，在第 <strong>1</strong> 页，标题是「示例图片」，对应的 PDF 锚点是 <code>figure.1</code>。
+          </div>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">7</div>
+        <div class="step-body">
+          <h3>外部工具：BibTeX / biber / makeindex</h3>
+          <p>主程序之外还有几个独立工具，各管一摊：</p>
+          <ul>
+            <li><code>bibtex</code> / <code>biber</code> — 读 <code>.aux</code> 里的 <code>\citation</code>，从 <code>.bib</code> 数据库找条目，按 <code>.bst</code> 样式生成 <code>.bbl</code></li>
+            <li><code>makeindex</code> / <code>xindy</code> — 读 <code>.idx</code> 里的索引词条，排序、去重，输出 <code>.ind</code></li>
+            <li><code>makeglossaries</code> — 处理 glossaries 宏包的 <code>.glo</code> → <code>.gls</code></li>
+          </ul>
+          <p>这些工具完全独立于 LaTeX 引擎，靠文件交换数据。这是 <strong>1980 年代的设计</strong>——但因为接口稳定，至今仍在用。</p>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">8</div>
+        <div class="step-body">
+          <h3>再编译——完成链接</h3>
+          <p>带着完整的 <code>.aux</code>、<code>.bbl</code>、<code>.toc</code> 信息再跑一遍 pdflatex。这一次：</p>
+          <ul>
+            <li><code>\ref{fig:1}</code> 不再是 <strong style="color: var(--accent-red);">??</strong>，而是 <strong style="color: var(--accent-green);">1</strong></li>
+            <li><code>\cite{Knuth1984}</code> 变成 <strong style="color: var(--accent-green);">[1]</strong></li>
+            <li>目录页知道每一章在第几页</li>
+            <li><code>hyperref</code> 把每个 <code>\ref</code>/<code>\cite</code>/目录项 包装成 PDF 注释流里的可点击链接</li>
+          </ul>
+          <p>这一遍如果 <code>.aux</code> 又变了（引用文字撑长了行、把后面的章节推到下一页……），就再来一次，直到 <code>.aux</code> 不再变。<code>latexmk</code> 就是替你做这件事的工具。</p>
+        </div>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-number">9</div>
+        <div class="step-body">
+          <h3>写出 PDF</h3>
+          <p>pdflatex 边排版边直接生成 PDF 字节流。每个字体子集、每张图、每页的内容、每条注释（包括超链接）都是一个独立的 <strong>PDF 对象</strong>（编号 1, 2, 3…）。最后写一张 <strong>xref 表</strong>（cross-reference table，对象索引），列出每个对象在文件里的字节偏移。</p>
+          <div class="technical">巧合的是，PDF 内部的「xref 表」本身也是一种「链接机制」——它让阅读器能直接跳到第 N 个对象，不必把整个文件扫一遍。LaTeX 给你做了文档层面的链接（<code>\ref</code>→编号），PDF 自身做了文件层面的链接（对象号→字节偏移）。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>— LaTeX 编译之旅 完 —</p>
+    <p>本演示模拟的是 pdflatex 的典型流程。XeLaTeX、LuaLaTeX 在字体处理（OpenType、Unicode）和脚本能力上更现代，但骨架就是这些。</p>
+  </footer>
+</div>
+
+<script>
+(function() {
+  const $ = (id) => document.getElementById(id);
+  const compileBtn = $('compileBtn');
+  const resetBtn = $('resetBtn');
+  const pdfPreview = $('pdfPreview');
+  const consoleOutput = $('consoleOutput');
+  const passIndicator = $('passIndicator');
+  const passLabel = $('passLabel');
+
+  let timeouts = [];
+  let compiling = false;
+
+  function clearAll() {
+    timeouts.forEach(clearTimeout);
+    timeouts = [];
+  }
+
+  function schedule(fn, delay) {
+    timeouts.push(setTimeout(fn, delay));
+  }
+
+  function setStage(id, state) {
+    const stage = document.querySelector('.stage[data-stage="' + id + '"]');
+    if (!stage) return;
+    stage.classList.remove('active', 'complete');
+    if (state) stage.classList.add(state);
+    const status = stage.querySelector('.stage-status');
+    if (status) {
+      if (state === 'active') status.textContent = '…';
+      else if (state === 'complete') status.textContent = 'done';
+      else status.textContent = '⋯';
+    }
+  }
+
+  function setStageStatus(id, text) {
+    const stage = document.querySelector('.stage[data-stage="' + id + '"]');
+    if (!stage) return;
+    const status = stage.querySelector('.stage-status');
+    if (status) status.textContent = text;
+  }
+
+  function applyHighlight(stageId) {
+    document.querySelectorAll('.source-code .src-highlight').forEach(el => el.classList.remove('src-highlight'));
+    if (!stageId) return;
+    document.querySelectorAll('.source-code [data-stage="' + stageId + '"]').forEach(el => {
+      el.classList.add('src-highlight');
+    });
+  }
+
+  function createFile(name, isFinal) {
+    const file = document.querySelector('.aux-file[data-file="' + name + '"]');
+    if (file) {
+      file.classList.add('exists');
+      if (isFinal) file.classList.add('final');
+    }
+  }
+
+  function log(text, type) {
+    const line = document.createElement('div');
+    line.className = 'console-line' + (type ? ' ' + type : '');
+    line.innerHTML = text;
+    consoleOutput.appendChild(line);
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  }
+
+  function setPass(label, state) {
+    passLabel.textContent = label;
+    passIndicator.classList.remove('active', 'done');
+    if (state) passIndicator.classList.add(state);
+  }
+
+  function reset() {
+    clearAll();
+    compiling = false;
+    [1,2,3,4,5,6,7].forEach(i => setStage(i, null));
+    document.querySelectorAll('.aux-file').forEach(f => f.classList.remove('exists', 'final'));
+    applyHighlight(null);
+    consoleOutput.innerHTML = '<div class="console-line muted"><span class="prompt">$</span>等待用户点击「编译成 PDF」…</div>';
+    pdfPreview.className = 'pdf-preview empty';
+    pdfPreview.innerHTML = '等待编译…';
+    setPass('待命', null);
+    compileBtn.disabled = false;
+    compileBtn.textContent = '📄 编译成 PDF';
+  }
+
+  function showPdfDraft() {
+    pdfPreview.className = 'pdf-preview';
+    pdfPreview.innerHTML = `
+      <h4>1 介绍</h4>
+      <p>这是一段普通文本。</p>
+      <p>公式：<span class="math-render">E = mc²</span></p>
+      <div class="img-placeholder">📷 photo.png</div>
+      <div class="figure-caption">图 ?: 示例图片</div>
+      <p>参考<span class="ref-undef">??</span>。</p>
+      <div class="page-mark">— Page 1 —</div>
+    `;
+  }
+
+  function showPdfFinal() {
+    pdfPreview.className = 'pdf-preview';
+    pdfPreview.innerHTML = `
+      <h4>1 介绍</h4>
+      <p>这是一段普通文本。</p>
+      <p>公式：<span class="math-render">E = mc²</span></p>
+      <div class="img-placeholder">📷 photo.png</div>
+      <div class="figure-caption">图 1: 示例图片</div>
+      <p>参考<span class="ref-resolved">1</span>。</p>
+      <div class="page-mark">— Page 1 —</div>
+    `;
+  }
+
+  function compile() {
+    if (compiling) return;
+    reset();
+    compiling = true;
+    compileBtn.disabled = true;
+    compileBtn.textContent = '编译中…';
+
+    let t = 100;
+
+    // ----- PASS 1 -----
+    schedule(() => {
+      setPass('PASS 1', 'active');
+      log('<span class="prompt">$</span> pdflatex document.tex', 'info');
+      log('This is pdfTeX, Version 3.141592653-2.6 (TeX Live 2024)', 'muted');
+      log('entering extended mode', 'muted');
+      log('(./document.tex', 'muted');
+    }, t); t += 700;
+
+    // Stage 1: Lexer
+    schedule(() => {
+      setStage(1, 'active');
+      setStageStatus(1, 'reading');
+      log('LaTeX2e &lt;2024-06-01&gt; loading format file...', '');
+      log('classifying characters by catcode (16 categories)', '');
+    }, t); t += 900;
+    schedule(() => {
+      setStage(1, 'complete');
+      createFile('log');
+      log('  → 247 tokens produced', 'success');
+    }, t); t += 100;
+
+    // Stage 2: Macro expansion
+    schedule(() => {
+      setStage(2, 'active');
+      setStageStatus(2, 'expanding');
+      applyHighlight(2);
+      log('expanding <span class="em">\\documentclass{article}</span>', '');
+      log('  loading article.cls, size10.clo, ...', 'muted');
+      log('expanding <span class="em">\\usepackage{graphicx}</span>', '');
+      log('  loading graphicx.sty, keyval.sty, ...', 'muted');
+    }, t); t += 1100;
+    schedule(() => {
+      setStage(2, 'complete');
+      log('  → macros reduced to TeX primitives', 'success');
+    }, t); t += 100;
+
+    // Stage 3: Boxes
+    schedule(() => {
+      setStage(3, 'active');
+      setStageStatus(3, 'typesetting');
+      applyHighlight(3);
+      log('typesetting <span class="em">\\section{介绍}</span> → hbox', '');
+      log('typesetting <span class="em">"这是一段普通文本。"</span> → hbox', '');
+    }, t); t += 700;
+    schedule(() => {
+      log('entering math mode <span class="em">$E = mc^2$</span>', '');
+      log('  switching to CM Math font, building math list', 'muted');
+    }, t); t += 600;
+    schedule(() => {
+      log('reading <span class="em">photo.png</span> (graphicx)', 'warn');
+      log('  embedding as PDF XObject, 320×240px', 'muted');
+    }, t); t += 700;
+    schedule(() => {
+      setStage(3, 'complete');
+      log('  → all content boxed', 'success');
+    }, t); t += 100;
+
+    // Stage 4: Line/page breaking
+    schedule(() => {
+      setStage(4, 'active');
+      setStageStatus(4, 'breaking');
+      applyHighlight(null);
+      log('paragraph: running Knuth-Plass line-breaking', '');
+      log('  badness = 0 (perfect fit)', 'muted');
+      log('output routine: shipping page 1', '');
+    }, t); t += 1000;
+    schedule(() => {
+      setStage(4, 'complete');
+      log('  → 1 page assembled', 'success');
+    }, t); t += 100;
+
+    // Stage 5: Aux files
+    schedule(() => {
+      setStage(5, 'active');
+      setStageStatus(5, 'writing');
+      applyHighlight(5);
+      log('writing → <span class="em">document.aux</span>', '');
+      log('  \\newlabel{fig:1}{{1}{1}{示例图片}{figure.1}{}}', 'muted');
+      log('writing → <span class="em">document.toc</span>', '');
+      log('  \\contentsline{section}{1 介绍}{1}{}', 'muted');
+    }, t); t += 900;
+    schedule(() => {
+      setStage(5, 'complete');
+      createFile('aux');
+      createFile('toc');
+      log('  → aux files saved', 'success');
+    }, t); t += 100;
+
+    // Stage 6: First PDF
+    schedule(() => {
+      setStage(6, 'active');
+      setStageStatus(6, 'output');
+      applyHighlight(null);
+      log('writing PDF stream → <span class="em">document.pdf</span>', '');
+      log('  embedding fonts, image, content stream...', 'muted');
+      log('<strong>Warning: Reference `fig:1\' on page 1 undefined</strong>', 'warn');
+    }, t); t += 1100;
+    schedule(() => {
+      setStage(6, 'complete');
+      createFile('pdf');
+      showPdfDraft();
+      log('Pass 1 done. 1 undefined reference.', 'warn');
+      setPass('PASS 1 完成', null);
+    }, t); t += 600;
+
+    // ----- PASS 2 -----
+    schedule(() => {
+      setPass('PASS 2', 'active');
+      log('<span class="prompt">$</span> pdflatex document.tex   <em style="color:var(--text-muted);">// 重新跑一遍解析引用</em>', 'info');
+    }, t); t += 700;
+
+    // Stage 7: Linking
+    schedule(() => {
+      setStage(7, 'active');
+      setStageStatus(7, 'linking');
+      applyHighlight(7);
+      log('reading <span class="em">document.aux</span> ...', '');
+      log('  resolved: fig:1 → "1", page 1', 'success');
+      log('replacing <span class="em">\\ref{fig:1}</span>: "??" → "1"', '');
+      log('hyperref: adding /Link annotation, /Dest = figure.1', '');
+    }, t); t += 1300;
+    schedule(() => {
+      setStage(7, 'complete');
+      createFile('pdf', true);
+      showPdfFinal();
+      applyHighlight(null);
+      log('Pass 2 done. .aux stable — no further runs needed.', 'success');
+      log('Output written on <span class="em">document.pdf</span> (1 page).', 'info');
+      log('<span class="prompt">$</span> <strong style="color: var(--accent-green);">✓ DONE</strong>', 'success');
+      setPass('完成 ✓', 'done');
+      compileBtn.disabled = false;
+      compileBtn.textContent = '🔁 再编译一次';
+      compiling = false;
+    }, t);
+  }
+
+  compileBtn.addEventListener('click', compile);
+  resetBtn.addEventListener('click', reset);
+})();
+</script>
+
+</body>
+</html>

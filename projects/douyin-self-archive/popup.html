@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Douyin Self Archive</title>
+    <link rel="stylesheet" href="src/popup.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>抖音自备份</h1>
+          <p id="pageHint">打开你自己的作品页后扫描</p>
+        </div>
+        <button id="scanBtn" class="iconButton" title="重新扫描" aria-label="重新扫描">
+          ↻
+        </button>
+      </header>
+
+      <section class="notice">
+        只下载当前登录账号能正常访问的媒体链接；不绕过登录、DRM 或权限限制。
+      </section>
+
+      <section class="actions">
+        <button id="bestBtn" class="primary" disabled>下载最佳候选</button>
+        <button id="copyBtn" class="secondary" disabled>复制链接</button>
+      </section>
+
+      <section id="status" class="status">正在准备扫描...</section>
+      <section id="list" class="list" aria-live="polite"></section>
+    </main>
+    <script src="src/popup.js"></script>
+  </body>
+</html>

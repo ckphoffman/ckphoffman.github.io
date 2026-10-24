@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>抖音私信下载器</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>抖音私信下载器</h1>
+      <span id="status-dot" class="status-dot" title="未连接"></span>
+    </header>
+
+    <section class="hint" id="hint-not-douyin" hidden>
+      <p>请先打开 <a href="https://www.douyin.com/" target="_blank">抖音网页版</a> 并登录，然后回到此扩展。</p>
+    </section>
+
+    <section id="main" hidden>
+      <div class="row">
+        <button id="btn-open-im" class="btn btn-secondary">打开私信页面</button>
+        <button id="btn-refresh" class="btn btn-ghost" title="刷新聊天列表">↻</button>
+      </div>
+
+      <div class="row">
+        <label for="chat-select">选择聊天对象</label>
+        <select id="chat-select">
+          <option value="">— 暂无数据 —</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <button id="btn-random" class="btn btn-secondary">🎲 随机选一个</button>
+        <button id="btn-open-chat" class="btn btn-secondary">打开此聊天</button>
+      </div>
+
+      <div class="row">
+        <label>导出格式</label>
+        <div class="checks">
+          <label><input type="checkbox" id="fmt-html" checked> HTML</label>
+          <label><input type="checkbox" id="fmt-txt" checked> TXT</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="btn-download" class="btn btn-primary">⬇️ 下载所有聊天记录</button>
+      </div>
+
+      <div class="row">
+        <progress id="progress" value="0" max="100" hidden></progress>
+        <div id="progress-label" class="muted"></div>
+      </div>
+
+      <div class="row log-row">
+        <pre id="log" class="log"></pre>
+      </div>
+    </section>
+
+    <footer>
+      <small>v1.0.0 · 仅本地运行，不上传任何数据</small>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

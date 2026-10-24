@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Douyin Self Archive",
+  "version": "0.1.0",
+  "description": "Download media URLs from Douyin pages you can access while signed in, for backing up your own works.",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "scripting",
+    "storage",
+    "tabs",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://www.douyin.com/*",
+    "https://*.douyin.com/*",
+    "https://*.douyinvod.com/*",
+    "https://*.douyinpic.com/*",
+    "https://*.byteimg.com/*",
+    "https://*.bytescm.com/*",
+    "https://*.amemv.com/*",
+    "https://*.snssdk.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Douyin Self Archive"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.douyin.com/*",
+        "https://*.douyin.com/*"
+      ],
+      "js": [
+        "src/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
