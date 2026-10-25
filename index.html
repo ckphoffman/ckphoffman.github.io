@@ -8,16 +8,19 @@
   <meta property="og:title" content="Yuxiao Pu — Portfolio">
   <meta property="og:description" content="Interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
   <meta property="og:image" content="assets/shots/camera-angles.jpg">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f5c5c'/><text x='50%' y='56%' font-family='Georgia,serif' font-size='30' fill='white' text-anchor='middle' dominant-baseline='middle'>YP</text></svg>">
+  <meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#11110f" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23141412'/><text x='50%' y='58%' font-family='Georgia,serif' font-style='italic' font-size='32' fill='%23f3f0e8' text-anchor='middle' dominant-baseline='middle'>yp</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
   <header class="nav">
     <div class="wrap nav-inner">
-      <a href="#top" class="brand">Yuxiao Pu</a>
+      <a href="#top" class="brand">Yuxiao Pu<span>,</span> <em>engineer</em></a>
       <nav>
         <a href="#work">Work</a>
         <a href="#about">About</a>
@@ -28,51 +31,61 @@
 
   <main id="top">
     <section class="hero wrap">
-      <p class="eyebrow">MSc Computer Science (AI) · University of Nottingham</p>
-      <h1>I turn fuzzy ideas into <em>working software</em> — fast.</h1>
-      <p class="lede">
-        I'm Yuxiao, an engineering and AI graduate who builds interactive tools with an
-        AI-assisted (“vibe coding”) workflow: write the spec, let the model draft, then test,
-        verify and ship. Explore <span id="count">16</span> projects below, from research and database applications
-        to browser extensions and interactive demos you can try right here.
-      </p>
-      <div class="cta">
-        <a class="btn primary" href="#work">See the work</a>
-        <a class="btn" id="hero-email" href="#contact">Get in touch</a>
+      <dl class="hero-meta reveal">
+        <div><dt>Degree</dt><dd>MSc Computer Science (AI)</dd></div>
+        <div><dt>School</dt><dd>University of Nottingham</dd></div>
+        <div><dt>Status</dt><dd><i class="dot" aria-hidden="true"></i>Open to roles</dd></div>
+      </dl>
+      <h1 class="reveal">I turn fuzzy ideas into <em>working software</em><span class="dash"> —&nbsp;fast.</span></h1>
+      <div class="hero-foot reveal">
+        <p class="lede">
+          I'm Yuxiao, an engineering and AI graduate who builds interactive tools with an
+          AI-assisted (“vibe coding”) workflow: write the spec, let the model draft, then test,
+          verify and ship. Explore <span id="count">16</span> projects below, from research and database applications
+          to browser extensions and interactive demos you can try right here.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#work">See the work <span aria-hidden="true">↓</span></a>
+          <a class="btn" id="hero-email" href="#contact">Get in touch</a>
+        </div>
       </div>
-      <ul class="stats">
-        <li><strong>5</strong><span>live interactive demos</span></li>
+      <ul class="stats reveal">
+        <li><strong>5</strong><span>Live interactive demos</span></li>
         <li><strong>8</strong><span>Chrome extensions</span></li>
-        <li><strong>1</strong><span>full-stack learning app</span></li>
-        <li><strong id="earlier-count">3</strong><span>research &amp; earlier projects</span></li>
+        <li><strong>1</strong><span>Full-stack learning app</span></li>
+        <li><strong id="earlier-count">3</strong><span>Research &amp; earlier projects</span></li>
       </ul>
     </section>
 
-    <section id="work" class="wrap">
-      <div class="section-head">
-        <h2>Research &amp; earlier projects</h2>
-        <p>Projects from my postgraduate work and independent development, spanning time-series analysis, data pipelines and database applications.</p>
-      </div>
-      <div class="grid tools" id="earlier-grid">
-        <article class="card earlier-project">
-          <div class="card-body">
+    <section id="work" class="section wrap">
+      <header class="section-head reveal">
+        <p class="sec-label">Research</p>
+        <div>
+          <h2>Research &amp; earlier projects</h2>
+          <p>Projects from my postgraduate work and independent development, spanning time-series analysis, data pipelines and database applications.</p>
+        </div>
+      </header>
+      <div class="index" id="earlier-grid">
+        <article class="entry earlier-project reveal">
+          <span class="entry-num"></span>
+          <div class="entry-main">
             <p class="project-kind">MSc dissertation · Research</p>
             <h3>Financial Time-Series Anomaly Detection</h3>
             <p>Evaluated anomaly-detection methods on 2,910,814 one-minute observations across 30 US equities, using TSB-AD to compare close-price inputs with multivariate market bars.</p>
-            <div class="tags"><span>Python</span><span>TSB-AD</span><span>Time series</span><span>Risk analysis</span></div>
             <details class="project-details">
               <summary>Project details</summary>
               <p>Built an evaluation framework around weak proxy labels, intraday-adjusted robustness checks, score-tail precision and forward-risk enrichment. Compared price-only signals with inputs including volume, trade count and VWAP.</p>
               <p>The findings support anomaly detection as a market-monitoring and risk-control aid; the study does not establish profitability or directional price prediction.</p>
             </details>
           </div>
+          <div class="tags"><span>Python</span><span>TSB-AD</span><span>Time series</span><span>Risk analysis</span></div>
         </article>
-        <article class="card earlier-project">
-          <div class="card-body">
+        <article class="entry earlier-project reveal">
+          <span class="entry-num"></span>
+          <div class="entry-main">
             <p class="project-kind">COMP4039 coursework · Database web application</p>
             <h3>Police Traffic Management System</h3>
             <p>A PHP and SQL coursework application that connects people, vehicles and traffic incidents in one searchable workflow. Separate officer and administrator roles support incident reporting, fine association and audit-log review.</p>
-            <div class="tags"><span>PHP / MySQLi</span><span>MySQL / MariaDB</span><span>JavaScript</span><span>SQL triggers</span><span>Docker Compose</span></div>
             <details class="project-details">
               <summary>Project details</summary>
               <p><strong>Incident reporting.</strong> Record an incident with its date, description, offence, vehicle and person. Reuse existing vehicle and person records or add new ones as part of the reporting workflow, then retrieve and edit the report.</p>
@@ -82,44 +95,50 @@
               <p><strong>Delivery.</strong> Built with PHP, MySQLi, HTML, CSS and JavaScript, with a Docker Compose environment using MariaDB. Delivered SQL setup files, a user manual and a technical manual covering installation, data flow and database design. The application runs with a PHP web server and database.</p>
             </details>
           </div>
+          <div class="tags"><span>PHP / MySQLi</span><span>MySQL / MariaDB</span><span>JavaScript</span><span>SQL triggers</span><span>Docker Compose</span></div>
         </article>
-        <article class="card earlier-project">
-          <div class="card-body">
+        <article class="entry earlier-project reveal">
+          <span class="entry-num"></span>
+          <div class="entry-main">
             <p class="project-kind">Independent project · Data tooling</p>
             <h3>Stock Data &amp; Volatility Toolkit</h3>
             <p>Python scripts for collecting market data, comparing stock volatility and identifying large daily price moves, with CSV exports for further analysis.</p>
-            <div class="tags"><span>Python</span><span>pandas</span><span>Alpaca API</span><span>CSV</span></div>
             <details class="project-details">
               <summary>Project details</summary>
               <p>Includes daily and minute-level data download workflows, average true range (ATR) and intraday volatility calculations, and ranking of stocks by daily price changes.</p>
               <p>Designed as local data preparation and exploratory analysis tooling. Data downloads require an independently configured market-data account.</p>
             </details>
           </div>
+          <div class="tags"><span>Python</span><span>pandas</span><span>Alpaca API</span><span>CSV</span></div>
         </article>
       </div>
     </section>
 
-    <section id="interactive-demos" class="wrap">
-      <div class="section-head">
-        <h2>Interactive demos</h2>
-        <p>Single-page explainers that make an abstract idea tangible. Open any of them live — no install. <span class="note">UI language: Chinese.</span></p>
-      </div>
-      <div class="grid demos" id="demo-grid"></div>
+    <section id="interactive-demos" class="section wrap">
+      <header class="section-head reveal">
+        <p class="sec-label">Demos</p>
+        <div>
+          <h2>Interactive demos</h2>
+          <p>Single-page explainers that make an abstract idea tangible. Open any of them live — no install. <span class="note">UI language: Chinese.</span></p>
+        </div>
+      </header>
+      <div class="demos" id="demo-grid"></div>
     </section>
 
-    <section class="wrap">
-      <div class="section-head">
-        <h2>Featured: YouTube Vocabulary Learner</h2>
-        <p>My most complete project — a three-part system I iterated on from a single extension into a full-stack app.</p>
-      </div>
-      <article class="feature">
-        <div class="feature-diagram" aria-hidden="true">
-          <div class="node"><span class="k">Chrome extension</span><span class="v">captures uploaded (non-auto) subtitles from the video you're watching</span></div>
-          <div class="arrow">→</div>
-          <div class="node"><span class="k">Node + Express API</span><span class="v">tokenises text, stores videos, sentences &amp; word counts in SQLite</span></div>
-          <div class="arrow">→</div>
-          <div class="node"><span class="k">React + TypeScript web app</span><span class="v">browse words, read every sentence they appear in, jump the embedded player to that moment</span></div>
+    <section class="section wrap">
+      <header class="section-head reveal">
+        <p class="sec-label">Featured</p>
+        <div>
+          <h2>YouTube Vocabulary Learner</h2>
+          <p>My most complete project — a three-part system I iterated on from a single extension into a full-stack app.</p>
         </div>
+      </header>
+      <article class="feature reveal">
+        <ol class="feature-diagram" aria-label="System architecture">
+          <li class="node"><span class="k">Chrome extension</span><span class="v">captures uploaded (non-auto) subtitles from the video you're watching</span></li>
+          <li class="node"><span class="k">Node + Express API</span><span class="v">tokenises text, stores videos, sentences &amp; word counts in SQLite</span></li>
+          <li class="node"><span class="k">React + TypeScript web app</span><span class="v">browse words, read every sentence they appear in, jump the embedded player to that moment</span></li>
+        </ol>
         <div class="feature-body">
           <ul class="bullets">
             <li>Counts each word once per video, so rewatching doesn't inflate frequencies.</li>
@@ -128,47 +147,50 @@
             <li>Favourites, sorting by frequency / date / alphabet, and filters.</li>
             <li>v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am/is/are → be); v2 split it into extension, API and web app.</li>
           </ul>
-          <div class="tags"><span>Chrome MV3</span><span>Express</span><span>SQLite</span><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Tailwind</span></div>
-          <div class="links">
-            <a class="btn small" data-src="projects/youtube-vocab-learner">Source (v2, full-stack)</a>
-            <a class="btn small ghost" data-src="projects/youtube-subtitle-parser">Source (v1, extension)</a>
+          <div class="feature-side">
+            <div class="tags"><span>Chrome MV3</span><span>Express</span><span>SQLite</span><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Tailwind</span></div>
+            <div class="links">
+              <a class="btn small primary" data-src="projects/youtube-vocab-learner">Source · v2 full-stack <span aria-hidden="true">↗</span></a>
+              <a class="btn small" data-src="projects/youtube-subtitle-parser">Source · v1 extension <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </div>
       </article>
     </section>
 
-    <section class="wrap">
-      <div class="section-head">
-        <h2>Douyin creator toolkit</h2>
-        <p>Six Chrome extensions I built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok) — chats, posts and notifications.
-          Everything runs locally in the browser using the session I'm already logged into; nothing is uploaded, and none of them bypass login or DRM.</p>
-      </div>
-      <div class="grid tools" id="tool-grid"></div>
+    <section class="section wrap">
+      <header class="section-head reveal">
+        <p class="sec-label">Extensions</p>
+        <div>
+          <h2>Douyin creator toolkit</h2>
+          <p>Six Chrome extensions I built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok) — chats, posts and notifications.
+            Everything runs locally in the browser using the session I'm already logged into; nothing is uploaded, and none of them bypass login or DRM.</p>
+        </div>
+      </header>
+      <div class="index tools" id="tool-grid"></div>
     </section>
 
-    <section id="about" class="wrap about">
-      <div class="section-head"><h2>About</h2></div>
+    <section id="about" class="section wrap about">
+      <header class="section-head reveal">
+        <p class="sec-label">About</p>
+        <div><h2>About</h2></div>
+      </header>
       <div class="about-grid">
-        <div>
-          <p>
+        <div class="about-text reveal">
+          <p class="about-lead">
             I studied measurement and control engineering at ECUST, then moved into AI with an
-            MSc in Computer Science at the University of Nottingham (Merit). My dissertation evaluated
-            anomaly-detection methods on 2.9 million one-minute observations across 30 US equities, and
-            concluded they're better supported as a risk-monitoring aid than as a profit signal.
+            MSc in Computer Science at the University of Nottingham (Merit).
+          </p>
+          <p>
+            My dissertation evaluated anomaly-detection methods on 2.9 million one-minute observations
+            across 30 US equities, and concluded they're better supported as a risk-monitoring aid than as a profit signal.
           </p>
           <p>
             What I enjoy most is the step from “this is confusing” to “here's a tool that makes it obvious”.
             Several of the demos above started as questions I had while learning photography, Git and LaTeX.
           </p>
-          <h3>How I build</h3>
-          <ol class="process">
-            <li><strong>Specify.</strong> Write down the goal, constraints and what “done” looks like.</li>
-            <li><strong>Generate.</strong> Pair with AI coding agents (Claude Code, Codex) to draft quickly.</li>
-            <li><strong>Verify.</strong> Unit tests, manual checks in the real page, and reading every diff.</li>
-            <li><strong>Iterate.</strong> Ship a small version, then refine from real use.</li>
-          </ol>
         </div>
-        <aside class="card facts">
+        <aside class="facts reveal">
           <h3>Education</h3>
           <p><strong>MSc Computer Science (AI)</strong><br>University of Nottingham, UK · 2024–2026 · Merit</p>
           <p><strong>BEng Measurement, Control Technology &amp; Instruments</strong><br>East China University of Science and Technology · 2019–2023</p>
@@ -178,18 +200,29 @@
           <p>Mandarin (native) · English (IELTS 6.5, UK-taught Master's)</p>
         </aside>
       </div>
+      <div class="process-wrap reveal">
+        <h3 class="process-title">How I build</h3>
+        <ol class="process">
+          <li><strong>Specify</strong>Write down the goal, constraints and what “done” looks like.</li>
+          <li><strong>Generate</strong>Pair with AI coding agents (Claude Code, Codex) to draft quickly.</li>
+          <li><strong>Verify</strong>Unit tests, manual checks in the real page, and reading every diff.</li>
+          <li><strong>Iterate</strong>Ship a small version, then refine from real use.</li>
+        </ol>
+      </div>
     </section>
 
     <section id="contact" class="wrap contact">
-      <h2>Let's talk</h2>
-      <p>I'm looking for roles where I can turn ambiguous problems into working tools.</p>
-      <a class="btn primary big" id="email-link" href="#">Email me</a>
+      <p class="sec-label reveal">Contact</p>
+      <h2 class="reveal">Let's <em>talk.</em></h2>
+      <p class="reveal">I'm looking for roles where I can turn ambiguous problems into working tools.</p>
+      <a class="mail reveal" id="email-link" href="#">Email me</a>
     </section>
   </main>
 
   <footer class="wrap foot">
     <span>© <span id="year"></span> Yuxiao Pu</span>
-    <a id="repo-link" href="#">Source of this site</a>
+    <a href="#top">Back to top ↑</a>
+    <a id="repo-link" href="#">Source of this site ↗</a>
   </footer>
 
   <script src="script.js"></script>

@@ -76,26 +76,44 @@ const tools = [
 
 const srcUrl = (path) => (REPO_URL ? `${REPO_URL}/tree/main/${path}` : null);
 
-function card(p, kind) {
+function demoCard(p) {
   const el = document.createElement("article");
-  el.className = `card ${kind}`;
-  const src = srcUrl(kind === "demo" ? `demos/${p.slug}` : `projects/${p.slug}`);
+  el.className = "demo reveal";
+  const href = `demos/${p.slug}/`;
+  const src = srcUrl(`demos/${p.slug}`);
   el.innerHTML = `
-    ${kind === "demo" ? `<a class="thumb" href="demos/${p.slug}/" target="_blank" rel="noopener"><img src="assets/shots/${p.slug}.jpg" alt="Screenshot of ${p.title}" loading="lazy"></a>` : ""}
-    <div class="card-body">
-      <h3>${p.title}</h3>
+    <a class="thumb" href="${href}" target="_blank" rel="noopener" aria-label="Open ${p.title} live demo"><img src="assets/shots/${p.slug}.jpg" alt="Screenshot of ${p.title}" loading="lazy"></a>
+    <div class="demo-body">
+      <div class="demo-top"><span class="entry-num"></span><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div></div>
+      <h3><a href="${href}" target="_blank" rel="noopener">${p.title}</a></h3>
       <p>${p.blurb}</p>
-      <div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div>
       <div class="links">
-        ${kind === "demo" ? `<a class="btn small primary" href="demos/${p.slug}/" target="_blank" rel="noopener">Open live demo ↗</a>` : ""}
-        ${src ? `<a class="btn small ghost" href="${src}" target="_blank" rel="noopener">Source</a>` : ""}
+        <a class="btn small primary" href="${href}" target="_blank" rel="noopener">Open live demo <span aria-hidden="true">↗</span></a>
+        ${src ? `<a class="arrow-link" href="${src}" target="_blank" rel="noopener">Source ↗</a>` : ""}
       </div>
     </div>`;
   return el;
 }
 
-document.getElementById("demo-grid").append(...demos.map((d) => card(d, "demo")));
-document.getElementById("tool-grid").append(...tools.map((t) => card(t, "tool")));
+function toolRow(p) {
+  const el = document.createElement("article");
+  el.className = "entry tool reveal";
+  const src = srcUrl(`projects/${p.slug}`);
+  el.innerHTML = `
+    <span class="entry-num"></span>
+    <div class="entry-main">
+      <h3>${p.title}</h3>
+      <p>${p.blurb}</p>
+    </div>
+    <div class="tool-side">
+      <div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div>
+      ${src ? `<a class="arrow-link" href="${src}" target="_blank" rel="noopener">Source ↗</a>` : ""}
+    </div>`;
+  return el;
+}
+
+document.getElementById("demo-grid").append(...demos.map(demoCard));
+document.getElementById("tool-grid").append(...tools.map(toolRow));
 
 // Count the two YouTube versions separately; v2 includes an extension and web app.
 const earlierCount = document.querySelectorAll(".earlier-project").length;
@@ -120,3 +138,21 @@ const repoLink = document.getElementById("repo-link");
 if (REPO_URL) repoLink.href = REPO_URL; else repoLink.remove();
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+const nav = document.querySelector(".nav");
+const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
+onScroll();
+window.addEventListener("scroll", onScroll, { passive: true });
+
+// Fade sections in as they enter the viewport.
+const revealEls = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  revealEls.forEach((el) => io.observe(el));
+} else {
+  revealEls.forEach((el) => el.classList.add("in"));
+}
