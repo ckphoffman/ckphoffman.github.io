@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     document.documentElement.classList.add("js");
-    try { const l = localStorage.getItem("lang"); if (l) document.documentElement.lang = l; } catch (e) {}
   </script>
 </head>
 <body>
@@ -25,14 +24,11 @@
     <div class="wrap nav-inner">
       <a href="#top" class="brand">Yuxiao Pu</a>
       <nav aria-label="Sections">
-        <a href="#work"><span class="en">Work</span><span class="zh">项目</span></a>
-        <a href="#builds"><span class="en">Builds</span><span class="zh">作品</span></a>
-        <a href="#about"><span class="en">About</span><span class="zh">关于</span></a>
-        <a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
+        <a href="#work">Work</a>
+        <a href="#builds">Builds</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
       </nav>
-      <button class="lang" id="lang-toggle" type="button" aria-label="Switch language / 切换语言">
-        <span data-l="en">EN</span><span data-l="zh-CN">中文</span>
-      </button>
     </div>
   </header>
 
@@ -41,49 +37,42 @@
     <section class="hero">
       <div class="wrap">
         <p class="eyebrow reveal">
-          <span class="en">Portfolio · Engineering &amp; AI graduate · Open to roles</span>
-          <span class="zh">作品集 · 工程与人工智能毕业生 · 求职中</span>
+          Portfolio · Engineering &amp; AI graduate · Open to roles
         </p>
         <h1 class="reveal">
-          <span class="en">I turn fuzzy ideas into <em>working software</em> — fast.</span>
-          <span class="zh">把模糊的想法，快速变成<em>能用的软件</em>。</span>
+          I turn fuzzy ideas into <em>working software</em> — fast.
         </h1>
         <div class="hero-grid">
           <div class="reveal">
-            <p class="lede en">
+            <p class="lede">
               I'm Yuxiao, an engineering and AI graduate who builds interactive tools with an
               AI-assisted (“vibe coding”) workflow: write the spec, let the model draft, then test,
               verify and ship. Below are research and database applications, browser extensions
               and interactive demos you can try right here.
             </p>
-            <p class="lede zh">
-              我是 Yuxiao，工程与人工智能背景的毕业生，习惯用 AI 辅助（“vibe coding”）的方式做交互工具：
-              先写清需求，让模型起草，再测试、核验、交付。下面有研究与数据库应用、浏览器扩展，
-              以及可以直接在线试用的交互演示。
-            </p>
             <div class="cta">
-              <a class="btn primary" href="#work"><span class="en">See the work</span><span class="zh">查看项目</span> <span aria-hidden="true">↓</span></a>
-              <a class="btn" id="hero-email" href="#contact"><span class="en">Get in touch</span><span class="zh">联系我</span></a>
+              <a class="btn primary" href="#work">See the work <span aria-hidden="true">↓</span></a>
+              <a class="btn" id="hero-email" href="#contact">Get in touch</a>
             </div>
           </div>
           <dl class="facts-card reveal">
-            <div><dt><span class="en">Education</span><span class="zh">教育</span></dt>
-              <dd><span class="en">MSc Computer Science (AI), University of Nottingham · Merit</span><span class="zh">诺丁汉大学 计算机科学（人工智能）硕士 · Merit</span></dd></div>
+            <div><dt>Education</dt>
+              <dd>MSc Computer Science (AI), University of Nottingham · Merit</dd></div>
             <div><dt>&nbsp;</dt>
-              <dd><span class="en">BEng Measurement &amp; Control, ECUST, Shanghai</span><span class="zh">华东理工大学 测控技术与仪器 学士</span></dd></div>
-            <div><dt><span class="en">Languages</span><span class="zh">语言</span></dt>
-              <dd><span class="en">English · Chinese</span><span class="zh">英语 · 汉语</span></dd></div>
-            <div><dt><span class="en">Status</span><span class="zh">状态</span></dt>
-              <dd><span class="en">Graduated 2026 · open to roles</span><span class="zh">2026 年毕业 · 求职中</span></dd></div>
+              <dd>BEng Measurement &amp; Control, ECUST, Shanghai</dd></div>
+            <div><dt>Languages</dt>
+              <dd>English · Chinese</dd></div>
+            <div><dt>Status</dt>
+              <dd>Graduated 2026 · open to roles</dd></div>
           </dl>
         </div>
       </div>
       <div class="ticker reveal" aria-label="Key figures">
         <div class="wrap ticker-inner">
-          <div><strong id="count">16</strong><span class="en">tools &amp; projects shipped</span><span class="zh">个已交付的工具与项目</span></div>
-          <div><strong id="demo-count">5</strong><span class="en">live interactive demos</span><span class="zh">个可在线试用的交互演示</span></div>
-          <div><strong>8</strong><span class="en">Chrome extensions</span><span class="zh">个 Chrome 扩展</span></div>
-          <div><strong>2,910,814</strong><span class="en">one-minute bars benchmarked</span><span class="zh">根一分钟 K 线用于基准测试</span></div>
+          <div><strong id="count">16</strong>tools &amp; projects shipped</div>
+          <div><strong id="demo-count">5</strong>live interactive demos</div>
+          <div><strong>8</strong>Chrome extensions</div>
+          <div><strong>2,910,814</strong>one-minute bars benchmarked</div>
         </div>
       </div>
     </section>
@@ -93,79 +82,66 @@
       <header class="section-head reveal">
         <p class="sec-num">01</p>
         <div>
-          <h2><span class="en">Selected work</span><span class="zh">重点项目</span></h2>
-          <p class="en">Three projects in depth — research, a database application and a full-stack product: the situation, what I did and what came out.</p>
-          <p class="zh">三个深入展开的项目——研究、数据库应用和全栈产品：背景、我做了什么，以及结果如何。</p>
+          <h2>Selected work</h2>
+          <p>Three projects in depth — research, a database application and a full-stack product: the situation, what I did and what came out.</p>
         </div>
       </header>
 
       <article class="case reveal" id="case-research">
         <div class="case-head">
-          <p class="case-kind"><span class="en">MSc dissertation · Research</span><span class="zh">硕士论文 · 研究</span></p>
-          <h3><span class="en">Anomaly Detection for Automated Trading</span><span class="zh">面向自动化交易的异常检测</span></h3>
+          <p class="case-kind">MSc dissertation · Research</p>
+          <h3>Anomaly Detection for Automated Trading</h3>
           <div class="tags"><span>Python</span><span>PyTorch</span><span>TSB-AD</span><span>Time series</span><span>Risk analysis</span></div>
         </div>
         <dl class="case-body">
-          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
-            <dd class="en">Automated trading needs an early warning when markets behave abnormally — but real market data has no "correct answer" labels to test against.</dd>
-            <dd class="zh">自动化交易需要在市场异常时提前预警——但真实市场数据没有“标准答案”可以用来检验模型。</dd></div>
-          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
-            <dd class="en">Risk-aware TSB-AD benchmarking on 2,910,814 one-minute bars from 30 US equities in 2025, comparing a close-only representation with a multivariate bar of OHLC, volume, trade count and VWAP. A custom execution layer adapts the TSB-AD model wrappers to unlabelled equity bars without modifying the upstream implementations. Evaluation combines weak proxy labels, intraday-adjusted robustness checks, top-1% score precision, consensus-event inspection, and current and forward risk-enrichment ratios.</dd>
-            <dd class="zh">在 2025 年 30 只美股、共 2,910,814 根一分钟 K 线上做风险导向的 TSB-AD 基准测试，比较“仅收盘价”与“多维 K 线（OHLC、成交量、成交笔数、VWAP）”两种表示。自建执行层，在不改动上游实现的前提下，让 TSB-AD 模型适配无标签的股票数据。评估结合弱代理标签、日内调整后的稳健性检验、前 1% 分数精度、共识事件检查，以及当期与前瞻风险富集比。</dd></div>
-          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
-            <dd class="en">23 model–representation combinations across all 30 tickers produced 690 aligned score vectors with no failures. LSTMAD was strongest with both representations; multivariate inputs improved neural models, especially LSTMAD and USAD, while close-only SR and Sub_KNN stayed competitive for return-driven stress. High-score periods coincided with elevated stress and larger next-30-bar moves.</dd>
-            <dd class="zh">23 种模型–表示组合覆盖全部 30 只股票，得到 690 组对齐的分数向量，零失败。LSTMAD 在两种表示下都最强；多维输入提升了神经网络模型（尤其 LSTMAD 和 USAD），而仅收盘价的 SR、Sub_KNN 在收益驱动的压力上依然有竞争力。高分时段与当期压力上升、之后 30 根 K 线的更大波动高度吻合。</dd></div>
-          <div class="cb"><dt><span class="en">Takeaway</span><span class="zh">结论</span></dt>
-            <dd class="en">Anomaly detection is most defensible as a risk-aware monitoring layer for automated trading — the study does not claim profitability or directional price prediction. Supervised by Professor Xu Kai; submitted May 2026.</dd>
-            <dd class="zh">异常检测最站得住脚的定位，是自动化交易中的风险监控层——本研究不主张盈利能力或价格方向预测。导师：Xu Kai 教授；2026 年 5 月提交。</dd></div>
+          <div><dt>Situation</dt>
+            <dd>Automated trading needs an early warning when markets behave abnormally — but real market data has no "correct answer" labels to test against.</dd></div>
+          <div><dt>What I did</dt>
+            <dd>Risk-aware TSB-AD benchmarking on 2,910,814 one-minute bars from 30 US equities in 2025, comparing a close-only representation with a multivariate bar of OHLC, volume, trade count and VWAP. A custom execution layer adapts the TSB-AD model wrappers to unlabelled equity bars without modifying the upstream implementations. Evaluation combines weak proxy labels, intraday-adjusted robustness checks, top-1% score precision, consensus-event inspection, and current and forward risk-enrichment ratios.</dd></div>
+          <div><dt>Result</dt>
+            <dd>23 model–representation combinations across all 30 tickers produced 690 aligned score vectors with no failures. LSTMAD was strongest with both representations; multivariate inputs improved neural models, especially LSTMAD and USAD, while close-only SR and Sub_KNN stayed competitive for return-driven stress. High-score periods coincided with elevated stress and larger next-30-bar moves.</dd></div>
+          <div class="cb"><dt>Takeaway</dt>
+            <dd>Anomaly detection is most defensible as a risk-aware monitoring layer for automated trading — the study does not claim profitability or directional price prediction. Supervised by Professor Xu Kai; submitted May 2026.</dd></div>
         </dl>
       </article>
 
       <article class="case reveal" id="case-traffic">
         <div class="case-head">
-          <p class="case-kind"><span class="en">COMP4039 coursework · Database web application</span><span class="zh">COMP4039 课程项目 · 数据库网页应用</span></p>
-          <h3><span class="en">Police Traffic Management System</span><span class="zh">警务交通管理系统</span></h3>
+          <p class="case-kind">COMP4039 coursework · Database web application</p>
+          <h3>Police Traffic Management System</h3>
           <div class="tags"><span>PHP / MySQLi</span><span>MySQL / MariaDB</span><span>JavaScript</span><span>SQL triggers</span><span>Docker Compose</span></div>
         </div>
         <dl class="case-body">
-          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
-            <dd class="en">A traffic-police team needs one searchable workflow that connects people, vehicles and traffic incidents — with separate officer and administrator roles.</dd>
-            <dd class="zh">交警团队需要一个可检索的统一流程，把人员、车辆和交通事故关联起来——并区分警员与管理员两种角色。</dd></div>
-          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
-            <dd class="en">Modelled accounts, officers, people, vehicles, ownership, incidents, offences, fines and audit logs. Built incident reporting that reuses or adds vehicle and person records; search by ID, date range, registration, name, licence number or officer; and admin tools to create officer accounts, associate fines and review audit logs. SQL triggers record account and incident changes, while PHP functions log record reads.</dd>
-            <dd class="zh">建模账户、警员、人员、车辆、所有权、事故、违法类型、罚款与审计日志。实现事故上报（可复用或新增车辆与人员记录）；按编号、日期范围、车牌、姓名、驾照号或警员检索；以及管理员创建警员账户、关联罚款、查看审计日志的功能。SQL 触发器记录账户与事故的变更，PHP 函数记录数据读取。</dd></div>
-          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
-            <dd class="en">A Docker Compose environment with MariaDB, SQL setup files, a user manual and a technical manual covering installation, data flow and database design.</dd>
-            <dd class="zh">交付基于 MariaDB 的 Docker Compose 环境、SQL 初始化文件、用户手册，以及涵盖安装、数据流与数据库设计的技术手册。</dd></div>
-          <div class="cb"><dt><span class="en">Takeaway</span><span class="zh">结论</span></dt>
-            <dd class="en">Controls belong in the data layer: role separation, linked records and an audit trail administrators can filter by user, action, table and date.</dd>
-            <dd class="zh">控制应当落在数据层：角色分离、关联记录，以及管理员可按用户、操作、数据表和日期筛选的审计轨迹。</dd></div>
+          <div><dt>Situation</dt>
+            <dd>A traffic-police team needs one searchable workflow that connects people, vehicles and traffic incidents — with separate officer and administrator roles.</dd></div>
+          <div><dt>What I did</dt>
+            <dd>Modelled accounts, officers, people, vehicles, ownership, incidents, offences, fines and audit logs. Built incident reporting that reuses or adds vehicle and person records; search by ID, date range, registration, name, licence number or officer; and admin tools to create officer accounts, associate fines and review audit logs. SQL triggers record account and incident changes, while PHP functions log record reads.</dd></div>
+          <div><dt>Result</dt>
+            <dd>A Docker Compose environment with MariaDB, SQL setup files, a user manual and a technical manual covering installation, data flow and database design.</dd></div>
+          <div class="cb"><dt>Takeaway</dt>
+            <dd>Controls belong in the data layer: role separation, linked records and an audit trail administrators can filter by user, action, table and date.</dd></div>
         </dl>
       </article>
 
       <article class="case reveal" id="case-vocab">
         <div class="case-head">
-          <p class="case-kind"><span class="en">Featured · Full-stack product</span><span class="zh">代表作 · 全栈产品</span></p>
-          <h3><span class="en">YouTube Vocabulary Learner</span><span class="zh">YouTube 词汇学习器</span></h3>
+          <p class="case-kind">Featured · Full-stack product</p>
+          <h3>YouTube Vocabulary Learner</h3>
           <div class="tags"><span>Chrome MV3</span><span>Express</span><span>SQLite</span><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Tailwind</span></div>
         </div>
         <dl class="case-body">
-          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
-            <dd class="en">I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</dd>
-            <dd class="zh">我想从自己真正在看的视频里学英语单词，并看到每个词在真实语境里的用法。</dd></div>
-          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
-            <dd class="en">v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am/is/are → be). v2 split it into a Chrome extension that captures uploaded subtitles, a Node + Express API that tokenises text and stores videos, sentences and word counts in SQLite, and a React + TypeScript web app.</dd>
-            <dd class="zh">v1 是一个使用 IndexedDB 存储、带手写词形还原（am/is/are → be）的独立扩展。v2 拆分为三部分：抓取上传字幕的 Chrome 扩展、负责分词并把视频、句子和词频存入 SQLite 的 Node + Express API，以及 React + TypeScript 网页应用。</dd></div>
-          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
-            <dd class="en">A concordance view of every subtitle line containing a word, grouped by video; click a sentence and the embedded player seeks to that moment. Favourites, sorting and filters — and each word counts once per video, so rewatching doesn't inflate frequencies.</dd>
-            <dd class="zh">例句索引视图按视频分组列出包含某词的每一行字幕；点击句子，内嵌播放器即跳转到该时刻。支持收藏、排序与筛选——每个词在同一视频中只计一次，重复观看不会虚高词频。</dd></div>
-          <div class="cb"><dt><span class="en">Takeaway</span><span class="zh">结论</span></dt>
-            <dd class="en">My most complete project: start small, use it for real, and know when to rebuild rather than patch.</dd>
-            <dd class="zh">我最完整的项目：从小处开始、真实使用，并判断何时该重构而不是打补丁。</dd></div>
+          <div><dt>Situation</dt>
+            <dd>I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</dd></div>
+          <div><dt>What I did</dt>
+            <dd>v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am/is/are → be). v2 split it into a Chrome extension that captures uploaded subtitles, a Node + Express API that tokenises text and stores videos, sentences and word counts in SQLite, and a React + TypeScript web app.</dd></div>
+          <div><dt>Result</dt>
+            <dd>A concordance view of every subtitle line containing a word, grouped by video; click a sentence and the embedded player seeks to that moment. Favourites, sorting and filters — and each word counts once per video, so rewatching doesn't inflate frequencies.</dd></div>
+          <div class="cb"><dt>Takeaway</dt>
+            <dd>My most complete project: start small, use it for real, and know when to rebuild rather than patch.</dd></div>
         </dl>
         <div class="links">
-          <a class="arrow-link" data-src="projects/youtube-vocab-learner"><span class="en">Source · v2 full-stack</span><span class="zh">源码 · v2 全栈</span> ↗</a>
-          <a class="arrow-link" data-src="projects/youtube-subtitle-parser"><span class="en">Source · v1 extension</span><span class="zh">源码 · v1 扩展</span> ↗</a>
+          <a class="arrow-link" data-src="projects/youtube-vocab-learner">Source · v2 full-stack ↗</a>
+          <a class="arrow-link" data-src="projects/youtube-subtitle-parser">Source · v1 extension ↗</a>
         </div>
       </article>
     </section>
@@ -175,17 +151,15 @@
       <header class="section-head reveal">
         <p class="sec-num">02</p>
         <div>
-          <h2><span class="en">Builds you can try</span><span class="zh">可以直接试用的作品</span></h2>
-          <p class="en">Interactive explainers — each one started as a question I had while learning photography, Git and LaTeX. Open any of them live; no install. <span class="note">UI language: Chinese.</span></p>
-          <p class="zh">交互式讲解页——每一个都源于我学习摄影、Git 和 LaTeX 时的一个疑问。点开即用，无需安装。</p>
+          <h2>Builds you can try</h2>
+          <p>Interactive explainers — each one started as a question I had while learning photography, Git and LaTeX. Open any of them live; no install. <span class="note">UI language: Chinese.</span></p>
         </div>
       </header>
       <div class="demos" id="demo-grid"></div>
 
       <div class="subhead reveal">
-        <h3><span class="en">Browser tools &amp; data utilities</span><span class="zh">浏览器工具与数据工具</span></h3>
-        <p class="en">Built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok). Everything runs locally in my own logged-in session; nothing is uploaded, and nothing bypasses login or DRM.</p>
-        <p class="zh">用于备份和整理我<em>自己</em>抖音账号的数据。全部在本地、在我已登录的会话中运行；不上传任何数据，不绕过登录或 DRM。</p>
+        <h3>Browser tools &amp; data utilities</h3>
+        <p>Built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok). Everything runs locally in my own logged-in session; nothing is uploaded, and nothing bypasses login or DRM.</p>
       </div>
       <div class="tools" id="tool-grid"></div>
     </section>
@@ -195,38 +169,37 @@
       <header class="section-head reveal">
         <p class="sec-num">03</p>
         <div>
-          <h2><span class="en">About &amp; how I build</span><span class="zh">关于我与工作方式</span></h2>
-          <p class="en">I studied measurement and control engineering at ECUST, then moved into AI with an MSc in Computer Science at the University of Nottingham. What I enjoy most is the step from “this is confusing” to “here's a tool that makes it obvious”.</p>
-          <p class="zh">我本科在华东理工大学读测控，之后在诺丁汉大学读计算机科学硕士，转向人工智能。我最享受的，是从“这东西好难懂”走到“这个工具让它一目了然”的那一步。</p>
+          <h2>About &amp; how I build</h2>
+          <p>I studied measurement and control engineering at ECUST, then moved into AI with an MSc in Computer Science at the University of Nottingham. What I enjoy most is the step from “this is confusing” to “here's a tool that makes it obvious”.</p>
         </div>
       </header>
       <ol class="process reveal">
-        <li><strong><span class="en">Specify</span><span class="zh">明确</span></strong>
-          <span class="en">Write down the goal, constraints and what “done” looks like.</span>
-          <span class="zh">先写下目标、约束条件，以及什么叫“完成”。</span></li>
-        <li><strong><span class="en">Generate</span><span class="zh">生成</span></strong>
-          <span class="en">Pair with AI coding agents (Claude Code, Codex) to draft quickly.</span>
-          <span class="zh">与 AI 编程助手（Claude Code、Codex）结对，快速起草。</span></li>
-        <li><strong><span class="en">Verify</span><span class="zh">核验</span></strong>
-          <span class="en">Unit tests, manual checks in the real page, and reading every diff.</span>
-          <span class="zh">单元测试、在真实页面中手动检查、逐个审阅改动。</span></li>
-        <li><strong><span class="en">Iterate</span><span class="zh">迭代</span></strong>
-          <span class="en">Ship a small version, then refine from real use.</span>
-          <span class="zh">先交付小版本，再根据真实使用改进。</span></li>
+        <li><strong>Specify</strong>
+          Write down the goal, constraints and what “done” looks like.
+          </li>
+        <li><strong>Generate</strong>
+          Pair with AI coding agents (Claude Code, Codex) to draft quickly.
+          </li>
+        <li><strong>Verify</strong>
+          Unit tests, manual checks in the real page, and reading every diff.
+          </li>
+        <li><strong>Iterate</strong>
+          Ship a small version, then refine from real use.
+          </li>
       </ol>
       <div class="about-grid reveal">
         <div>
-          <h3><span class="en">Education</span><span class="zh">教育背景</span></h3>
-          <p><strong><span class="en">MSc Computer Science (Artificial Intelligence)</span><span class="zh">计算机科学（人工智能）硕士</span></strong><br>
-            <span class="en">University of Nottingham, UK · 2024–2026 · Merit</span><span class="zh">英国诺丁汉大学 · 2024–2026 · Merit</span></p>
-          <p><strong><span class="en">BEng Measurement, Control Technology &amp; Instruments</span><span class="zh">测控技术与仪器 学士</span></strong><br>
-            <span class="en">East China University of Science and Technology, Shanghai · 2019–2023</span><span class="zh">华东理工大学（上海）· 2019–2023</span></p>
+          <h3>Education</h3>
+          <p><strong>MSc Computer Science (Artificial Intelligence)</strong><br>
+            University of Nottingham, UK · 2024–2026 · Merit</p>
+          <p><strong>BEng Measurement, Control Technology &amp; Instruments</strong><br>
+            East China University of Science and Technology, Shanghai · 2019–2023</p>
         </div>
         <div>
-          <h3><span class="en">Toolkit</span><span class="zh">技能</span></h3>
+          <h3>Toolkit</h3>
           <div class="tags"><span>Python</span><span>PyTorch</span><span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>SQL</span><span>PHP</span><span>Three.js</span><span>Chrome Extensions</span></div>
-          <h3><span class="en">Languages</span><span class="zh">语言</span></h3>
-          <p><span class="en">English · Chinese</span><span class="zh">英语 · 汉语</span></p>
+          <h3>Languages</h3>
+          <p>English · Chinese</p>
         </div>
       </div>
     </section>
@@ -235,10 +208,9 @@
     <section id="contact" class="contact">
       <div class="wrap">
         <p class="sec-num reveal">04</p>
-        <h2 class="reveal"><span class="en">Let's <em>talk.</em></span><span class="zh">期待<em>交流。</em></span></h2>
+        <h2 class="reveal">Let's <em>talk.</em></h2>
         <p class="reveal">
-          <span class="en">I'm looking for roles where I can turn ambiguous problems into working tools.</span>
-          <span class="zh">我在寻找能把模糊问题变成可用工具的岗位。</span>
+          I'm looking for roles where I can turn ambiguous problems into working tools.
         </p>
         <a class="mail reveal" id="email-link" href="#">Email</a>
       </div>
@@ -247,8 +219,8 @@
 
   <footer class="wrap foot">
     <span>© <span id="year"></span> Yuxiao Pu</span>
-    <a href="#top"><span class="en">Back to top ↑</span><span class="zh">回到顶部 ↑</span></a>
-    <a id="repo-link" href="#"><span class="en">Source of this site ↗</span><span class="zh">本站源码 ↗</span></a>
+    <a href="#top">Back to top ↑</a>
+    <a id="repo-link" href="#">Source of this site ↗</a>
   </footer>
 
   <script src="script.js"></script>

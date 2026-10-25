@@ -42,12 +42,6 @@
   }
 }
 
-/* ---------- language switching ---------- */
-html[lang="en"] .zh { display: none !important; }
-html[lang="zh-CN"] .en { display: none !important; }
-html[lang="zh-CN"] body { letter-spacing: .01em; }
-html[lang="zh-CN"] h1, html[lang="zh-CN"] h2, html[lang="zh-CN"] h3 { letter-spacing: 0; }
-
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 body {
@@ -79,13 +73,6 @@ h1, h2, h3, h4, p { margin: 0; }
 .nav nav { display: flex; gap: 28px; }
 .nav nav a { color: var(--muted); text-decoration: none; font: 500 13px var(--sans); transition: color .2s; }
 .nav nav a:hover { color: var(--ink); }
-.lang {
-  display: inline-flex; padding: 3px; gap: 2px; border: 1px solid var(--line); border-radius: 999px;
-  background: var(--surface); cursor: pointer; font: 500 12px var(--sans); color: var(--muted);
-}
-.lang span { padding: 4px 10px; border-radius: 999px; transition: background .2s, color .2s; }
-html[lang="en"] .lang [data-l="en"],
-html[lang="zh-CN"] .lang [data-l="zh-CN"] { background: var(--ink); color: var(--bg); }
 
 /* ---------- buttons & small bits ---------- */
 .btn {
@@ -117,7 +104,6 @@ html[lang="zh-CN"] .lang [data-l="zh-CN"] { background: var(--ink); color: var(-
   margin: 28px 0 48px; max-width: 18ch;
   font: 400 clamp(44px, 7vw, 96px)/1.02 var(--serif); letter-spacing: -.03em;
 }
-html[lang="zh-CN"] .hero h1 { max-width: 14em; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.2; }
 .hero h1 em { font-style: italic; color: var(--accent); }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
 .lede { font-size: clamp(17px, 1.5vw, 19px); color: var(--ink-2); max-width: 60ch; }
