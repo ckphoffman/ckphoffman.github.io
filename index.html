@@ -70,15 +70,17 @@
           <span class="entry-num"></span>
           <div class="entry-main">
             <p class="project-kind">MSc dissertation · Research</p>
-            <h3>Financial Time-Series Anomaly Detection</h3>
-            <p>Evaluated anomaly-detection methods on 2,910,814 one-minute observations across 30 US equities, using TSB-AD to compare close-price inputs with multivariate market bars.</p>
+            <h3>Anomaly Detection for Automated Trading</h3>
+            <p>Risk-aware TSB-AD benchmarking on 2,910,814 one-minute bars from 30 US equities in 2025, comparing a close-only representation with a multivariate bar of OHLC, volume, trade count and VWAP.</p>
             <details class="project-details">
               <summary>Project details</summary>
-              <p>Built an evaluation framework around weak proxy labels, intraday-adjusted robustness checks, score-tail precision and forward-risk enrichment. Compared price-only signals with inputs including volume, trade count and VWAP.</p>
-              <p>The findings support anomaly detection as a market-monitoring and risk-control aid; the study does not establish profitability or directional price prediction.</p>
+              <p><strong>Benchmark.</strong> A custom execution layer adapts the TSB-AD model wrappers to unlabelled equity bars without modifying the upstream implementations. 23 model–representation combinations (11 close-only, 12 multivariate) ran across all 30 tickers, producing 690 aligned score vectors with no failures.</p>
+              <p><strong>Evaluation without true labels.</strong> Combines weak proxy labels, intraday-adjusted robustness checks, top-1% score precision, consensus-event inspection, and current and forward risk-enrichment ratios.</p>
+              <p><strong>Findings.</strong> LSTMAD was the strongest model with both representations. Multivariate inputs improved neural models, especially LSTMAD and USAD, and tracked volume-related activity more closely; close-only models such as SR and Sub_KNN remained competitive for return-driven stress. High-score periods coincided with elevated current stress and larger next-30-bar absolute moves.</p>
+              <p>The study frames anomaly detection as a risk-aware monitoring layer for automated trading; it does not establish profitability or directional price prediction. Supervised by Professor Xu Kai; submitted May 2026.</p>
             </details>
           </div>
-          <div class="tags"><span>Python</span><span>TSB-AD</span><span>Time series</span><span>Risk analysis</span></div>
+          <div class="tags"><span>Python</span><span>TSB-AD</span><span>PyTorch</span><span>Time series</span><span>Risk analysis</span></div>
         </article>
         <article class="entry earlier-project reveal">
           <span class="entry-num"></span>
@@ -182,8 +184,8 @@
             MSc in Computer Science at the University of Nottingham (Merit).
           </p>
           <p>
-            My dissertation evaluated anomaly-detection methods on 2.9 million one-minute observations
-            across 30 US equities, and concluded they're better supported as a risk-monitoring aid than as a profit signal.
+            My dissertation benchmarked TSB-AD anomaly detectors on 2.9 million one-minute bars
+            across 30 US equities, and concluded they're most defensible as a risk-monitoring layer for automated trading, not as a direct trading signal.
           </p>
           <p>
             What I enjoy most is the step from “this is confusing” to “here's a tool that makes it obvious”.
