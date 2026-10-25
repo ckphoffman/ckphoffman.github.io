@@ -69,14 +69,17 @@
         </article>
         <article class="card earlier-project">
           <div class="card-body">
-            <p class="project-kind">University coursework · Web application</p>
-            <h3>Police Traffic Database</h3>
-            <p>A PHP and MariaDB application for searching people and vehicles, recording traffic incidents and associating fines, with officer accounts and an administrative interface.</p>
-            <div class="tags"><span>PHP</span><span>MariaDB</span><span>SQL</span><span>Docker Compose</span></div>
+            <p class="project-kind">COMP4039 coursework · Database web application</p>
+            <h3>Police Traffic Management System</h3>
+            <p>A PHP and SQL coursework application that connects people, vehicles and traffic incidents in one searchable workflow. Separate officer and administrator roles support incident reporting, fine association and audit-log review.</p>
+            <div class="tags"><span>PHP / MySQLi</span><span>MySQL / MariaDB</span><span>JavaScript</span><span>SQL triggers</span><span>Docker Compose</span></div>
             <details class="project-details">
               <summary>Project details</summary>
-              <p>Implemented workflows for vehicle registration, incident creation and editing, owner lookup and fine association. The project also includes account management and audit-log views.</p>
-              <p>Packaged the web application and database environment with Docker Compose for local use. This coursework application requires a PHP server and database.</p>
+              <p><strong>Incident reporting.</strong> Record an incident with its date, description, offence, vehicle and person. Reuse existing vehicle and person records or add new ones as part of the reporting workflow, then retrieve and edit the report.</p>
+              <p><strong>Search and retrieval.</strong> Find incidents by ID, date range, vehicle registration, person name, licence number or officer name. Dedicated people and vehicle searches provide access to related records.</p>
+              <p><strong>Role-based workflows.</strong> Officers record and retrieve operational data; administrators can also create officer accounts, associate fines with incidents and review audit logs. Account features include sign-in, password changes and logout.</p>
+              <p><strong>Relational data and audit trails.</strong> Model accounts, officers, people, vehicles, ownership, incidents, offences, fines and audit logs. SQL triggers record account and incident changes, while PHP functions log record reads. Administrators can filter audit records by user, action, table and date range.</p>
+              <p><strong>Delivery.</strong> Built with PHP, MySQLi, HTML, CSS and JavaScript, with a Docker Compose environment using MariaDB. Delivered SQL setup files, a user manual and a technical manual covering installation, data flow and database design. The application runs with a PHP web server and database.</p>
             </details>
           </div>
         </article>
