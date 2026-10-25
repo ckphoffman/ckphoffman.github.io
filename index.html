@@ -4,227 +4,251 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yuxiao Pu — Portfolio</title>
-  <meta name="description" content="Yuxiao Pu — MSc Computer Science (AI), University of Nottingham. Interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
+  <meta name="description" content="Yuxiao Pu — MSc Computer Science (AI), University of Nottingham. Research, interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
   <meta property="og:title" content="Yuxiao Pu — Portfolio">
-  <meta property="og:description" content="Interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
+  <meta property="og:description" content="Research, interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
   <meta property="og:image" content="assets/shots/camera-angles.jpg">
-  <meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#11110f" media="(prefers-color-scheme: dark)">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23141412'/><text x='50%' y='58%' font-family='Georgia,serif' font-style='italic' font-size='32' fill='%23f3f0e8' text-anchor='middle' dominant-baseline='middle'>yp</text></svg>">
+  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0c1220" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f1d36'/><text x='50%' y='56%' font-family='Georgia,serif' font-size='30' fill='%23f6f5f1' text-anchor='middle' dominant-baseline='middle'>YP</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.add("js");</script>
+  <script>
+    document.documentElement.classList.add("js");
+    try { const l = localStorage.getItem("lang"); if (l) document.documentElement.lang = l; } catch (e) {}
+  </script>
 </head>
 <body>
   <header class="nav">
     <div class="wrap nav-inner">
-      <a href="#top" class="brand">Yuxiao Pu<span>,</span> <em>engineer</em></a>
-      <nav>
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+      <a href="#top" class="brand">Yuxiao Pu</a>
+      <nav aria-label="Sections">
+        <a href="#work"><span class="en">Work</span><span class="zh">项目</span></a>
+        <a href="#builds"><span class="en">Builds</span><span class="zh">作品</span></a>
+        <a href="#about"><span class="en">About</span><span class="zh">关于</span></a>
+        <a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
       </nav>
+      <button class="lang" id="lang-toggle" type="button" aria-label="Switch language / 切换语言">
+        <span data-l="en">EN</span><span data-l="zh-CN">中文</span>
+      </button>
     </div>
   </header>
 
   <main id="top">
-    <section class="hero wrap">
-      <dl class="hero-meta reveal">
-        <div><dt>Degree</dt><dd>MSc Computer Science (AI)</dd></div>
-        <div><dt>School</dt><dd>University of Nottingham</dd></div>
-        <div><dt>Status</dt><dd><i class="dot" aria-hidden="true"></i>Open to roles</dd></div>
-      </dl>
-      <h1 class="reveal">I turn fuzzy ideas into <em>working software</em><span class="dash"> —&nbsp;fast.</span></h1>
-      <div class="hero-foot reveal">
-        <p class="lede">
-          I'm Yuxiao, an engineering and AI graduate who builds interactive tools with an
-          AI-assisted (“vibe coding”) workflow: write the spec, let the model draft, then test,
-          verify and ship. Explore <span id="count">16</span> projects below, from research and database applications
-          to browser extensions and interactive demos you can try right here.
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow reveal">
+          <span class="en">Portfolio · Engineering &amp; AI graduate · Open to roles</span>
+          <span class="zh">作品集 · 工程与人工智能毕业生 · 求职中</span>
         </p>
-        <div class="cta">
-          <a class="btn primary" href="#work">See the work <span aria-hidden="true">↓</span></a>
-          <a class="btn" id="hero-email" href="#contact">Get in touch</a>
-        </div>
-      </div>
-      <ul class="stats reveal">
-        <li><strong>5</strong><span>Live interactive demos</span></li>
-        <li><strong>8</strong><span>Chrome extensions</span></li>
-        <li><strong>1</strong><span>Full-stack learning app</span></li>
-        <li><strong id="earlier-count">3</strong><span>Research &amp; earlier projects</span></li>
-      </ul>
-    </section>
-
-    <section id="work" class="section wrap">
-      <header class="section-head reveal">
-        <p class="sec-label">Research</p>
-        <div>
-          <h2>Research &amp; earlier projects</h2>
-          <p>Projects from my postgraduate work and independent development, spanning time-series analysis, data pipelines and database applications.</p>
-        </div>
-      </header>
-      <div class="index" id="earlier-grid">
-        <article class="entry earlier-project reveal">
-          <span class="entry-num"></span>
-          <div class="entry-main">
-            <p class="project-kind">MSc dissertation · Research</p>
-            <h3>Anomaly Detection for Automated Trading</h3>
-            <p>Risk-aware TSB-AD benchmarking on 2,910,814 one-minute bars from 30 US equities in 2025, comparing a close-only representation with a multivariate bar of OHLC, volume, trade count and VWAP.</p>
-            <details class="project-details">
-              <summary>Project details</summary>
-              <p><strong>Benchmark.</strong> A custom execution layer adapts the TSB-AD model wrappers to unlabelled equity bars without modifying the upstream implementations. 23 model–representation combinations (11 close-only, 12 multivariate) ran across all 30 tickers, producing 690 aligned score vectors with no failures.</p>
-              <p><strong>Evaluation without true labels.</strong> Combines weak proxy labels, intraday-adjusted robustness checks, top-1% score precision, consensus-event inspection, and current and forward risk-enrichment ratios.</p>
-              <p><strong>Findings.</strong> LSTMAD was the strongest model with both representations. Multivariate inputs improved neural models, especially LSTMAD and USAD, and tracked volume-related activity more closely; close-only models such as SR and Sub_KNN remained competitive for return-driven stress. High-score periods coincided with elevated current stress and larger next-30-bar absolute moves.</p>
-              <p>The study frames anomaly detection as a risk-aware monitoring layer for automated trading; it does not establish profitability or directional price prediction. Supervised by Professor Xu Kai; submitted May 2026.</p>
-            </details>
-          </div>
-          <div class="tags"><span>Python</span><span>TSB-AD</span><span>PyTorch</span><span>Time series</span><span>Risk analysis</span></div>
-        </article>
-        <article class="entry earlier-project reveal">
-          <span class="entry-num"></span>
-          <div class="entry-main">
-            <p class="project-kind">COMP4039 coursework · Database web application</p>
-            <h3>Police Traffic Management System</h3>
-            <p>A PHP and SQL coursework application that connects people, vehicles and traffic incidents in one searchable workflow. Separate officer and administrator roles support incident reporting, fine association and audit-log review.</p>
-            <details class="project-details">
-              <summary>Project details</summary>
-              <p><strong>Incident reporting.</strong> Record an incident with its date, description, offence, vehicle and person. Reuse existing vehicle and person records or add new ones as part of the reporting workflow, then retrieve and edit the report.</p>
-              <p><strong>Search and retrieval.</strong> Find incidents by ID, date range, vehicle registration, person name, licence number or officer name. Dedicated people and vehicle searches provide access to related records.</p>
-              <p><strong>Role-based workflows.</strong> Officers record and retrieve operational data; administrators can also create officer accounts, associate fines with incidents and review audit logs. Account features include sign-in, password changes and logout.</p>
-              <p><strong>Relational data and audit trails.</strong> Model accounts, officers, people, vehicles, ownership, incidents, offences, fines and audit logs. SQL triggers record account and incident changes, while PHP functions log record reads. Administrators can filter audit records by user, action, table and date range.</p>
-              <p><strong>Delivery.</strong> Built with PHP, MySQLi, HTML, CSS and JavaScript, with a Docker Compose environment using MariaDB. Delivered SQL setup files, a user manual and a technical manual covering installation, data flow and database design. The application runs with a PHP web server and database.</p>
-            </details>
-          </div>
-          <div class="tags"><span>PHP / MySQLi</span><span>MySQL / MariaDB</span><span>JavaScript</span><span>SQL triggers</span><span>Docker Compose</span></div>
-        </article>
-        <article class="entry earlier-project reveal">
-          <span class="entry-num"></span>
-          <div class="entry-main">
-            <p class="project-kind">Independent project · Data tooling</p>
-            <h3>Stock Data &amp; Volatility Toolkit</h3>
-            <p>Python scripts for collecting market data, comparing stock volatility and identifying large daily price moves, with CSV exports for further analysis.</p>
-            <details class="project-details">
-              <summary>Project details</summary>
-              <p>Includes daily and minute-level data download workflows, average true range (ATR) and intraday volatility calculations, and ranking of stocks by daily price changes.</p>
-              <p>Designed as local data preparation and exploratory analysis tooling. Data downloads require an independently configured market-data account.</p>
-            </details>
-          </div>
-          <div class="tags"><span>Python</span><span>pandas</span><span>Alpaca API</span><span>CSV</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section id="interactive-demos" class="section wrap">
-      <header class="section-head reveal">
-        <p class="sec-label">Demos</p>
-        <div>
-          <h2>Interactive demos</h2>
-          <p>Single-page explainers that make an abstract idea tangible. Open any of them live — no install. <span class="note">UI language: Chinese.</span></p>
-        </div>
-      </header>
-      <div class="demos" id="demo-grid"></div>
-    </section>
-
-    <section class="section wrap">
-      <header class="section-head reveal">
-        <p class="sec-label">Featured</p>
-        <div>
-          <h2>YouTube Vocabulary Learner</h2>
-          <p>My most complete project — a three-part system I iterated on from a single extension into a full-stack app.</p>
-        </div>
-      </header>
-      <article class="feature reveal">
-        <ol class="feature-diagram" aria-label="System architecture">
-          <li class="node"><span class="k">Chrome extension</span><span class="v">captures uploaded (non-auto) subtitles from the video you're watching</span></li>
-          <li class="node"><span class="k">Node + Express API</span><span class="v">tokenises text, stores videos, sentences &amp; word counts in SQLite</span></li>
-          <li class="node"><span class="k">React + TypeScript web app</span><span class="v">browse words, read every sentence they appear in, jump the embedded player to that moment</span></li>
-        </ol>
-        <div class="feature-body">
-          <ul class="bullets">
-            <li>Counts each word once per video, so rewatching doesn't inflate frequencies.</li>
-            <li>Concordance view: every subtitle line containing a word, highlighted, grouped by video.</li>
-            <li>Click a sentence → the embedded YouTube player seeks to that timestamp.</li>
-            <li>Favourites, sorting by frequency / date / alphabet, and filters.</li>
-            <li>v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am/is/are → be); v2 split it into extension, API and web app.</li>
-          </ul>
-          <div class="feature-side">
-            <div class="tags"><span>Chrome MV3</span><span>Express</span><span>SQLite</span><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Tailwind</span></div>
-            <div class="links">
-              <a class="btn small primary" data-src="projects/youtube-vocab-learner">Source · v2 full-stack <span aria-hidden="true">↗</span></a>
-              <a class="btn small" data-src="projects/youtube-subtitle-parser">Source · v1 extension <span aria-hidden="true">↗</span></a>
+        <h1 class="reveal">
+          <span class="en">I turn fuzzy ideas into <em>working software</em> — fast.</span>
+          <span class="zh">把模糊的想法，快速变成<em>能用的软件</em>。</span>
+        </h1>
+        <div class="hero-grid">
+          <div class="reveal">
+            <p class="lede en">
+              I'm Yuxiao, an engineering and AI graduate who builds interactive tools with an
+              AI-assisted (“vibe coding”) workflow: write the spec, let the model draft, then test,
+              verify and ship. Below are research and database applications, browser extensions
+              and interactive demos you can try right here.
+            </p>
+            <p class="lede zh">
+              我是 Yuxiao，工程与人工智能背景的毕业生，习惯用 AI 辅助（“vibe coding”）的方式做交互工具：
+              先写清需求，让模型起草，再测试、核验、交付。下面有研究与数据库应用、浏览器扩展，
+              以及可以直接在线试用的交互演示。
+            </p>
+            <div class="cta">
+              <a class="btn primary" href="#work"><span class="en">See the work</span><span class="zh">查看项目</span> <span aria-hidden="true">↓</span></a>
+              <a class="btn" id="hero-email" href="#contact"><span class="en">Get in touch</span><span class="zh">联系我</span></a>
             </div>
           </div>
+          <dl class="facts-card reveal">
+            <div><dt><span class="en">Education</span><span class="zh">教育</span></dt>
+              <dd><span class="en">MSc Computer Science (AI), University of Nottingham · Merit</span><span class="zh">诺丁汉大学 计算机科学（人工智能）硕士 · Merit</span></dd></div>
+            <div><dt>&nbsp;</dt>
+              <dd><span class="en">BEng Measurement &amp; Control, ECUST, Shanghai</span><span class="zh">华东理工大学 测控技术与仪器 学士</span></dd></div>
+            <div><dt><span class="en">Languages</span><span class="zh">语言</span></dt>
+              <dd><span class="en">Mandarin (native) · English (UK-taught Master's)</span><span class="zh">中文（母语）· 英语（英国授课硕士）</span></dd></div>
+            <div><dt><span class="en">Status</span><span class="zh">状态</span></dt>
+              <dd><span class="en">Graduated 2026 · open to roles</span><span class="zh">2026 年毕业 · 求职中</span></dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="ticker reveal" aria-label="Key figures">
+        <div class="wrap ticker-inner">
+          <div><strong id="count">16</strong><span class="en">tools &amp; projects shipped</span><span class="zh">个已交付的工具与项目</span></div>
+          <div><strong id="demo-count">5</strong><span class="en">live interactive demos</span><span class="zh">个可在线试用的交互演示</span></div>
+          <div><strong>8</strong><span class="en">Chrome extensions</span><span class="zh">个 Chrome 扩展</span></div>
+          <div><strong>2,910,814</strong><span class="en">one-minute bars benchmarked</span><span class="zh">根一分钟 K 线用于基准测试</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <section id="work" class="section wrap">
+      <header class="section-head reveal">
+        <p class="sec-num">01</p>
+        <div>
+          <h2><span class="en">Selected work</span><span class="zh">重点项目</span></h2>
+          <p class="en">Three projects in depth — research, a database application and a full-stack product: the situation, what I did and what came out.</p>
+          <p class="zh">三个深入展开的项目——研究、数据库应用和全栈产品：背景、我做了什么，以及结果如何。</p>
+        </div>
+      </header>
+
+      <article class="case reveal" id="case-research">
+        <div class="case-head">
+          <p class="case-kind"><span class="en">MSc dissertation · Research</span><span class="zh">硕士论文 · 研究</span></p>
+          <h3><span class="en">Anomaly Detection for Automated Trading</span><span class="zh">面向自动化交易的异常检测</span></h3>
+          <div class="tags"><span>Python</span><span>PyTorch</span><span>TSB-AD</span><span>Time series</span><span>Risk analysis</span></div>
+        </div>
+        <dl class="case-body">
+          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
+            <dd class="en">Automated trading needs an early warning when markets behave abnormally — but real market data has no "correct answer" labels to test against.</dd>
+            <dd class="zh">自动化交易需要在市场异常时提前预警——但真实市场数据没有“标准答案”可以用来检验模型。</dd></div>
+          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
+            <dd class="en">Risk-aware TSB-AD benchmarking on 2,910,814 one-minute bars from 30 US equities in 2025, comparing a close-only representation with a multivariate bar of OHLC, volume, trade count and VWAP. A custom execution layer adapts the TSB-AD model wrappers to unlabelled equity bars without modifying the upstream implementations. Evaluation combines weak proxy labels, intraday-adjusted robustness checks, top-1% score precision, consensus-event inspection, and current and forward risk-enrichment ratios.</dd>
+            <dd class="zh">在 2025 年 30 只美股、共 2,910,814 根一分钟 K 线上做风险导向的 TSB-AD 基准测试，比较“仅收盘价”与“多维 K 线（OHLC、成交量、成交笔数、VWAP）”两种表示。自建执行层，在不改动上游实现的前提下，让 TSB-AD 模型适配无标签的股票数据。评估结合弱代理标签、日内调整后的稳健性检验、前 1% 分数精度、共识事件检查，以及当期与前瞻风险富集比。</dd></div>
+          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
+            <dd class="en">23 model–representation combinations across all 30 tickers produced 690 aligned score vectors with no failures. LSTMAD was strongest with both representations; multivariate inputs improved neural models, especially LSTMAD and USAD, while close-only SR and Sub_KNN stayed competitive for return-driven stress. High-score periods coincided with elevated stress and larger next-30-bar moves.</dd>
+            <dd class="zh">23 种模型–表示组合覆盖全部 30 只股票，得到 690 组对齐的分数向量，零失败。LSTMAD 在两种表示下都最强；多维输入提升了神经网络模型（尤其 LSTMAD 和 USAD），而仅收盘价的 SR、Sub_KNN 在收益驱动的压力上依然有竞争力。高分时段与当期压力上升、之后 30 根 K 线的更大波动高度吻合。</dd></div>
+          <div class="cb"><dt><span class="en">Takeaway</span><span class="zh">结论</span></dt>
+            <dd class="en">Anomaly detection is most defensible as a risk-aware monitoring layer for automated trading — the study does not claim profitability or directional price prediction. Supervised by Professor Xu Kai; submitted May 2026.</dd>
+            <dd class="zh">异常检测最站得住脚的定位，是自动化交易中的风险监控层——本研究不主张盈利能力或价格方向预测。导师：Xu Kai 教授；2026 年 5 月提交。</dd></div>
+        </dl>
+      </article>
+
+      <article class="case reveal" id="case-traffic">
+        <div class="case-head">
+          <p class="case-kind"><span class="en">COMP4039 coursework · Database web application</span><span class="zh">COMP4039 课程项目 · 数据库网页应用</span></p>
+          <h3><span class="en">Police Traffic Management System</span><span class="zh">警务交通管理系统</span></h3>
+          <div class="tags"><span>PHP / MySQLi</span><span>MySQL / MariaDB</span><span>JavaScript</span><span>SQL triggers</span><span>Docker Compose</span></div>
+        </div>
+        <dl class="case-body">
+          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
+            <dd class="en">A traffic-police team needs one searchable workflow that connects people, vehicles and traffic incidents — with separate officer and administrator roles.</dd>
+            <dd class="zh">交警团队需要一个可检索的统一流程，把人员、车辆和交通事故关联起来——并区分警员与管理员两种角色。</dd></div>
+          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
+            <dd class="en">Modelled accounts, officers, people, vehicles, ownership, incidents, offences, fines and audit logs. Built incident reporting that reuses or adds vehicle and person records; search by ID, date range, registration, name, licence number or officer; and admin tools to create officer accounts, associate fines and review audit logs. SQL triggers record account and incident changes, while PHP functions log record reads.</dd>
+            <dd class="zh">建模账户、警员、人员、车辆、所有权、事故、违法类型、罚款与审计日志。实现事故上报（可复用或新增车辆与人员记录）；按编号、日期范围、车牌、姓名、驾照号或警员检索；以及管理员创建警员账户、关联罚款、查看审计日志的功能。SQL 触发器记录账户与事故的变更，PHP 函数记录数据读取。</dd></div>
+          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
+            <dd class="en">A Docker Compose environment with MariaDB, SQL setup files, a user manual and a technical manual covering installation, data flow and database design.</dd>
+            <dd class="zh">交付基于 MariaDB 的 Docker Compose 环境、SQL 初始化文件、用户手册，以及涵盖安装、数据流与数据库设计的技术手册。</dd></div>
+          <div class="cb"><dt><span class="en">Takeaway</span><span class="zh">结论</span></dt>
+            <dd class="en">Controls belong in the data layer: role separation, linked records and an audit trail administrators can filter by user, action, table and date.</dd>
+            <dd class="zh">控制应当落在数据层：角色分离、关联记录，以及管理员可按用户、操作、数据表和日期筛选的审计轨迹。</dd></div>
+        </dl>
+      </article>
+
+      <article class="case reveal" id="case-vocab">
+        <div class="case-head">
+          <p class="case-kind"><span class="en">Featured · Full-stack product</span><span class="zh">代表作 · 全栈产品</span></p>
+          <h3><span class="en">YouTube Vocabulary Learner</span><span class="zh">YouTube 词汇学习器</span></h3>
+          <div class="tags"><span>Chrome MV3</span><span>Express</span><span>SQLite</span><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Tailwind</span></div>
+        </div>
+        <dl class="case-body">
+          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
+            <dd class="en">I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</dd>
+            <dd class="zh">我想从自己真正在看的视频里学英语单词，并看到每个词在真实语境里的用法。</dd></div>
+          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
+            <dd class="en">v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am/is/are → be). v2 split it into a Chrome extension that captures uploaded subtitles, a Node + Express API that tokenises text and stores videos, sentences and word counts in SQLite, and a React + TypeScript web app.</dd>
+            <dd class="zh">v1 是一个使用 IndexedDB 存储、带手写词形还原（am/is/are → be）的独立扩展。v2 拆分为三部分：抓取上传字幕的 Chrome 扩展、负责分词并把视频、句子和词频存入 SQLite 的 Node + Express API，以及 React + TypeScript 网页应用。</dd></div>
+          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
+            <dd class="en">A concordance view of every subtitle line containing a word, grouped by video; click a sentence and the embedded player seeks to that moment. Favourites, sorting and filters — and each word counts once per video, so rewatching doesn't inflate frequencies.</dd>
+            <dd class="zh">例句索引视图按视频分组列出包含某词的每一行字幕；点击句子，内嵌播放器即跳转到该时刻。支持收藏、排序与筛选——每个词在同一视频中只计一次，重复观看不会虚高词频。</dd></div>
+          <div class="cb"><dt><span class="en">Takeaway</span><span class="zh">结论</span></dt>
+            <dd class="en">My most complete project: start small, use it for real, and know when to rebuild rather than patch.</dd>
+            <dd class="zh">我最完整的项目：从小处开始、真实使用，并判断何时该重构而不是打补丁。</dd></div>
+        </dl>
+        <div class="links">
+          <a class="arrow-link" data-src="projects/youtube-vocab-learner"><span class="en">Source · v2 full-stack</span><span class="zh">源码 · v2 全栈</span> ↗</a>
+          <a class="arrow-link" data-src="projects/youtube-subtitle-parser"><span class="en">Source · v1 extension</span><span class="zh">源码 · v1 扩展</span> ↗</a>
         </div>
       </article>
     </section>
 
-    <section class="section wrap">
+    <!-- ============ BUILDS ============ -->
+    <section id="builds" class="section wrap">
       <header class="section-head reveal">
-        <p class="sec-label">Extensions</p>
+        <p class="sec-num">02</p>
         <div>
-          <h2>Douyin creator toolkit</h2>
-          <p>Six Chrome extensions I built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok) — chats, posts and notifications.
-            Everything runs locally in the browser using the session I'm already logged into; nothing is uploaded, and none of them bypass login or DRM.</p>
+          <h2><span class="en">Builds you can try</span><span class="zh">可以直接试用的作品</span></h2>
+          <p class="en">Interactive explainers — each one started as a question I had while learning photography, Git and LaTeX. Open any of them live; no install. <span class="note">UI language: Chinese.</span></p>
+          <p class="zh">交互式讲解页——每一个都源于我学习摄影、Git 和 LaTeX 时的一个疑问。点开即用，无需安装。</p>
         </div>
       </header>
-      <div class="index tools" id="tool-grid"></div>
+      <div class="demos" id="demo-grid"></div>
+
+      <div class="subhead reveal">
+        <h3><span class="en">Browser tools &amp; data utilities</span><span class="zh">浏览器工具与数据工具</span></h3>
+        <p class="en">Built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok). Everything runs locally in my own logged-in session; nothing is uploaded, and nothing bypasses login or DRM.</p>
+        <p class="zh">用于备份和整理我<em>自己</em>抖音账号的数据。全部在本地、在我已登录的会话中运行；不上传任何数据，不绕过登录或 DRM。</p>
+      </div>
+      <div class="tools" id="tool-grid"></div>
     </section>
 
-    <section id="about" class="section wrap about">
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section wrap">
       <header class="section-head reveal">
-        <p class="sec-label">About</p>
-        <div><h2>About</h2></div>
-      </header>
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <p class="about-lead">
-            I studied measurement and control engineering at ECUST, then moved into AI with an
-            MSc in Computer Science at the University of Nottingham (Merit).
-          </p>
-          <p>
-            My dissertation benchmarked TSB-AD anomaly detectors on 2.9 million one-minute bars
-            across 30 US equities, and concluded they're most defensible as a risk-monitoring layer for automated trading, not as a direct trading signal.
-          </p>
-          <p>
-            What I enjoy most is the step from “this is confusing” to “here's a tool that makes it obvious”.
-            Several of the demos above started as questions I had while learning photography, Git and LaTeX.
-          </p>
+        <p class="sec-num">03</p>
+        <div>
+          <h2><span class="en">About &amp; how I build</span><span class="zh">关于我与工作方式</span></h2>
+          <p class="en">I studied measurement and control engineering at ECUST, then moved into AI with an MSc in Computer Science at the University of Nottingham. What I enjoy most is the step from “this is confusing” to “here's a tool that makes it obvious”.</p>
+          <p class="zh">我本科在华东理工大学读测控，之后在诺丁汉大学读计算机科学硕士，转向人工智能。我最享受的，是从“这东西好难懂”走到“这个工具让它一目了然”的那一步。</p>
         </div>
-        <aside class="facts reveal">
-          <h3>Education</h3>
-          <p><strong>MSc Computer Science (AI)</strong><br>University of Nottingham, UK · 2024–2026 · Merit</p>
-          <p><strong>BEng Measurement, Control Technology &amp; Instruments</strong><br>East China University of Science and Technology · 2019–2023</p>
-          <h3>Toolkit</h3>
+      </header>
+      <ol class="process reveal">
+        <li><strong><span class="en">Specify</span><span class="zh">明确</span></strong>
+          <span class="en">Write down the goal, constraints and what “done” looks like.</span>
+          <span class="zh">先写下目标、约束条件，以及什么叫“完成”。</span></li>
+        <li><strong><span class="en">Generate</span><span class="zh">生成</span></strong>
+          <span class="en">Pair with AI coding agents (Claude Code, Codex) to draft quickly.</span>
+          <span class="zh">与 AI 编程助手（Claude Code、Codex）结对，快速起草。</span></li>
+        <li><strong><span class="en">Verify</span><span class="zh">核验</span></strong>
+          <span class="en">Unit tests, manual checks in the real page, and reading every diff.</span>
+          <span class="zh">单元测试、在真实页面中手动检查、逐个审阅改动。</span></li>
+        <li><strong><span class="en">Iterate</span><span class="zh">迭代</span></strong>
+          <span class="en">Ship a small version, then refine from real use.</span>
+          <span class="zh">先交付小版本，再根据真实使用改进。</span></li>
+      </ol>
+      <div class="about-grid reveal">
+        <div>
+          <h3><span class="en">Education</span><span class="zh">教育背景</span></h3>
+          <p><strong><span class="en">MSc Computer Science (Artificial Intelligence)</span><span class="zh">计算机科学（人工智能）硕士</span></strong><br>
+            <span class="en">University of Nottingham, UK · 2024–2026 · Merit</span><span class="zh">英国诺丁汉大学 · 2024–2026 · Merit</span></p>
+          <p><strong><span class="en">BEng Measurement, Control Technology &amp; Instruments</span><span class="zh">测控技术与仪器 学士</span></strong><br>
+            <span class="en">East China University of Science and Technology, Shanghai · 2019–2023</span><span class="zh">华东理工大学（上海）· 2019–2023</span></p>
+        </div>
+        <div>
+          <h3><span class="en">Toolkit</span><span class="zh">技能</span></h3>
           <div class="tags"><span>Python</span><span>PyTorch</span><span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>SQL</span><span>PHP</span><span>Three.js</span><span>Chrome Extensions</span></div>
-          <h3>Languages</h3>
-          <p>Mandarin (native) · English (IELTS 6.5, UK-taught Master's)</p>
-        </aside>
-      </div>
-      <div class="process-wrap reveal">
-        <h3 class="process-title">How I build</h3>
-        <ol class="process">
-          <li><strong>Specify</strong>Write down the goal, constraints and what “done” looks like.</li>
-          <li><strong>Generate</strong>Pair with AI coding agents (Claude Code, Codex) to draft quickly.</li>
-          <li><strong>Verify</strong>Unit tests, manual checks in the real page, and reading every diff.</li>
-          <li><strong>Iterate</strong>Ship a small version, then refine from real use.</li>
-        </ol>
+          <h3><span class="en">Languages</span><span class="zh">语言</span></h3>
+          <p><span class="en">Mandarin (native) · English (IELTS 6.5, UK-taught Master's)</span><span class="zh">中文（母语）· 英语（雅思 6.5，英国授课硕士）</span></p>
+        </div>
       </div>
     </section>
 
-    <section id="contact" class="wrap contact">
-      <p class="sec-label reveal">Contact</p>
-      <h2 class="reveal">Let's <em>talk.</em></h2>
-      <p class="reveal">I'm looking for roles where I can turn ambiguous problems into working tools.</p>
-      <a class="mail reveal" id="email-link" href="#">Email me</a>
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <p class="sec-num reveal">04</p>
+        <h2 class="reveal"><span class="en">Let's <em>talk.</em></span><span class="zh">期待<em>交流。</em></span></h2>
+        <p class="reveal">
+          <span class="en">I'm looking for roles where I can turn ambiguous problems into working tools.</span>
+          <span class="zh">我在寻找能把模糊问题变成可用工具的岗位。</span>
+        </p>
+        <a class="mail reveal" id="email-link" href="#">Email</a>
+      </div>
     </section>
   </main>
 
   <footer class="wrap foot">
     <span>© <span id="year"></span> Yuxiao Pu</span>
-    <a href="#top">Back to top ↑</a>
-    <a id="repo-link" href="#">Source of this site ↗</a>
+    <a href="#top"><span class="en">Back to top ↑</span><span class="zh">回到顶部 ↑</span></a>
+    <a id="repo-link" href="#"><span class="en">Source of this site ↗</span><span class="zh">本站源码 ↗</span></a>
   </footer>
 
   <script src="script.js"></script>
