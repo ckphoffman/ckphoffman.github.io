@@ -39,7 +39,7 @@ const tools = [
   {
     slug: "douyin-im-exporter",
     title: "IM HTML Exporter",
-    blurb: "Exports a whole chat as a self-contained HTML file without scrolling: a main-world bridge reuses the page's own initialised IM SDK and pages through history by cursor.",
+    blurb: "Exports chat history into a clean, self-contained HTML archive using cursor-based pagination and automated unit tests for formatting reliability.",
     tags: ["MV3", "Page bridge", "Unit tests"],
   },
   {
@@ -63,7 +63,7 @@ const tools = [
   {
     slug: "douyin-self-archive",
     title: "Self Archive",
-    blurb: "Watches the media requests a page already makes while I play my own post, ranks the candidates, and saves the best one.",
+    blurb: "A local-first archiving utility that helps creators organise and back up their own published media posts directly within an authenticated browser session.",
     tags: ["webRequest", "MV3"],
   },
   {
