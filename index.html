@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Yuxiao Pu — Corporate Bank Graduate Candidate</title>
-  <meta name="description" content="Yuxiao Pu — MSc Computer Science (AI), University of Nottingham; BEng, ECUST Shanghai. Candidate for the 2027 Corporate Bank Graduate Programme, Shanghai.">
-  <meta property="og:title" content="Yuxiao Pu — Clarity for complex systems">
+  <title>Yuxiao Pu, Corporate Bank graduate candidate</title>
+  <meta name="description" content="Yuxiao Pu: MSc Computer Science (AI), University of Nottingham; BEng, ECUST Shanghai. Candidate for the 2027 Corporate Bank Graduate Programme, Shanghai.">
+  <meta property="og:title" content="Yuxiao Pu: clarity for complex systems">
   <meta property="og:description" content="Risk analytics, controlled systems and client-ready explanations. Candidate for the 2027 Corporate Bank Graduate Programme, Shanghai.">
   <meta property="og:image" content="assets/shots/camera-angles.jpg">
-  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0c1220" media="(prefers-color-scheme: dark)">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f1d36'/><text x='50%' y='56%' font-family='Georgia,serif' font-size='30' fill='%23f6f5f1' text-anchor='middle' dominant-baseline='middle'>YP</text></svg>">
+  <meta name="theme-color" content="#f8f7f3">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23d8352a'/><text x='50%' y='56%' font-family='Arial,sans-serif' font-weight='700' font-size='30' fill='%23f8f7f3' text-anchor='middle' dominant-baseline='middle'>YP</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:wght@400;700&family=Radio+Canada:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script>
     document.documentElement.classList.add("js");
@@ -21,319 +20,354 @@
   </script>
 </head>
 <body>
+  <a class="skip" href="#top"><span class="en">Skip to content</span><span class="zh">跳到正文</span></a>
+
   <header class="nav">
-    <div class="wrap nav-inner">
-      <a href="#top" class="brand">Yuxiao Pu</a>
+    <div class="container nav-inner">
+      <a href="#top" class="wordmark" aria-label="Yuxiao Pu, home"><span>Yuxiao</span><span>Pu</span></a>
       <nav aria-label="Sections">
         <a href="#fit"><span class="en">Fit</span><span class="zh">匹配</span></a>
-        <a href="#cases"><span class="en">Case studies</span><span class="zh">案例</span></a>
+        <a href="#cases"><span class="en">Cases</span><span class="zh">案例</span></a>
         <a href="#why"><span class="en">Why CB</span><span class="zh">为什么</span></a>
         <a href="#builds"><span class="en">Builds</span><span class="zh">作品</span></a>
-        <a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
       </nav>
       <button class="lang" id="lang-toggle" type="button" aria-label="Switch language / 切换语言">
         <span data-l="en">EN</span><span data-l="zh-CN">中文</span>
       </button>
+      <a class="nav-action" href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
     </div>
   </header>
 
   <main id="top">
-    <!-- ============ HERO ============ -->
-    <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow reveal">
-          <span class="en">Candidate · 2027 Graduate Programme · Corporate Bank · Shanghai</span>
-          <span class="zh">申请 · 2027 管培生项目 · 企业银行 · 上海</span>
+    <!-- hero: the work index on the ultramarine field -->
+    <section class="hero" aria-labelledby="hero-head">
+      <div class="container cols hero-grid">
+        <div class="hero-text">
+          <h1 id="hero-head">
+            <span class="en">I turn complexity into clarity for the people who depend on it.</span>
+            <span class="zh">把复杂的东西讲清楚、做可靠，交给真正依赖它的人。</span>
+          </h1>
+          <p class="lead">
+            <span class="en">Candidate for the 2027 Graduate Programme, Corporate Bank, Shanghai.</span>
+            <span class="zh">申请 2027 管培生项目，企业银行，上海。</span>
+          </p>
+          <div class="actions">
+            <a class="btn btn--primary" id="hero-email" href="#contact"><span class="en">Get in touch</span><span class="zh">联系我</span></a>
+            <a class="btn btn--secondary" href="#fit"><span class="en">How I fit the role</span><span class="zh">看我如何匹配</span></a>
+          </div>
+        </div>
+        <ol class="work-index field" aria-label="Selected work">
+          <li><a href="#case-risk">
+            <span class="wi-title"><span class="en">Spotting market stress without crying wolf</span><span class="zh">识别市场压力，又不“狼来了”</span></span>
+            <span class="wi-kind"><span class="en">MSc dissertation, risk analytics</span><span class="zh">硕士论文，风险分析</span></span>
+            <span class="wi-fig num">2,910,814 <small><span class="en">one-minute bars analysed for risk</span><span class="zh">根一分钟 K 线用于风险分析</span></small></span>
+          </a></li>
+          <li><a href="#case-controls">
+            <span class="wi-title"><span class="en">A system where every change leaves a trace</span><span class="zh">每一次修改都留痕的系统</span></span>
+            <span class="wi-kind"><span class="en">Coursework, controlled operations</span><span class="zh">课程项目，受控业务系统</span></span>
+            <span class="wi-fig num">690 / 0 <small><span class="en">model runs / failures</span><span class="zh">次模型运行 / 零失败</span></small></span>
+          </a></li>
+          <li><a href="#case-product">
+            <span class="wi-title"><span class="en">From a browser add&#8209;on to a three-part product</span><span class="zh">从一个浏览器插件到三层产品</span></span>
+            <span class="wi-kind"><span class="en">Independent product, iteration</span><span class="zh">独立产品，迭代</span></span>
+            <span class="wi-fig num"><span class="en">v1 to v2</span><span class="zh">v1 到 v2</span></span>
+          </a></li>
+          <li><a href="#builds">
+            <span class="wi-title"><span class="en">Builds you can try</span><span class="zh">可以直接试用的作品</span></span>
+            <span class="wi-kind"><span class="en">Explainers, browser tools, data utilities</span><span class="zh">讲解页、浏览器工具、数据工具</span></span>
+            <span class="wi-fig num"><span id="count">16</span> <small><span class="en">tools &amp; projects shipped</span><span class="zh">个已交付的工具与项目</span></small></span>
+          </a></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- fit: four roles as rows -->
+    <section id="fit" class="section">
+      <div class="container">
+        <div class="statement cols">
+          <p class="statement-text en">
+          Engineer by training, Shanghai- and UK-educated. I’ve analysed 2.9 million minutes of market data for risk,
+          built systems where every change leaves an audit trail, and shipped tools people can understand in seconds.
+          I want to bring that mix to corporate clients: rigour, reliability and plain-language explanation.
         </p>
-        <h1 class="reveal">
-          <span class="en">I turn complexity into <em>clarity</em> — for the people who depend on it.</span>
-          <span class="zh">把复杂的东西<em>讲清楚</em>、做可靠，交给真正依赖它的人。</span>
-        </h1>
-        <div class="hero-grid">
-          <div class="reveal">
-            <p class="lede en">
-              Engineer by training, Shanghai- and UK-educated. I've analysed 2.9 million minutes of market data for risk,
-              built systems where every change leaves an audit trail, and shipped tools people can understand in seconds.
-              I want to bring that mix — rigour, reliability and plain-language explanation — to corporate clients.
-            </p>
-            <p class="lede zh">
-              测控工程本科（华东理工，上海），诺丁汉大学计算机（人工智能）硕士。我用 290 万根一分钟 K 线做过风险分析，
-              搭建过“每一次修改都留痕”的业务系统，也做过让人几秒钟就能看懂的交互工具。
-              我希望把这种组合——严谨、可靠、讲得清楚——带给企业客户。
-            </p>
-            <div class="cta">
-              <a class="btn primary" href="#fit"><span class="en">How I fit the role</span><span class="zh">看我如何匹配</span> <span aria-hidden="true">↓</span></a>
-              <a class="btn" id="hero-email" href="#contact"><span class="en">Get in touch</span><span class="zh">联系我</span></a>
-            </div>
-          </div>
-          <dl class="facts-card reveal">
-            <div><dt><span class="en">Education</span><span class="zh">教育</span></dt>
-              <dd><span class="en">MSc Computer Science (AI), University of Nottingham · Merit</span><span class="zh">诺丁汉大学 计算机科学（人工智能）硕士 · Merit</span></dd></div>
-            <div><dt>&nbsp;</dt>
-              <dd><span class="en">BEng Measurement &amp; Control, ECUST, Shanghai</span><span class="zh">华东理工大学 测控技术与仪器 学士</span></dd></div>
-            <div><dt><span class="en">Languages</span><span class="zh">语言</span></dt>
-              <dd><span class="en">Mandarin · English</span><span class="zh">中文 · 英语</span></dd></div>
-            <div><dt><span class="en">Graduated</span><span class="zh">毕业</span></dt>
-              <dd><span class="en">2026 · available from July 2027</span><span class="zh">2026 年 · 2027 年 7 月可全职入职</span></dd></div>
-          </dl>
+        <p class="statement-text zh">
+          测控工程本科（华东理工，上海），诺丁汉大学计算机（人工智能）硕士。我用 290 万根一分钟 K 线做过风险分析，
+          搭建过“每一次修改都留痕”的业务系统，也做过让人几秒钟就能看懂的交互工具。
+          我希望把这种组合带给企业客户：严谨、可靠、讲得清楚。
+        </p>
         </div>
-      </div>
-      <div class="ticker reveal" aria-label="Key figures">
-        <div class="wrap ticker-inner">
-          <div><strong>2,910,814</strong><span class="en">one-minute bars analysed for risk</span><span class="zh">根一分钟 K 线用于风险分析</span></div>
-          <div><strong>690 / 0</strong><span class="en">model runs / failures</span><span class="zh">次模型运行 / 零失败</span></div>
-          <div><strong id="count">16</strong><span class="en">tools &amp; projects shipped</span><span class="zh">个已交付的工具与项目</span></div>
-          <div><strong>2 × 2</strong><span class="en">languages × education systems</span><span class="zh">种语言 × 两种教育体系</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FIT ============ -->
-    <section id="fit" class="section wrap">
-      <header class="section-head reveal">
-        <p class="sec-num">01</p>
-        <div>
+        <div class="head cols">
           <h2><span class="en">Four roles. One way of working.</span><span class="zh">四类岗位，同一种做事方式。</span></h2>
-          <p class="en">The Corporate Bank programme rotates graduates through Sales, Product Management, Client Service &amp; Delivery and Business Management. Here is the evidence I'd bring to each.</p>
-          <p class="zh">企业银行管培生会接触销售、产品管理、客户服务与交付、业务管理四类角色。以下是我在每一类里能拿出来的证据。</p>
+          <p class="lead en">The Corporate Bank programme rotates graduates through Sales, Product Management, Client Service &amp; Delivery and Business Management. Here is the evidence I’d bring to each.</p>
+          <p class="lead zh">企业银行管培生会接触销售、产品管理、客户服务与交付、业务管理四类角色。以下是我在每一类里能拿出来的证据。</p>
         </div>
-      </header>
-      <div class="fit-grid">
-        <article class="fit reveal">
-          <p class="fit-role"><span class="en">Sales &amp; Coverage</span><span class="zh">销售与客户覆盖</span></p>
-          <h3><span class="en">Earn trust by making things clear.</span><span class="zh">把事情讲清楚，信任自然来。</span></h3>
-          <ul>
-            <li class="en">Built five interactive explainers that turn abstract ideas — optics, Git, LaTeX — into something you can touch.</li>
-            <li class="zh">做了五个交互式讲解页，把光学、Git、LaTeX 这类抽象概念变成可以动手摸的东西。</li>
-            <li class="en">Educated in Shanghai and the UK; at home switching between Chinese and English, and between engineers and non-specialists.</li>
-            <li class="zh">在上海和英国接受教育，能在中英文之间、在工程师和非技术人员之间自如切换。</li>
-          </ul>
-          <a class="evidence" href="#builds"><span class="en">See the explainers</span><span class="zh">查看讲解页</span> →</a>
+        <div class="fit-rows">
+          <article class="fit cols">
+            <h3 class="fit-role"><span class="en">Sales &amp; Coverage</span><span class="zh">销售与客户覆盖</span></h3>
+            <p class="fit-claim"><span class="en">Earn trust by making things clear.</span><span class="zh">把事情讲清楚，信任自然来。</span></p>
+            <div class="fit-proof">
+              <ul>
+                <li class="en">Built five interactive explainers that turn abstract ideas (optics, Git, LaTeX) into something you can touch.</li>
+                <li class="zh">做了五个交互式讲解页，把光学、Git、LaTeX 这类抽象概念变成可以动手摸的东西。</li>
+                <li class="en">Educated in Shanghai and the UK; at home switching between Chinese and English, and between engineers and non-specialists.</li>
+                <li class="zh">在上海和英国接受教育，能在中英文之间、在工程师和非技术人员之间自如切换。</li>
+              </ul>
+              <a class="evidence" href="#builds"><span class="en">See the explainers</span><span class="zh">查看讲解页</span></a>
+            </div>
+          </article>
+          <article class="fit cols">
+            <h3 class="fit-role"><span class="en">Product Management</span><span class="zh">产品管理</span></h3>
+            <p class="fit-claim"><span class="en">Start from a real pain. Ship. Iterate.</span><span class="zh">从真实痛点出发，交付，再迭代。</span></p>
+            <div class="fit-proof">
+              <ul>
+                <li class="en">Eight Chrome extensions, each born from a problem I had myself, written spec-first, then tested.</li>
+                <li class="zh">八个 Chrome 扩展，每个都源于我自己遇到的问题：先写需求文档，再开发、再测试。</li>
+                <li class="en">Grew a single extension into a three-part product (extension, API, web app) once v1 hit its limits.</li>
+                <li class="zh">当 v1 不够用时，把一个扩展重构成“扩展 + API + 网页应用”的三层产品。</li>
+              </ul>
+              <a class="evidence" href="#case-product"><span class="en">Read the case</span><span class="zh">查看案例</span></a>
+            </div>
+          </article>
+          <article class="fit cols">
+            <h3 class="fit-role"><span class="en">Client Service &amp; Delivery</span><span class="zh">客户服务与交付</span></h3>
+            <p class="fit-claim"><span class="en">Reliability is the product.</span><span class="zh">可靠，本身就是产品。</span></p>
+            <div class="fit-proof">
+              <ul>
+                <li class="en">Ran 690 model-by-ticker benchmarks end to end with zero failures.</li>
+                <li class="zh">端到端跑完 690 组模型 × 股票的基准测试，零失败。</li>
+                <li class="en">Designed role-based access and database-level audit trails so every change can be traced.</li>
+                <li class="zh">设计了基于角色的权限和数据库级审计日志，任何修改都可追溯。</li>
+              </ul>
+              <a class="evidence" href="#case-controls"><span class="en">Read the case</span><span class="zh">查看案例</span></a>
+            </div>
+          </article>
+          <article class="fit cols">
+            <h3 class="fit-role"><span class="en">Business Management</span><span class="zh">业务管理</span></h3>
+            <p class="fit-claim"><span class="en">Numbers first, then an honest conclusion.</span><span class="zh">先看数据，再给出诚实的结论。</span></p>
+            <div class="fit-proof">
+              <ul>
+                <li class="en">My dissertation concluded that anomaly detectors are a risk-monitoring layer, not a trading signal, and said so plainly.</li>
+                <li class="zh">我的毕业论文得出结论：异常检测适合作为风险监控层，而不是交易信号，并如实写明了这一点。</li>
+                <li class="en">Built my own market-data and volatility toolkit (ATR, intraday ranges, large-move ranking).</li>
+                <li class="zh">自建行情数据与波动率工具（ATR、日内波动、大幅变动排名）。</li>
+              </ul>
+              <a class="evidence" href="#case-risk"><span class="en">Read the case</span><span class="zh">查看案例</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- cases: three, on the paper-2 well -->
+    <section id="cases" class="section well">
+      <div class="container">
+        <div class="head cols">
+          <h2><span class="en">Case studies</span><span class="zh">案例</span></h2>
+          <p class="lead en">Three projects, written the way I’d brief a colleague: the situation, what I did, what came out, and why it matters for corporate banking.</p>
+          <p class="lead zh">三个项目，按照向同事汇报的方式来写：背景、我做了什么、结果如何，以及它和企业银行有什么关系。</p>
+        </div>
+
+        <article class="case cols" id="case-risk">
+          <div class="case-head">
+            <h3><span class="en">Spotting market stress without crying wolf</span><span class="zh">识别市场压力，又不“狼来了”</span></h3>
+            <p class="case-kind"><span class="en">MSc dissertation, risk analytics</span><span class="zh">硕士论文，风险分析</span></p>
+            <ul class="tags" aria-label="Tools"><li>Python</li><li>PyTorch</li><li>TSB-AD</li><li>Time series</li></ul>
+          </div>
+          <dl class="case-body">
+            <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
+              <dd class="en">Automated trading needs an early warning when markets behave abnormally, but real market data has no “correct answer” labels to test against.</dd>
+              <dd class="zh">自动化交易需要在市场异常时提前预警，但真实市场数据没有“标准答案”可以用来检验模型。</dd></div>
+            <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
+              <dd class="en">Benchmarked 23 anomaly-detection set-ups on 2,910,814 one-minute bars from 30 US equities in 2025, comparing price-only inputs with a richer view (OHLC, volume, trade count, VWAP). Built my own execution layer around the benchmark, and an evaluation framework that works without labels: proxy labels, top-1% precision, consensus events and forward risk-enrichment.</dd>
+              <dd class="zh">在 2025 年 30 只美股、共 2,910,814 根一分钟 K 线上，对 23 种异常检测配置做基准测试，比较“仅收盘价”与“多维数据（OHLC、成交量、成交笔数、VWAP）”两种输入。自建执行层适配基准框架，并设计了一套无需标签的评估方法：代理标签、前 1% 精度、共识事件和前瞻风险富集比。</dd></div>
+            <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
+              <dd class="en">690 aligned runs, zero failures. LSTMAD was strongest; richer inputs helped neural models track volume-driven activity. High-score periods lined up with higher stress and larger moves over the next 30 minutes.</dd>
+              <dd class="zh">690 组对齐结果，零失败。LSTMAD 表现最好；多维输入让神经网络模型更好地捕捉成交量驱动的异动。高分时段与当期压力上升、以及之后 30 分钟的更大波动高度吻合。</dd></div>
+            <div class="cb"><dt><span class="en">Why it matters for CB</span><span class="zh">与企业银行的关系</span></dt>
+              <dd class="en">FX and rates risk management and payment monitoring face the same problem: flag the unusual early, without drowning people in false alarms, and be honest about what a model can and can’t tell you.</dd>
+              <dd class="zh">外汇与利率风险管理、支付监控面对的是同一个问题：尽早发现异常，又不让误报淹没团队，并且诚实地说明模型能说明什么、不能说明什么。</dd></div>
+          </dl>
         </article>
-        <article class="fit reveal">
-          <p class="fit-role"><span class="en">Product Management</span><span class="zh">产品管理</span></p>
-          <h3><span class="en">Start from a real pain. Ship. Iterate.</span><span class="zh">从真实痛点出发，交付，再迭代。</span></h3>
-          <ul>
-            <li class="en">Eight Chrome extensions, each born from a problem I had myself — written spec-first, then tested.</li>
-            <li class="zh">八个 Chrome 扩展，每个都源于我自己遇到的问题——先写需求文档，再开发、再测试。</li>
-            <li class="en">Grew a single extension into a three-part product (extension, API, web app) once v1 hit its limits.</li>
-            <li class="zh">当 v1 不够用时，把一个扩展重构成“扩展 + API + 网页应用”的三层产品。</li>
-          </ul>
-          <a class="evidence" href="#case-product"><span class="en">Read the case</span><span class="zh">查看案例</span> →</a>
+
+        <article class="case cols" id="case-controls">
+          <div class="case-head">
+            <h3><span class="en">A system where every change leaves a trace</span><span class="zh">每一次修改都留痕的系统</span></h3>
+            <p class="case-kind"><span class="en">Coursework, controlled operations</span><span class="zh">课程项目，受控业务系统</span></p>
+            <ul class="tags" aria-label="Tools"><li>PHP</li><li>SQL</li><li>MariaDB</li><li>Docker</li></ul>
+          </div>
+          <dl class="case-body">
+            <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
+              <dd class="en">The brief: a traffic-police team needs one place to link people, vehicles, incidents and fines, with clear separation between what officers and administrators may do.</dd>
+              <dd class="zh">课程需求：交警团队需要一个统一平台，把人员、车辆、事故和罚款关联起来，并清晰区分警员和管理员的权限。</dd></div>
+            <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
+              <dd class="en">Modelled nine linked entities in a relational database; built role-based workflows for reporting, search and fines; added SQL triggers and application logging so every create, edit and read is recorded and filterable by user, action, table and date.</dd>
+              <dd class="zh">在关系型数据库中建模九类关联实体；实现基于角色的上报、检索和罚款流程；通过 SQL 触发器和应用层日志记录每一次新增、修改和读取，并可按用户、操作、数据表和日期筛选。</dd></div>
+            <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
+              <dd class="en">A containerised application delivered with setup scripts, a user manual and a technical manual, so someone else could run, use and maintain it.</dd>
+              <dd class="zh">交付一套容器化应用，附带部署脚本、用户手册和技术手册，让别人能够部署、使用和维护。</dd></div>
+            <div class="cb"><dt><span class="en">Why it matters for CB</span><span class="zh">与企业银行的关系</span></dt>
+              <dd class="en">Cash management and trust &amp; agency services run on the same building blocks: entitlements, linked records and a complete audit trail. I understand why controls exist, not just how to follow them.</dd>
+              <dd class="zh">现金管理、信托与代理服务的底层正是这些模块：权限、关联记录和完整的审计轨迹。我理解“为什么要有控制”，而不只是“怎样遵守控制”。</dd></div>
+          </dl>
         </article>
-        <article class="fit reveal">
-          <p class="fit-role"><span class="en">Client Service &amp; Delivery</span><span class="zh">客户服务与交付</span></p>
-          <h3><span class="en">Reliability is the product.</span><span class="zh">可靠，本身就是产品。</span></h3>
-          <ul>
-            <li class="en">Ran 690 model–ticker benchmarks end to end with zero failures.</li>
-            <li class="zh">端到端跑完 690 组模型 × 股票的基准测试，零失败。</li>
-            <li class="en">Designed role-based access and database-level audit trails so every change can be traced.</li>
-            <li class="zh">设计了基于角色的权限和数据库级审计日志，任何修改都可追溯。</li>
-          </ul>
-          <a class="evidence" href="#case-controls"><span class="en">Read the case</span><span class="zh">查看案例</span> →</a>
-        </article>
-        <article class="fit reveal">
-          <p class="fit-role"><span class="en">Business Management</span><span class="zh">业务管理</span></p>
-          <h3><span class="en">Numbers first, then an honest conclusion.</span><span class="zh">先看数据，再给出诚实的结论。</span></h3>
-          <ul>
-            <li class="en">My dissertation concluded that anomaly detectors are a risk-monitoring layer, not a trading signal — and said so plainly.</li>
-            <li class="zh">我的毕业论文得出结论：异常检测适合作为风险监控层，而不是交易信号——并如实写明了这一点。</li>
-            <li class="en">Built my own market-data and volatility toolkit (ATR, intraday ranges, large-move ranking).</li>
-            <li class="zh">自建行情数据与波动率工具（ATR、日内波动、大幅变动排名）。</li>
-          </ul>
-          <a class="evidence" href="#case-risk"><span class="en">Read the case</span><span class="zh">查看案例</span> →</a>
+
+        <article class="case cols" id="case-product">
+          <div class="case-head">
+            <h3><span class="en">From a browser add&#8209;on to a three-part product</span><span class="zh">从一个浏览器插件到三层产品</span></h3>
+            <p class="case-kind"><span class="en">Independent product, iteration</span><span class="zh">独立产品，迭代</span></p>
+            <ul class="tags" aria-label="Tools"><li>React</li><li>TypeScript</li><li>Node</li><li>SQLite</li></ul>
+            <p class="case-links">
+              <a data-src="projects/youtube-vocab-learner"><span class="en">Source, v2</span><span class="zh">源码 v2</span></a>
+              <a data-src="projects/youtube-subtitle-parser"><span class="en">Source, v1</span><span class="zh">源码 v1</span></a>
+            </p>
+          </div>
+          <dl class="case-body">
+            <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
+              <dd class="en">I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</dd>
+              <dd class="zh">我想从自己真正在看的视频里学英语单词，并看到每个词在真实语境里的用法。</dd></div>
+            <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
+              <dd class="en">v1 was a single extension with local storage and a hand-written lemmatiser. When it outgrew that, I re-architected it into an extension that captures subtitles, an API that stores and counts words, and a web app that jumps the video to any sentence.</dd>
+              <dd class="zh">v1 是一个带本地存储和手写词形还原的单一扩展。用户需求超出它的能力后，我把它重构为三部分：抓取字幕的扩展、存储与统计词频的 API，以及能一键跳转到任意例句的网页应用。</dd></div>
+            <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
+              <dd class="en">A working full-stack product with concordance views, favourites, filters, and frequency counts that don’t inflate on re-watching.</dd>
+              <dd class="zh">一个可用的全栈产品：例句索引、收藏、筛选，以及不会因重复观看而虚高的词频统计。</dd></div>
+            <div class="cb"><dt><span class="en">Why it matters for CB</span><span class="zh">与企业银行的关系</span></dt>
+              <dd class="en">Product management in cash management is the same loop: understand the client’s workflow, launch something useful, and know when to rebuild rather than patch.</dd>
+              <dd class="zh">现金管理的产品管理也是同样的循环：理解客户的工作流程，先推出有用的东西，并判断何时该重构而不是打补丁。</dd></div>
+          </dl>
         </article>
       </div>
     </section>
 
-    <!-- ============ CASES ============ -->
-    <section id="cases" class="section wrap">
-      <header class="section-head reveal">
-        <p class="sec-num">02</p>
-        <div>
-          <h2><span class="en">Case studies</span><span class="zh">案例</span></h2>
-          <p class="en">Three projects, written the way I'd brief a colleague: the situation, what I did, what came out — and why it matters for corporate banking.</p>
-          <p class="zh">三个项目，按照向同事汇报的方式来写：背景、我做了什么、结果如何，以及它和企业银行有什么关系。</p>
-        </div>
-      </header>
-
-      <article class="case reveal" id="case-risk">
-        <div class="case-head">
-          <p class="case-kind"><span class="en">MSc dissertation · Risk analytics</span><span class="zh">硕士论文 · 风险分析</span></p>
-          <h3><span class="en">Spotting market stress without crying wolf</span><span class="zh">识别市场压力，又不“狼来了”</span></h3>
-          <div class="tags"><span>Python</span><span>PyTorch</span><span>TSB-AD</span><span>Time series</span></div>
-        </div>
-        <dl class="case-body">
-          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
-            <dd class="en">Automated trading needs an early warning when markets behave abnormally — but real market data has no "correct answer" labels to test against.</dd>
-            <dd class="zh">自动化交易需要在市场异常时提前预警——但真实市场数据没有“标准答案”可以用来检验模型。</dd></div>
-          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
-            <dd class="en">Benchmarked 23 anomaly-detection set-ups on 2,910,814 one-minute bars from 30 US equities in 2025, comparing price-only inputs with a richer view (OHLC, volume, trade count, VWAP). Built my own execution layer around the benchmark, and an evaluation framework that works without labels: proxy labels, top-1% precision, consensus events and forward risk-enrichment.</dd>
-            <dd class="zh">在 2025 年 30 只美股、共 2,910,814 根一分钟 K 线上，对 23 种异常检测配置做基准测试，比较“仅收盘价”与“多维数据（OHLC、成交量、成交笔数、VWAP）”两种输入。自建执行层适配基准框架，并设计了一套无需标签的评估方法：代理标签、前 1% 精度、共识事件和前瞻风险富集比。</dd></div>
-          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
-            <dd class="en">690 aligned runs, zero failures. LSTMAD was strongest; richer inputs helped neural models track volume-driven activity. High-score periods lined up with elevated stress and larger moves over the next 30 minutes.</dd>
-            <dd class="zh">690 组对齐结果，零失败。LSTMAD 表现最好；多维输入让神经网络模型更好地捕捉成交量驱动的异动。高分时段与当期压力上升、以及之后 30 分钟的更大波动高度吻合。</dd></div>
-          <div class="cb"><dt><span class="en">Why it matters for CB</span><span class="zh">与企业银行的关系</span></dt>
-            <dd class="en">FX and rates risk management and payment monitoring face the same problem: flag the unusual early, without drowning people in false alarms — and be honest about what a model can and can't tell you.</dd>
-            <dd class="zh">外汇与利率风险管理、支付监控面对的是同一个问题：尽早发现异常，又不让误报淹没团队——并且诚实地说明模型能说明什么、不能说明什么。</dd></div>
-        </dl>
-      </article>
-
-      <article class="case reveal" id="case-controls">
-        <div class="case-head">
-          <p class="case-kind"><span class="en">Coursework · Controlled operations</span><span class="zh">课程项目 · 受控业务系统</span></p>
-          <h3><span class="en">A system where every change leaves a trace</span><span class="zh">每一次修改都留痕的系统</span></h3>
-          <div class="tags"><span>PHP</span><span>SQL</span><span>MariaDB</span><span>Docker</span></div>
-        </div>
-        <dl class="case-body">
-          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
-            <dd class="en">The brief: a traffic-police team needs one place to link people, vehicles, incidents and fines — with clear separation between what officers and administrators may do.</dd>
-            <dd class="zh">课程需求：交警团队需要一个统一平台，把人员、车辆、事故和罚款关联起来——并清晰区分警员和管理员的权限。</dd></div>
-          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
-            <dd class="en">Modelled nine linked entities in a relational database; built role-based workflows for reporting, search and fines; added SQL triggers and application logging so every create, edit and read is recorded and filterable by user, action, table and date.</dd>
-            <dd class="zh">在关系型数据库中建模九类关联实体；实现基于角色的上报、检索和罚款流程；通过 SQL 触发器和应用层日志记录每一次新增、修改和读取，并可按用户、操作、数据表和日期筛选。</dd></div>
-          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
-            <dd class="en">A containerised application delivered with setup scripts, a user manual and a technical manual — so someone else could run, use and maintain it.</dd>
-            <dd class="zh">交付一套容器化应用，附带部署脚本、用户手册和技术手册——让别人能够部署、使用和维护。</dd></div>
-          <div class="cb"><dt><span class="en">Why it matters for CB</span><span class="zh">与企业银行的关系</span></dt>
-            <dd class="en">Cash management and trust &amp; agency services run on the same building blocks: entitlements, linked records and a complete audit trail. I understand why controls exist, not just how to follow them.</dd>
-            <dd class="zh">现金管理、信托与代理服务的底层正是这些模块：权限、关联记录和完整的审计轨迹。我理解“为什么要有控制”，而不只是“怎样遵守控制”。</dd></div>
-        </dl>
-      </article>
-
-      <article class="case reveal" id="case-product">
-        <div class="case-head">
-          <p class="case-kind"><span class="en">Independent product · Iteration</span><span class="zh">独立产品 · 迭代</span></p>
-          <h3><span class="en">From a browser add-on to a three-part product</span><span class="zh">从一个浏览器插件到三层产品</span></h3>
-          <div class="tags"><span>React</span><span>TypeScript</span><span>Node</span><span>SQLite</span></div>
-        </div>
-        <dl class="case-body">
-          <div><dt><span class="en">Situation</span><span class="zh">背景</span></dt>
-            <dd class="en">I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</dd>
-            <dd class="zh">我想从自己真正在看的视频里学英语单词，并看到每个词在真实语境里的用法。</dd></div>
-          <div><dt><span class="en">What I did</span><span class="zh">我做了什么</span></dt>
-            <dd class="en">v1 was a single extension with local storage and a hand-written lemmatiser. When it outgrew that, I re-architected it into an extension that captures subtitles, an API that stores and counts words, and a web app that jumps the video to any sentence.</dd>
-            <dd class="zh">v1 是一个带本地存储和手写词形还原的单一扩展。用户需求超出它的能力后，我把它重构为三部分：抓取字幕的扩展、存储与统计词频的 API，以及能一键跳转到任意例句的网页应用。</dd></div>
-          <div><dt><span class="en">Result</span><span class="zh">结果</span></dt>
-            <dd class="en">A working full-stack product with concordance views, favourites, filters, and frequency counts that don't inflate on re-watching.</dd>
-            <dd class="zh">一个可用的全栈产品：例句索引、收藏、筛选，以及不会因重复观看而虚高的词频统计。</dd></div>
-          <div class="cb"><dt><span class="en">Why it matters for CB</span><span class="zh">与企业银行的关系</span></dt>
-            <dd class="en">Product management in cash management is the same loop: understand the client's workflow, launch something useful, and know when to rebuild rather than patch.</dd>
-            <dd class="zh">现金管理的产品管理也是同样的循环：理解客户的工作流程，先推出有用的东西，并判断何时该重构而不是打补丁。</dd></div>
-        </dl>
-        <div class="links">
-          <a class="arrow-link" data-src="projects/youtube-vocab-learner"><span class="en">Source · v2</span><span class="zh">源码 · v2</span> ↗</a>
-          <a class="arrow-link" data-src="projects/youtube-subtitle-parser"><span class="en">Source · v1</span><span class="zh">源码 · v1</span> ↗</a>
-        </div>
-      </article>
-    </section>
-
-    <!-- ============ WHY ============ -->
-    <section id="why" class="why">
-      <div class="wrap why-inner">
-        <p class="sec-num reveal">03</p>
-        <div>
-          <h2 class="reveal"><span class="en">Why the Corporate Bank, <em>why Shanghai</em></span><span class="zh">为什么是企业银行，<em>为什么是上海</em></span></h2>
-          <div class="why-cols">
-            <div class="reveal">
-              <h3><span class="en">Close to the real economy</span><span class="zh">贴近实体经济</span></h3>
-              <p class="en">Cash management, trade finance and FX hedging are how real companies pay suppliers, get paid and manage risk. I'd rather solve problems whose effect a client feels the next morning.</p>
-              <p class="zh">现金管理、贸易融资和外汇对冲，是真实企业付款、收款和管理风险的方式。我更想解决那些客户第二天早上就能感受到效果的问题。</p>
-            </div>
-            <div class="reveal">
-              <h3><span class="en">Where technology meets relationships</span><span class="zh">技术与客户关系的交汇处</span></h3>
-              <p class="en">Payments and cash management are being rebuilt around data and digital channels — but a client still needs someone who can explain it. I want to be the person who can do both.</p>
-              <p class="zh">支付和现金管理正在围绕数据与数字渠道重建——但客户仍然需要有人把它讲明白。我想成为两者都能做的人。</p>
-            </div>
-            <div class="reveal">
-              <h3><span class="en">A bridge I've already crossed</span><span class="zh">我走过的这座桥</span></h3>
-              <p class="en">I studied in Shanghai, then in the UK. Corporates here increasingly need a partner that connects Chinese business with global markets — that is the bridge a European bank in Shanghai offers, and the one I've lived.</p>
-              <p class="zh">我先在上海读书，再去英国深造。越来越多的中国企业需要一个连接本土业务与全球市场的伙伴——这正是一家在上海的欧洲银行能提供的桥梁，也是我亲身走过的路。</p>
-            </div>
-          </div>
-          <p class="why-note reveal">
-            <span class="en">I don't come from a finance degree — and the programme is built for exactly that. I learn fast, I check my own work, and I'm ready to start in July 2027.</span>
-            <span class="zh">我不是金融科班出身——而这个项目正是为这样的人设计的。我学得快，会自己检查自己的工作，并已准备好在 2027 年 7 月入职。</span>
+    <!-- why: the ultramarine field -->
+    <section id="why" class="section field">
+      <div class="container">
+        <div class="why-grid cols">
+          <h2><span class="en">Why the Corporate Bank, why Shanghai</span><span class="zh">为什么是企业银行，为什么是上海</span></h2>
+          <p class="why-note">
+            <span class="en">I don’t come from a finance degree, and the programme is built for exactly that. I learn fast, I check my own work, and I’m ready to start in July 2027.</span>
+            <span class="zh">我不是金融科班出身，而这个项目正是为这样的人设计的。我学得快，会自己检查自己的工作，并已准备好在 2027 年 7 月入职。</span>
           </p>
         </div>
+        <div class="why-list">
+          <div>
+            <h3><span class="en">Close to the real economy</span><span class="zh">贴近实体经济</span></h3>
+            <p class="en">Cash management, trade finance and FX hedging are how real companies pay suppliers, get paid and manage risk. I’d rather solve problems whose effect a client feels the next morning.</p>
+            <p class="zh">现金管理、贸易融资和外汇对冲，是真实企业付款、收款和管理风险的方式。我更想解决那些客户第二天早上就能感受到效果的问题。</p>
+          </div>
+          <div>
+            <h3><span class="en">Where technology meets relationships</span><span class="zh">技术与客户关系的交汇处</span></h3>
+            <p class="en">Payments and cash management are being rebuilt around data and digital channels, but a client still needs someone who can explain it. I want to be the person who can do both.</p>
+            <p class="zh">支付和现金管理正在围绕数据与数字渠道重建，但客户仍然需要有人把它讲明白。我想成为两者都能做的人。</p>
+          </div>
+          <div>
+            <h3><span class="en">A bridge I’ve already crossed</span><span class="zh">我走过的这座桥</span></h3>
+            <p class="en">I studied in Shanghai, then in the UK. Corporates here increasingly need a partner that connects Chinese business with global markets. That is the bridge a European bank in Shanghai offers, and the one I’ve lived.</p>
+            <p class="zh">我先在上海读书，再去英国深造。越来越多的中国企业需要一个连接本土业务与全球市场的伙伴。这正是一家在上海的欧洲银行能提供的桥梁，也是我亲身走过的路。</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ============ BUILDS ============ -->
-    <section id="builds" class="section wrap">
-      <header class="section-head reveal">
-        <p class="sec-num">04</p>
-        <div>
+    <!-- builds: a rail of live demos, then the tools as an index -->
+    <section id="builds" class="section">
+      <div class="container">
+        <div class="head cols">
           <h2><span class="en">Builds you can try</span><span class="zh">可以直接试用的作品</span></h2>
-          <p class="en">Interactive explainers — each one started as a question I had while learning something new. Open any of them live; no install. <span class="note">UI language: Chinese.</span></p>
-          <p class="zh">交互式讲解页——每一个都源于我学习新东西时的一个疑问。点开即用，无需安装。</p>
+          <p class="lead en">Interactive explainers, each one started as a question I had while learning something new. Open any of them live; no install. The interface is in Chinese.</p>
+          <p class="lead zh">交互式讲解页，每一个都源于我学习新东西时的一个疑问。点开即用，无需安装。</p>
         </div>
-      </header>
-      <div class="demos" id="demo-grid"></div>
-
-      <div class="subhead reveal">
-        <h3><span class="en">Browser tools &amp; data utilities</span><span class="zh">浏览器工具与数据工具</span></h3>
-        <p class="en">Built to back up and organise my own account data. Everything runs locally in my own logged-in session; nothing is uploaded, and nothing bypasses login or DRM.</p>
-        <p class="zh">用于备份和整理我自己账号的数据。全部在本地、在我已登录的会话中运行；不上传任何数据，不绕过登录或 DRM。</p>
       </div>
-      <div class="tools" id="tool-grid"></div>
-    </section>
-
-    <!-- ============ ABOUT ============ -->
-    <section id="about" class="section wrap">
-      <header class="section-head reveal">
-        <p class="sec-num">05</p>
-        <div><h2><span class="en">How I work</span><span class="zh">我的工作方式</span></h2></div>
-      </header>
-      <ol class="process reveal">
-        <li><strong><span class="en">Clarify</span><span class="zh">明确</span></strong>
-          <span class="en">Write down the goal, the constraints and what "done" looks like before touching anything.</span>
-          <span class="zh">动手前，先写下目标、约束条件，以及什么叫“完成”。</span></li>
-        <li><strong><span class="en">Draft fast</span><span class="zh">快速起草</span></strong>
-          <span class="en">Use the best tools available — including AI assistants — to get a first version quickly.</span>
-          <span class="zh">善用最好的工具——包括 AI 助手——快速拿出第一版。</span></li>
-        <li><strong><span class="en">Verify</span><span class="zh">核验</span></strong>
-          <span class="en">Tests, real-world checks and reading every line. Speed never replaces accountability.</span>
-          <span class="zh">测试、真实场景检查、逐行审阅。速度永远不能替代责任。</span></li>
-        <li><strong><span class="en">Iterate</span><span class="zh">迭代</span></strong>
-          <span class="en">Ship something small and useful, then improve it from real feedback.</span>
-          <span class="zh">先交付小而有用的版本，再根据真实反馈改进。</span></li>
-      </ol>
-      <div class="about-grid reveal">
-        <div>
-          <h3><span class="en">Education</span><span class="zh">教育背景</span></h3>
-          <p><strong><span class="en">MSc Computer Science (Artificial Intelligence)</span><span class="zh">计算机科学（人工智能）硕士</span></strong><br>
-            <span class="en">University of Nottingham, UK · 2024–2026 · Merit</span><span class="zh">英国诺丁汉大学 · 2024–2026 · Merit</span></p>
-          <p><strong><span class="en">BEng Measurement, Control Technology &amp; Instruments</span><span class="zh">测控技术与仪器 学士</span></strong><br>
-            <span class="en">East China University of Science and Technology, Shanghai · 2019–2023</span><span class="zh">华东理工大学（上海）· 2019–2023</span></p>
+      <ul class="rail" id="demo-grid" tabindex="0" aria-label="Interactive demos"></ul>
+      <div class="container">
+        <div class="tools-head cols">
+          <h3><span class="en">Browser tools &amp; data utilities</span><span class="zh">浏览器工具与数据工具</span></h3>
+          <p class="en">Built to back up and organise my own account data. Everything runs locally in my own logged-in session; nothing is uploaded, and nothing bypasses login or DRM.</p>
+          <p class="zh">用于备份和整理我自己账号的数据。全部在本地、在我已登录的会话中运行；不上传任何数据，不绕过登录或 DRM。</p>
         </div>
-        <div>
-          <h3><span class="en">Toolkit</span><span class="zh">技能</span></h3>
-          <div class="tags"><span>Python</span><span>pandas</span><span>PyTorch</span><span>SQL</span><span>JavaScript</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>PHP</span><span>Docker</span></div>
-          <h3><span class="en">Languages</span><span class="zh">语言</span></h3>
-          <p><span class="en">Mandarin · English</span><span class="zh">中文 · 英语</span></p>
-        </div>
+        <table class="tools">
+          <thead><tr>
+            <th scope="col"><span class="en">Tool</span><span class="zh">工具</span></th>
+            <th scope="col"><span class="en">What it does</span><span class="zh">用途</span></th>
+            <th scope="col"><span class="en">Built with</span><span class="zh">技术</span></th>
+            <th scope="col"><span class="visually-hidden">Source</span></th>
+          </tr></thead>
+          <tbody id="tool-grid"></tbody>
+        </table>
       </div>
     </section>
 
-    <!-- ============ CONTACT ============ -->
-    <section id="contact" class="contact">
-      <div class="wrap">
-        <p class="sec-num reveal">06</p>
-        <h2 class="reveal"><span class="en">Let's <em>talk.</em></span><span class="zh">期待<em>交流。</em></span></h2>
-        <p class="reveal">
-          <span class="en">Applying to the 2027 Corporate Bank Graduate Programme in Shanghai. I'd be glad to walk through any of this work.</span>
-          <span class="zh">正在申请 2027 企业银行管培生项目（上海）。很乐意详细介绍以上任何一个项目。</span>
-        </p>
-        <a class="mail reveal" id="email-link" href="#">Email</a>
+    <!-- about: the process on the red field, then the record -->
+    <section id="about" class="section field--mark">
+      <div class="container">
+        <h2><span class="en">How I work</span><span class="zh">我的工作方式</span></h2>
+        <ol class="process">
+          <li><strong><span class="en">Clarify</span><span class="zh">明确</span></strong>
+            <span class="en">Write down the goal, the constraints and what “done” looks like before touching anything.</span>
+            <span class="zh">动手前，先写下目标、约束条件，以及什么叫“完成”。</span></li>
+          <li><strong><span class="en">Draft fast</span><span class="zh">快速起草</span></strong>
+            <span class="en">Use the best tools available, including AI assistants, to get a first version quickly.</span>
+            <span class="zh">善用最好的工具，包括 AI 助手，快速拿出第一版。</span></li>
+          <li><strong><span class="en">Verify</span><span class="zh">核验</span></strong>
+            <span class="en">Tests, real-world checks and reading every line. Speed never replaces accountability.</span>
+            <span class="zh">测试、真实场景检查、逐行审阅。速度永远不能替代责任。</span></li>
+          <li><strong><span class="en">Iterate</span><span class="zh">迭代</span></strong>
+            <span class="en">Ship something small and useful, then improve it from real feedback.</span>
+            <span class="zh">先交付小而有用的版本，再根据真实反馈改进。</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section record" aria-labelledby="record-head">
+      <div class="container cols">
+        <h2 id="record-head"><span class="en">Education and languages</span><span class="zh">教育与语言</span></h2>
+        <dl class="record-list">
+          <div>
+            <dt><span class="en">MSc Computer Science (Artificial Intelligence)</span><span class="zh">计算机科学（人工智能）硕士</span></dt>
+            <dd><span class="en">University of Nottingham, UK, 2024 to 2026, Merit</span><span class="zh">英国诺丁汉大学，2024 至 2026，Merit</span></dd>
+          </div>
+          <div>
+            <dt><span class="en">BEng Measurement, Control Technology &amp; Instruments</span><span class="zh">测控技术与仪器 学士</span></dt>
+            <dd><span class="en">East China University of Science and Technology, Shanghai, 2019 to 2023</span><span class="zh">华东理工大学（上海），2019 至 2023</span></dd>
+          </div>
+          <div>
+            <dt><span class="en">Graduated</span><span class="zh">毕业</span></dt>
+            <dd><span class="en">2026, available from July 2027</span><span class="zh">2026 年，2027 年 7 月可全职入职</span></dd>
+          </div>
+          <div>
+            <dt><span class="en">Languages</span><span class="zh">语言</span></dt>
+            <dd><span class="en">Mandarin, English</span><span class="zh">中文，英语</span></dd>
+          </div>
+          <div>
+            <dt><span class="en">Toolkit</span><span class="zh">技能</span></dt>
+            <dd>Python, pandas, PyTorch, SQL, JavaScript, TypeScript, React, Node.js, PHP, Docker</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- contact: a letter close -->
+    <section id="contact" class="section contact">
+      <div class="container cols">
+        <h2><span class="en">Let’s talk.</span><span class="zh">期待交流。</span></h2>
+        <div class="contact-body">
+          <p class="lead">
+            <span class="en">Applying to the 2027 Corporate Bank Graduate Programme in Shanghai. I’d be glad to walk through any of this work.</span>
+            <span class="zh">正在申请 2027 企业银行管培生项目（上海）。很乐意详细介绍以上任何一个项目。</span>
+          </p>
+          <a class="mail" id="email-link" href="#">Email</a>
+          <p class="signoff"><span class="en">Yuxiao Pu</span><span class="zh">Yuxiao Pu</span></p>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="wrap foot">
-    <span>© <span id="year"></span> Yuxiao Pu</span>
-    <a href="#top"><span class="en">Back to top ↑</span><span class="zh">回到顶部 ↑</span></a>
-    <a id="repo-link" href="#"><span class="en">Source of this site ↗</span><span class="zh">本站源码 ↗</span></a>
+  <footer class="foot">
+    <div class="container foot-inner">
+      <span>© <span id="year"></span> Yuxiao Pu</span>
+      <a href="#top"><span class="en">Back to top</span><span class="zh">回到顶部</span></a>
+      <a id="repo-link" href="#"><span class="en">Source of this site</span><span class="zh">本站源码</span></a>
+    </div>
   </footer>
 
   <script src="script.js"></script>

@@ -59,7 +59,7 @@ const tools = [
     zhTitle: "消息导出器（JSON/CSV）",
     blurb: "Built spec-first: a written design doc and implementation plan, then tests for data safety and selection logic.",
     zh: "先写设计文档和实施计划，再为数据安全与选择逻辑编写测试。",
-    tags: ["Spec → plan → tests", "CSV"],
+    tags: ["Spec, plan, tests", "CSV"],
   },
   {
     slug: "douyin-im-exporter",
@@ -106,36 +106,31 @@ const tools = [
 const srcUrl = (path) => (REPO_URL ? `${REPO_URL}/tree/main/${path}` : null);
 const bi = (en, zh) => `<span class="en">${en}</span><span class="zh">${zh}</span>`;
 
-function demoCard(p, i) {
-  const el = document.createElement("article");
-  el.className = "demo reveal";
+function demoCard(p) {
+  const el = document.createElement("li");
+  el.className = "demo";
   const href = `demos/${p.slug}/`;
   const src = srcUrl(`demos/${p.slug}`);
   el.innerHTML = `
-    <a class="thumb" href="${href}" target="_blank" rel="noopener" aria-label="Open ${p.title}"><img src="assets/shots/${p.slug}.jpg" alt="Screenshot of ${p.title}" loading="lazy"></a>
-    <div class="demo-body">
-      <p class="demo-num">${String(i + 1).padStart(2, "0")}</p>
-      <h3><a href="${href}" target="_blank" rel="noopener">${bi(p.title, p.zhTitle)}</a></h3>
-      <p>${bi(p.blurb, p.zh)}</p>
-      <div class="links">
-        <a class="btn small primary" href="${href}" target="_blank" rel="noopener">${bi("Open live", "在线打开")} <span aria-hidden="true">↗</span></a>
-        ${src ? `<a class="arrow-link" href="${src}" target="_blank" rel="noopener">${bi("Source", "源码")} ↗</a>` : ""}
-      </div>
-    </div>`;
+    <a class="thumb" href="${href}" target="_blank" rel="noopener" aria-label="Open ${p.title}"><img src="assets/shots/${p.slug}.jpg" alt="Screenshot of ${p.title}" width="1280" height="800" loading="lazy"></a>
+    <h3><a href="${href}" target="_blank" rel="noopener">${bi(p.title, p.zhTitle)}</a></h3>
+    <p>${bi(p.blurb, p.zh)}</p>
+    <p class="demo-links">
+      <a class="btn btn--primary btn--small" href="${href}" target="_blank" rel="noopener">${bi("Open live", "在线打开")}</a>
+      ${src ? `<a class="btn btn--secondary" href="${src}" target="_blank" rel="noopener">${bi("Source", "源码")}</a>` : ""}
+    </p>`;
   return el;
 }
 
 function toolRow(p) {
-  const el = document.createElement("article");
-  el.className = "tool reveal";
+  const el = document.createElement("tr");
+  el.className = "tool";
   const src = p.slug ? srcUrl(`projects/${p.slug}`) : null;
   el.innerHTML = `
-    <h4>${bi(p.title, p.zhTitle)}</h4>
-    <p>${bi(p.blurb, p.zh)}</p>
-    <div class="tool-foot">
-      <div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div>
-      ${src ? `<a class="arrow-link" href="${src}" target="_blank" rel="noopener">${bi("Source", "源码")} ↗</a>` : ""}
-    </div>`;
+    <th scope="row">${bi(p.title, p.zhTitle)}</th>
+    <td>${bi(p.blurb, p.zh)}</td>
+    <td class="tool-tags">${p.tags.join(", ")}</td>
+    <td class="tool-src">${src ? `<a href="${src}" target="_blank" rel="noopener">${bi("Source", "源码")}</a>` : ""}</td>`;
   return el;
 }
 
@@ -170,21 +165,3 @@ document.getElementById("lang-toggle").addEventListener("click", () => {
   document.documentElement.lang = next;
   try { localStorage.setItem("lang", next); } catch (e) {}
 });
-
-const nav = document.querySelector(".nav");
-const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
-onScroll();
-window.addEventListener("scroll", onScroll, { passive: true });
-
-// Fade sections in as they enter the viewport.
-const revealEls = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-    });
-  }, { rootMargin: "0px 0px -8% 0px" });
-  revealEls.forEach((el) => io.observe(el));
-} else {
-  revealEls.forEach((el) => el.classList.add("in"));
-}
