@@ -8,214 +8,269 @@
   <meta property="og:title" content="Yuxiao Pu, engineer and AI graduate">
   <meta property="og:description" content="Research, interactive web demos, browser extensions and full-stack tools built with AI-assisted development.">
   <meta property="og:image" content="assets/shots/camera-angles.jpg">
-  <meta name="theme-color" content="#16191d">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%2316191d'/><text x='50%' y='56%' font-family='Helvetica,Arial,sans-serif' font-weight='500' font-size='28' fill='%23f0b44c' text-anchor='middle' dominant-baseline='middle'>YP</text></svg>">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%23ff5a1f'/><text x='50%' y='55%' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='28' fill='%2315120e' text-anchor='middle' dominant-baseline='middle'>YP</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&family=Atkinson+Hyperlegible+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to the work</a>
 
   <header class="nav">
-    <div class="container nav-inner">
-      <a href="#top" class="wordmark" aria-label="Yuxiao Pu, back to top">Yuxiao Pu</a>
+    <div class="nav-inner">
+      <a href="#top" class="wordmark" aria-label="Yuxiao Pu, back to top"><span class="mark" aria-hidden="true">YP</span>Yuxiao Pu</a>
       <nav aria-label="Sections">
         <a href="#work">Work</a>
         <a href="#builds">Builds</a>
+        <a href="#tools">Tools</a>
         <a href="#about">About</a>
-        <a href="#contact">Contact</a>
       </nav>
+      <a class="btn btn--ink btn--sm" href="#contact">Get in touch</a>
     </div>
   </header>
 
   <main id="top">
+    <!-- ================= HERO ================= -->
     <section class="hero">
-      <div class="container opening">
-        <div class="intro">
-          <h1>I turn fuzzy ideas into working software.</h1>
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <p class="status"><span class="dot" aria-hidden="true"></span>Open to roles · Graduated 2026</p>
+          <h1>I turn fuzzy ideas into <em>working software.</em></h1>
           <p class="lead">An engineering and AI graduate who builds tools with AI-assisted development.</p>
-          <p class="credentials">MSc Computer Science (AI), University of Nottingham, Merit<br>Graduated 2026, open to roles</p>
+          <p class="credentials">MSc Computer Science (AI), University of Nottingham, Merit</p>
           <div class="actions">
-            <a class="btn btn--primary" id="hero-email" href="#contact">Get in touch</a>
-            <a class="btn" href="#work">See the work</a>
+            <a class="btn btn--accent" id="hero-email" href="#contact">Get in touch</a>
+            <a class="btn btn--ghost" href="#work">See the work <span aria-hidden="true">↓</span></a>
           </div>
         </div>
 
-        <div class="sheet work-index">
-          <div class="sheet-head">
-            <h2 class="sheet-title">Index of work</h2>
-            <p><span id="count" class="num">16</span> tools and projects</p>
-          </div>
-          <table>
-            <thead><tr><th scope="col">Project</th><th scope="col">What it is</th></tr></thead>
-            <tbody>
-              <tr class="lead-row"><th scope="row"><a href="#case-research">Anomaly Detection for Automated Trading</a></th><td>MSc dissertation</td></tr>
-              <tr><th scope="row"><a href="#case-traffic">Police Traffic Management System</a></th><td>Database web application</td></tr>
-              <tr><th scope="row"><a href="#case-vocab">YouTube Vocabulary Learner</a></th><td>Full-stack product</td></tr>
-              <tr><th scope="row"><a href="demos/camera-angles/">Camera Angle Studio</a></th><td>Live demo</td></tr>
-              <tr><th scope="row"><a href="demos/dof/">Depth of Field Lab</a></th><td>Live demo</td></tr>
-              <tr><th scope="row"><a href="demos/entrance-pupil/">Entrance Pupil Explorer</a></th><td>Live demo</td></tr>
-              <tr><th scope="row"><a href="demos/git-explained/">How Git Works</a></th><td>Live demo</td></tr>
-              <tr><th scope="row"><a href="demos/latex-journey/">The LaTeX Compile Journey</a></th><td>Live demo</td></tr>
-              <tr><th scope="row"><a href="#tools">Browser tools and data utilities</a></th><td>Seven tools</td></tr>
-            </tbody>
-          </table>
+        <div class="collage" aria-label="Screenshots of three live demos">
+          <a class="frame frame--a" href="demos/git-explained/" target="_blank" rel="noopener" aria-label="Open How Git Works">
+            <span class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><b>how-git-works</b></span>
+            <img src="assets/shots/git-explained.jpg" alt="" width="960" height="600">
+          </a>
+          <a class="frame frame--b" href="demos/latex-journey/" target="_blank" rel="noopener" aria-label="Open The LaTeX Compile Journey">
+            <span class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><b>latex-journey</b></span>
+            <img src="assets/shots/latex-journey.jpg" alt="" width="960" height="600">
+          </a>
+          <a class="frame frame--c" href="demos/camera-angles/" target="_blank" rel="noopener" aria-label="Open Camera Angle Studio">
+            <span class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><b>camera-angle-studio</b></span>
+            <img src="assets/shots/camera-angles.jpg" alt="" width="960" height="600">
+          </a>
+          <span class="sticker" aria-hidden="true">Try them live ↗</span>
         </div>
+      </div>
+
+      <div class="container">
+        <dl class="stats">
+          <div><dt><span id="count">16</span></dt><dd>tools and projects</dd></div>
+          <div><dt><span id="demo-count-hero">5</span></dt><dd>live demos, no install</dd></div>
+          <div><dt>8</dt><dd>Chrome extensions</dd></div>
+          <div><dt>2.9M</dt><dd>market bars benchmarked</dd></div>
+        </dl>
       </div>
     </section>
 
+    <!-- ================= WORK ================= -->
     <section id="work" class="section">
       <div class="container">
-        <h2 class="section-head">Three projects in depth</h2>
+        <div class="section-head">
+          <p class="eyebrow">Selected work</p>
+          <h2>Three projects in depth</h2>
+        </div>
 
-        <article class="case case--split" id="case-research">
-          <div class="case-text">
-            <h3>Anomaly Detection for Automated Trading</h3>
-            <p class="meta">MSc dissertation, University of Nottingham</p>
-            <p class="lead">Automated trading needs an early warning when markets behave abnormally, but real market data has no “correct answer” labels to test against.</p>
-            <dl class="facts">
-              <div><dt>What I did</dt><dd>Risk-aware TSB-AD benchmarking comparing a close-only representation with a multivariate bar of OHLC, volume, trade count and VWAP. A custom execution layer adapts the TSB-AD model wrappers to unlabelled equity bars without modifying the upstream implementations. Evaluation combines weak proxy labels, intraday-adjusted robustness checks, top-1% score precision, consensus-event inspection, and current and forward risk-enrichment ratios.</dd></div>
-              <div><dt>Result</dt><dd>LSTMAD was strongest with both representations; multivariate inputs improved neural models, especially LSTMAD and USAD, while close-only SR and Sub_KNN stayed competitive for return-driven stress. High-score periods coincided with higher stress and larger next-30-bar moves.</dd></div>
-              <div><dt>Takeaway</dt><dd>Anomaly detection is most defensible as a risk-aware monitoring layer for automated trading. The study does not claim profitability or directional price prediction.</dd></div>
-              <div><dt>Stack</dt><dd>Python, PyTorch, TSB-AD, time series, risk analysis</dd></div>
-            </dl>
+        <!-- Dissertation -->
+        <article class="card card--ink reveal" id="case-research">
+          <div class="case-top">
+            <div>
+              <p class="tag">MSc dissertation · University of Nottingham</p>
+              <h3>Anomaly Detection for Automated Trading</h3>
+              <p class="case-lead">Automated trading needs an early warning when markets behave abnormally, but real market data has no “correct answer” labels to test against.</p>
+              <ul class="chips">
+                <li>Python</li><li>PyTorch</li><li>TSB-AD</li><li>Time series</li><li>Risk analysis</li>
+              </ul>
+            </div>
+            <figure class="reading">
+              <p class="reading-value">2,910,814</p>
+              <p class="reading-label">one-minute bars · 30 US equities · all of 2025</p>
+              <dl class="tiles">
+                <div><dt>11</dt><dd>close-only combinations</dd></div>
+                <div><dt>12</dt><dd>multivariate combinations</dd></div>
+                <div><dt>690</dt><dd>aligned score vectors</dd></div>
+                <div class="ok"><dt>0</dt><dd>failed runs</dd></div>
+              </dl>
+              <figcaption>23 model and representation combinations, each run across all 30 tickers. Supervised by Professor Xu Kai; submitted May 2026.</figcaption>
+            </figure>
           </div>
-          <figure class="sheet case-figure">
-            <p class="reading"><span class="reading-value">2,910,814</span><span class="reading-label">One-minute bars, 30 US equities, all of 2025</span></p>
-            <table>
-              <thead><tr><th scope="col">The benchmark</th><th scope="col" class="num">Count</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Close-only combinations</th><td class="num">11</td></tr>
-                <tr><th scope="row">Multivariate combinations</th><td class="num">12</td></tr>
-                <tr><th scope="row">Aligned score vectors</th><td class="num">690</td></tr>
-                <tr class="mark-row"><th scope="row">Failed runs</th><td class="num">0</td></tr>
-              </tbody>
-            </table>
-            <figcaption>23 model and representation combinations, each run across all 30 tickers. Supervised by Professor Xu Kai; submitted May 2026.</figcaption>
-          </figure>
-        </article>
-
-        <article class="case case--rows" id="case-traffic">
-          <div class="case-text">
-            <h3>Police Traffic Management System</h3>
-            <p class="meta">COMP4039 coursework, database web application</p>
-            <p class="stack">PHP and MySQLi, MySQL and MariaDB, JavaScript, SQL triggers, Docker Compose</p>
-          </div>
-          <dl class="facts facts--rows">
-            <div><dt>Situation</dt><dd>A traffic-police team needs one searchable workflow that connects people, vehicles and traffic incidents, with separate officer and administrator roles.</dd></div>
-            <div><dt>What I did</dt><dd>Modelled accounts, officers, people, vehicles, ownership, incidents, offences, fines and audit logs. Built incident reporting that reuses or adds vehicle and person records; search by ID, date range, registration, name, licence number or officer; and admin tools to create officer accounts, associate fines and review audit logs. SQL triggers record account and incident changes, while PHP functions log record reads.</dd></div>
-            <div><dt>Result</dt><dd>A Docker Compose environment with MariaDB, SQL setup files, a user manual and a technical manual covering installation, data flow and database design.</dd></div>
-            <div><dt>Takeaway</dt><dd>Controls belong in the data layer: role separation, linked records and an audit trail administrators can filter by user, action, table and date.</dd></div>
+          <dl class="facts facts--3">
+            <div><dt>What I did</dt><dd>Risk-aware TSB-AD benchmarking comparing a close-only representation with a multivariate bar of OHLC, volume, trade count and VWAP. A custom execution layer adapts the TSB-AD model wrappers to unlabelled equity bars without modifying the upstream implementations. Evaluation combines weak proxy labels, intraday-adjusted robustness checks, top-1% score precision, consensus-event inspection, and current and forward risk-enrichment ratios.</dd></div>
+            <div><dt>Result</dt><dd>LSTMAD was strongest with both representations; multivariate inputs improved neural models, especially LSTMAD and USAD, while close-only SR and Sub_KNN stayed competitive for return-driven stress. High-score periods coincided with higher stress and larger next-30-bar moves.</dd></div>
+            <div><dt>Takeaway</dt><dd>Anomaly detection is most defensible as a risk-aware monitoring layer for automated trading. The study does not claim profitability or directional price prediction.</dd></div>
           </dl>
         </article>
-      </div>
-    </section>
 
-    <section class="section well" aria-labelledby="case-vocab-title">
-      <div class="container">
-        <article class="case case--system" id="case-vocab">
-          <div class="case-intro">
-            <h3 id="case-vocab-title">YouTube Vocabulary Learner</h3>
-            <p class="meta">My most complete project, a full-stack product</p>
-            <p class="lead">I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</p>
+        <!-- Vocabulary learner -->
+        <article class="card card--butter reveal" id="case-vocab">
+          <div class="case-head">
+            <p class="tag">My most complete project · full-stack product</p>
+            <h3>YouTube Vocabulary Learner</h3>
+            <p class="case-lead">I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</p>
           </div>
-          <div class="sheet system">
-            <table>
-              <thead><tr><th scope="col">Part</th><th scope="col">What it does</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Chrome extension</th><td>Captures uploaded (non-auto) subtitles from the video you are watching.</td></tr>
-                <tr><th scope="row">Node and Express API</th><td>Tokenises text, stores videos, sentences and word counts in SQLite.</td></tr>
-                <tr><th scope="row">React and TypeScript web app</th><td>Browse words, read every sentence they appear in, jump the embedded player to that moment.</td></tr>
-              </tbody>
-            </table>
-          </div>
+
+          <ol class="pipeline" aria-label="How the three parts connect">
+            <li>
+              <span class="step">01</span>
+              <h4>Chrome extension</h4>
+              <p>Captures uploaded (non-auto) subtitles from the video you are watching.</p>
+            </li>
+            <li>
+              <span class="step">02</span>
+              <h4>Node and Express API</h4>
+              <p>Tokenises text, stores videos, sentences and word counts in SQLite.</p>
+            </li>
+            <li>
+              <span class="step">03</span>
+              <h4>React and TypeScript web app</h4>
+              <p>Browse words, read every sentence they appear in, jump the embedded player to that moment.</p>
+            </li>
+          </ol>
+
           <div class="case-foot">
-            <ul class="bullets">
+            <ul class="checks">
               <li>Counts each word once per video, so rewatching does not inflate frequencies.</li>
               <li>Concordance view: every subtitle line containing a word, highlighted, grouped by video.</li>
               <li>Click a sentence and the embedded YouTube player seeks to that timestamp.</li>
               <li>Favourites, sorting by frequency, date or alphabet, and filters.</li>
             </ul>
             <div class="case-side">
-              <p>v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am, is, are to be). When it outgrew that, v2 split it into extension, API and web app: start small, use it for real, and know when to rebuild rather than patch.</p>
-              <p class="stack">Chrome MV3, Express, SQLite, React 18, TypeScript, Vite, Tailwind</p>
+              <p class="note"><strong>v1 → v2.</strong> v1 was a standalone extension with IndexedDB storage and a hand-written lemmatiser (am, is, are to be). When it outgrew that, v2 split it into extension, API and web app: start small, use it for real, and know when to rebuild rather than patch.</p>
+              <ul class="chips">
+                <li>Chrome MV3</li><li>Express</li><li>SQLite</li><li>React 18</li><li>TypeScript</li><li>Vite</li><li>Tailwind</li>
+              </ul>
               <div class="links">
-                <a data-src="projects/youtube-vocab-learner">Source for v2, full-stack</a>
-                <a data-src="projects/youtube-subtitle-parser">Source for v1, extension</a>
+                <a class="arrow" data-src="projects/youtube-vocab-learner">Source for v2, full-stack</a>
+                <a class="arrow" data-src="projects/youtube-subtitle-parser">Source for v1, extension</a>
               </div>
             </div>
+          </div>
+        </article>
+
+        <!-- Traffic system -->
+        <article class="card card--sky reveal" id="case-traffic">
+          <div class="case-split">
+            <div class="case-head">
+              <p class="tag">COMP4039 coursework · database web application</p>
+              <h3>Police Traffic Management System</h3>
+              <p class="case-lead">A traffic-police team needs one searchable workflow that connects people, vehicles and traffic incidents, with separate officer and administrator roles.</p>
+              <ul class="chips">
+                <li>PHP and MySQLi</li><li>MySQL and MariaDB</li><li>JavaScript</li><li>SQL triggers</li><li>Docker Compose</li>
+              </ul>
+            </div>
+            <dl class="facts facts--stack">
+              <div><dt>What I did</dt><dd>Modelled accounts, officers, people, vehicles, ownership, incidents, offences, fines and audit logs. Built incident reporting that reuses or adds vehicle and person records; search by ID, date range, registration, name, licence number or officer; and admin tools to create officer accounts, associate fines and review audit logs. SQL triggers record account and incident changes, while PHP functions log record reads.</dd></div>
+              <div><dt>Result</dt><dd>A Docker Compose environment with MariaDB, SQL setup files, a user manual and a technical manual covering installation, data flow and database design.</dd></div>
+              <div><dt>Takeaway</dt><dd>Controls belong in the data layer: role separation, linked records and an audit trail administrators can filter by user, action, table and date.</dd></div>
+            </dl>
           </div>
         </article>
       </div>
     </section>
 
+    <!-- ================= BUILDS ================= -->
     <section id="builds" class="section">
       <div class="container">
-        <div class="head-split">
-          <h2>Builds you can try</h2>
-          <p class="lead"><span id="demo-count">5</span> interactive explainers, each started as a question I had while learning photography, Git and LaTeX. Open any of them live, no install. Their interface is in Chinese.</p>
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Live demos</p>
+            <h2>Builds you can try</h2>
+          </div>
+          <p class="section-lead"><span id="demo-count">5</span> interactive explainers, each started as a question I had while learning photography, Git and LaTeX. Open any of them live, no install. Their interface is in Chinese.</p>
         </div>
         <div class="demos" id="demo-grid"></div>
       </div>
     </section>
 
-    <section id="tools" class="section section--tight">
+    <!-- ================= TOOLS ================= -->
+    <section id="tools" class="section">
       <div class="container">
-        <div class="head-split">
-          <h2>Browser tools and data utilities</h2>
-          <p class="lead">Built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok). Everything runs locally in my own logged-in session; nothing is uploaded, and nothing bypasses login or DRM. With both versions of the vocabulary learner, that makes eight Chrome extensions.</p>
+        <div class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Utilities</p>
+            <h2>Browser tools and data utilities</h2>
+          </div>
+          <p class="section-lead">Built to back up and organise <em>my own</em> account data on Douyin (Chinese TikTok). Everything runs locally in my own logged-in session; nothing is uploaded, and nothing bypasses login or DRM. With both versions of the vocabulary learner, that makes eight Chrome extensions.</p>
         </div>
-        <div class="sheet tools-sheet">
-          <table class="tools">
-            <thead><tr><th scope="col">Tool</th><th scope="col">What it does</th><th scope="col">Built with</th><th scope="col"><span class="visually-hidden">Source</span></th></tr></thead>
-            <tbody id="tool-grid"></tbody>
-          </table>
-        </div>
+        <div class="tools" id="tool-grid"></div>
       </div>
     </section>
 
+    <!-- ================= ABOUT ================= -->
     <section id="about" class="section">
-      <div class="container about-grid">
-        <div class="about-text">
-          <h2>About and how I build</h2>
-          <p>I studied measurement and control engineering at ECUST, then moved into AI with an MSc in Computer Science at the University of Nottingham. What I enjoy most is the step from “this is confusing” to “here’s a tool that makes it obvious”.</p>
-          <dl class="facts">
-            <div><dt>MSc</dt><dd>Computer Science (Artificial Intelligence), University of Nottingham, UK, 2024 to 2026, Merit</dd></div>
-            <div><dt>BEng</dt><dd>Measurement, Control Technology and Instruments, East China University of Science and Technology, Shanghai, 2019 to 2023</dd></div>
-            <div><dt>Toolkit</dt><dd>Python, PyTorch, JavaScript, TypeScript, React, Node.js, SQL, PHP, Three.js, Chrome extensions</dd></div>
-            <div><dt>Languages</dt><dd>English and Chinese</dd></div>
-            <div><dt>Status</dt><dd>Graduated 2026, open to roles</dd></div>
-          </dl>
+      <div class="container">
+        <div class="about">
+          <div class="about-text">
+            <p class="eyebrow">About</p>
+            <h2>About and how I build</h2>
+            <p class="about-lead">I studied measurement and control engineering at ECUST, then moved into AI with an MSc in Computer Science at the University of Nottingham. What I enjoy most is the step from “this is confusing” to “here’s a tool that makes it obvious”.</p>
+          </div>
+          <div class="about-facts">
+            <ol class="timeline">
+              <li>
+                <span class="when">2024 to 2026</span>
+                <h3>MSc Computer Science (Artificial Intelligence)</h3>
+                <p>University of Nottingham, UK · Merit</p>
+              </li>
+              <li>
+                <span class="when">2019 to 2023</span>
+                <h3>BEng Measurement, Control Technology and Instruments</h3>
+                <p>East China University of Science and Technology, Shanghai</p>
+              </li>
+            </ol>
+            <dl class="mini">
+              <div><dt>Toolkit</dt><dd>
+                <ul class="chips">
+                  <li>Python</li><li>PyTorch</li><li>JavaScript</li><li>TypeScript</li><li>React</li><li>Node.js</li><li>SQL</li><li>PHP</li><li>Three.js</li><li>Chrome extensions</li>
+                </ul>
+              </dd></div>
+              <div><dt>Languages</dt><dd>English and Chinese</dd></div>
+              <div><dt>Status</dt><dd>Graduated 2026, open to roles</dd></div>
+            </dl>
+          </div>
         </div>
+
         <ol class="process" aria-label="How I build">
-          <li><h3>Specify</h3><p>Write down the goal, constraints and what “done” looks like.</p></li>
-          <li><h3>Generate</h3><p>Pair with AI coding agents (Claude Code, Codex) to draft quickly.</p></li>
-          <li><h3>Verify</h3><p>Unit tests, manual checks in the real page, and reading every diff.</p></li>
-          <li><h3>Iterate</h3><p>Ship a small version, then refine from real use.</p></li>
+          <li class="reveal"><span class="step">01</span><h3>Specify</h3><p>Write down the goal, constraints and what “done” looks like.</p></li>
+          <li class="reveal"><span class="step">02</span><h3>Generate</h3><p>Pair with AI coding agents (Claude Code, Codex) to draft quickly.</p></li>
+          <li class="reveal"><span class="step">03</span><h3>Verify</h3><p>Unit tests, manual checks in the real page, and reading every diff.</p></li>
+          <li class="reveal"><span class="step">04</span><h3>Iterate</h3><p>Ship a small version, then refine from real use.</p></li>
         </ol>
       </div>
     </section>
 
-    <section id="contact" class="band--deep">
-      <div class="container contact-grid">
-        <h2>Let’s talk.</h2>
-        <div class="contact-body">
-          <p class="lead">I’m looking for roles where I can turn ambiguous problems into working tools.</p>
-          <a class="mail" id="email-link" href="#">Email</a>
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="contact">
+          <h2>Let’s talk.</h2>
+          <p class="contact-lead">I’m looking for roles where I can turn ambiguous problems into working tools.</p>
+          <div class="contact-row">
+            <a class="mail" id="email-link" href="#">Email</a>
+            <button class="btn btn--ink btn--sm" id="copy-email" type="button">Copy address</button>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="container">
-      <p class="foot-mark">Yuxiao Pu</p>
+    <div class="container foot-inner">
+      <span>© <span id="year">2026</span> Yuxiao Pu</span>
       <div class="foot-links">
-        <span>© <span id="year">2026</span> Yuxiao Pu</span>
-        <a href="#top">Back to top</a>
         <a id="repo-link" href="#">Source of this site</a>
+        <a href="#top">Back to top ↑</a>
       </div>
     </div>
   </footer>

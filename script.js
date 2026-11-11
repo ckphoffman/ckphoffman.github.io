@@ -81,40 +81,51 @@ const tools = [
 
 const srcUrl = (path) => (REPO_URL ? `${REPO_URL}/tree/main/${path}` : null);
 
-function demoCard(p) {
+const tints = ["peach", "sky", "mint", "lilac", "butter"];
+
+function demoCard(p, i) {
   const el = document.createElement("article");
-  el.className = "demo";
+  el.className = "demo reveal";
+  el.style.setProperty("--tint", `var(--tint-${tints[i % tints.length]})`);
   const href = `demos/${p.slug}/`;
   const src = srcUrl(`demos/${p.slug}`);
   el.innerHTML = `
-    <a class="thumb" href="${href}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/shots/${p.slug}.jpg" alt="" width="960" height="600" loading="lazy"></a>
-    <h3><a href="${href}" target="_blank" rel="noopener">${p.title}</a></h3>
-    <p>${p.blurb}</p>
-    <p class="stack">${p.tags.join(", ")}</p>
-    <div class="links">
-      <a href="${href}" target="_blank" rel="noopener">Open the live demo</a>
-      ${src ? `<a href="${src}" target="_blank" rel="noopener">Source code</a>` : ""}
+    <a class="frame" href="${href}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+      <span class="frame-bar"><i></i><i></i><i></i><b>${p.slug}</b></span>
+      <img src="assets/shots/${p.slug}.jpg" alt="" width="960" height="600" loading="lazy">
+    </a>
+    <div class="demo-body">
+      <h3><a href="${href}" target="_blank" rel="noopener">${p.title}</a></h3>
+      <p>${p.blurb}</p>
+      <ul class="chips">${p.tags.map((t) => `<li>${t}</li>`).join("")}</ul>
+      <div class="links">
+        <a class="arrow" href="${href}" target="_blank" rel="noopener">Open the live demo</a>
+        ${src ? `<a class="arrow" href="${src}" target="_blank" rel="noopener">Source code</a>` : ""}
+      </div>
     </div>`;
   return el;
 }
 
-function toolRow(p) {
-  const el = document.createElement("tr");
+function toolCard(p) {
+  const el = document.createElement("article");
+  el.className = "tool reveal";
   const src = p.slug ? srcUrl(`projects/${p.slug}`) : null;
   el.innerHTML = `
-    <th scope="row">${p.title}</th>
-    <td>${p.blurb}</td>
-    <td class="stack">${p.tags.join(", ")}</td>
-    <td class="src">${src ? `<a href="${src}" target="_blank" rel="noopener">Source<span class="visually-hidden"> for ${p.title}</span></a>` : ""}</td>`;
+    <p class="tool-kind">${p.slug ? "Chrome extension" : "Python toolkit"}</p>
+    <h3>${p.title}</h3>
+    <p>${p.blurb}</p>
+    <ul class="chips">${p.tags.map((t) => `<li>${t}</li>`).join("")}</ul>
+    ${src ? `<a class="arrow" href="${src}" target="_blank" rel="noopener">Source<span class="visually-hidden"> for ${p.title}</span></a>` : ""}`;
   return el;
 }
 
 document.getElementById("demo-grid").append(...demos.map(demoCard));
-document.getElementById("tool-grid").append(...tools.map(toolRow));
+document.getElementById("tool-grid").append(...tools.map(toolCard));
 
 // Demos + tools + YouTube v1/v2 + dissertation + traffic system.
 document.getElementById("count").textContent = demos.length + tools.length + 2 + 2;
 document.getElementById("demo-count").textContent = demos.length;
+document.getElementById("demo-count-hero").textContent = demos.length;
 
 document.querySelectorAll("[data-src]").forEach((a) => {
   const url = srcUrl(a.dataset.src);
@@ -122,12 +133,28 @@ document.querySelectorAll("[data-src]").forEach((a) => {
 });
 
 const emailLink = document.getElementById("email-link");
+const copyBtn = document.getElementById("copy-email");
 if (EMAIL) {
   emailLink.href = `mailto:${EMAIL}`;
   emailLink.textContent = EMAIL;
   document.getElementById("hero-email").href = `mailto:${EMAIL}`;
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      copyBtn.textContent = "Copied";
+    } catch {
+      copyBtn.textContent = "Press Ctrl/Cmd + C";
+      const range = document.createRange();
+      range.selectNodeContents(emailLink);
+      const sel = getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    setTimeout(() => { copyBtn.textContent = "Copy address"; }, 2000);
+  });
 } else {
   emailLink.remove();
+  copyBtn.remove();
 }
 
 const repoLink = document.getElementById("repo-link");
@@ -139,3 +166,16 @@ const nav = document.querySelector(".nav");
 const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
 onScroll();
 window.addEventListener("scroll", onScroll, { passive: true });
+
+// Reveal on scroll (content stays visible without JS or with reduced motion).
+const revealEls = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  revealEls.forEach((el) => io.observe(el));
+} else {
+  revealEls.forEach((el) => el.classList.add("in"));
+}
