@@ -81,36 +81,31 @@ const tools = [
 
 const srcUrl = (path) => (REPO_URL ? `${REPO_URL}/tree/main/${path}` : null);
 
-function demoCard(p, i) {
+function demoCard(p) {
   const el = document.createElement("article");
-  el.className = "demo reveal";
+  el.className = "demo";
   const href = `demos/${p.slug}/`;
   const src = srcUrl(`demos/${p.slug}`);
   el.innerHTML = `
-    <a class="thumb" href="${href}" target="_blank" rel="noopener" aria-label="Open ${p.title}"><img src="assets/shots/${p.slug}.jpg" alt="Screenshot of ${p.title}" loading="lazy"></a>
-    <div class="demo-body">
-      <p class="demo-num">${String(i + 1).padStart(2, "0")}</p>
-      <h3><a href="${href}" target="_blank" rel="noopener">${p.title}</a></h3>
-      <p>${p.blurb}</p>
-      <div class="links">
-        <a class="btn small primary" href="${href}" target="_blank" rel="noopener">Open live <span aria-hidden="true">↗</span></a>
-        ${src ? `<a class="arrow-link" href="${src}" target="_blank" rel="noopener">Source ↗</a>` : ""}
-      </div>
+    <a class="thumb" href="${href}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/shots/${p.slug}.jpg" alt="" width="960" height="600" loading="lazy"></a>
+    <h3><a href="${href}" target="_blank" rel="noopener">${p.title}</a></h3>
+    <p>${p.blurb}</p>
+    <p class="stack">${p.tags.join(", ")}</p>
+    <div class="links">
+      <a href="${href}" target="_blank" rel="noopener">Open the live demo</a>
+      ${src ? `<a href="${src}" target="_blank" rel="noopener">Source code</a>` : ""}
     </div>`;
   return el;
 }
 
 function toolRow(p) {
-  const el = document.createElement("article");
-  el.className = "tool reveal";
+  const el = document.createElement("tr");
   const src = p.slug ? srcUrl(`projects/${p.slug}`) : null;
   el.innerHTML = `
-    <h4>${p.title}</h4>
-    <p>${p.blurb}</p>
-    <div class="tool-foot">
-      <div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div>
-      ${src ? `<a class="arrow-link" href="${src}" target="_blank" rel="noopener">Source ↗</a>` : ""}
-    </div>`;
+    <th scope="row">${p.title}</th>
+    <td>${p.blurb}</td>
+    <td class="stack">${p.tags.join(", ")}</td>
+    <td class="src">${src ? `<a href="${src}" target="_blank" rel="noopener">Source<span class="visually-hidden"> for ${p.title}</span></a>` : ""}</td>`;
   return el;
 }
 
@@ -140,21 +135,7 @@ if (REPO_URL) repoLink.href = REPO_URL; else repoLink.remove();
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-
 const nav = document.querySelector(".nav");
 const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
 onScroll();
 window.addEventListener("scroll", onScroll, { passive: true });
-
-// Fade sections in as they enter the viewport.
-const revealEls = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-    });
-  }, { rootMargin: "0px 0px -8% 0px" });
-  revealEls.forEach((el) => io.observe(el));
-} else {
-  revealEls.forEach((el) => el.classList.add("in"));
-}
