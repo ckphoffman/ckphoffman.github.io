@@ -32,17 +32,18 @@
 
   <main id="top">
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
+      <div class="container opening">
+        <div class="intro">
           <h1>I turn fuzzy ideas into working software.</h1>
           <p class="lead">An engineering and AI graduate who builds tools with AI-assisted development.</p>
+          <p class="credentials">MSc Computer Science (AI), University of Nottingham, Merit<br>Graduated 2026, open to roles</p>
           <div class="actions">
             <a class="btn btn--primary" id="hero-email" href="#contact">Get in touch</a>
             <a class="btn" href="#work">See the work</a>
           </div>
         </div>
 
-        <div class="sheet hero-index">
+        <div class="sheet work-index">
           <div class="sheet-head">
             <h2 class="sheet-title">Index of work</h2>
             <p><span id="count" class="num">16</span> tools and projects</p>
@@ -121,11 +122,16 @@
             <p class="meta">My most complete project, a full-stack product</p>
             <p class="lead">I wanted to learn English vocabulary from the videos I actually watch, with every word shown in its real context.</p>
           </div>
-          <ol class="system" aria-label="System architecture">
-            <li><h4>Chrome extension</h4><p>Captures uploaded (non-auto) subtitles from the video you are watching.</p></li>
-            <li><h4>Node and Express API</h4><p>Tokenises text, stores videos, sentences and word counts in SQLite.</p></li>
-            <li><h4>React and TypeScript web app</h4><p>Browse words, read every sentence they appear in, jump the embedded player to that moment.</p></li>
-          </ol>
+          <div class="sheet system">
+            <table>
+              <thead><tr><th scope="col">Part</th><th scope="col">What it does</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Chrome extension</th><td>Captures uploaded (non-auto) subtitles from the video you are watching.</td></tr>
+                <tr><th scope="row">Node and Express API</th><td>Tokenises text, stores videos, sentences and word counts in SQLite.</td></tr>
+                <tr><th scope="row">React and TypeScript web app</th><td>Browse words, read every sentence they appear in, jump the embedded player to that moment.</td></tr>
+              </tbody>
+            </table>
+          </div>
           <div class="case-foot">
             <ul class="bullets">
               <li>Counts each word once per video, so rewatching does not inflate frequencies.</li>
